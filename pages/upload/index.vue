@@ -1,5 +1,3 @@
 <template>
-  <div>
-    upload page
-  </div>
+  <div>upload page</div>
 </template>

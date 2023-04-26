@@ -1,5 +1,3 @@
 <template>
-  <div>
-    a single course
-  </div>
+  <div>a single course</div>
 </template>

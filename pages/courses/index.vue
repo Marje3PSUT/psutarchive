@@ -1,5 +1,3 @@
 <template>
-  <div>
-    courses list
-  </div>
+  <div>courses list</div>
 </template>

@@ -7,7 +7,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lintfix": "prettier --write --list-different . && lint --fix"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.1.1",
