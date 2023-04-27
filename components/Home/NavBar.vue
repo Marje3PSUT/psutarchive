@@ -1,11 +1,11 @@
 <template>
   <div class="navbar bg-base-100">
     <div class="navbar-start">
-      <!-- Navigation menu on sm/md screens -->
+      <!-- Navigation menu on small screens -->
       <div class="dropdown">
         <label
           tabindex="0"
-          class="btn btn-ghost lg:hidden"
+          class="btn btn-ghost md:hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,8 +50,8 @@
         PSUT Archive
       </NuxtLink>
     </div>
-    <!-- Navigation menu on large screens -->
-    <div class="navbar-center hidden lg:flex">
+    <!-- Navigation menu on md/lg screens -->
+    <div class="navbar-center hidden md:flex">
       <ul class="menu menu-horizontal px-1">
         <li tabindex="0">
           <NuxtLink to="/courses">
