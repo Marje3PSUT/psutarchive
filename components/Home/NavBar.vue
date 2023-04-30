@@ -83,6 +83,16 @@
       </ul>
     </div>
     <div class="navbar-end">
+      <form>
+        <select v-model="locale" class="select">
+          <option value="en">
+            English
+          </option>
+          <option value="ar">
+            Arabic
+          </option>
+        </select>
+      </form>
       <!-- Theme toggle -->
       <label class="swap swap-rotate">
         <input
@@ -122,4 +132,5 @@
 const toggleTheme = () => {
   useTheme().value = useTheme().value == "light" ? "dark" : "light";
 };
+const {locale} = useI18n();
 </script>
