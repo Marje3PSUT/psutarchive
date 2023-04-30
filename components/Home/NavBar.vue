@@ -28,17 +28,23 @@
         >
           <li tabindex="0">
             <NuxtLink to="/courses">
-              Courses
+              {{
+                $t('courses')
+              }}
             </NuxtLink>
           </li>
           <li>
             <NuxtLink to="/upload">
-              Upload
+              {{
+                $t('submit')
+              }}
             </NuxtLink>
           </li>
           <li>
             <NuxtLink to="/about">
-              About
+              {{
+                $t('about')
+              }}
             </NuxtLink>
           </li>
         </ul>
@@ -55,17 +61,23 @@
       <ul class="menu menu-horizontal px-1">
         <li tabindex="0">
           <NuxtLink to="/courses">
-            Courses
+            {{
+              $t('courses')
+            }}
           </NuxtLink>
         </li>
         <li>
           <NuxtLink to="/upload">
-            Upload
+            {{
+              $t('submit')
+            }}
           </NuxtLink>
         </li>
         <li>
           <NuxtLink to="/about">
-            About
+            {{
+              $t('about')
+            }}
           </NuxtLink>
         </li>
       </ul>
