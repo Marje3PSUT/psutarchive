@@ -10,7 +10,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: "",
+      strapi: {
+        url: 'http://localhost:1337' // can be overridden by NUXT_PUBLIC_STRAPI_URL env var
+      },
     },
   },
 });
