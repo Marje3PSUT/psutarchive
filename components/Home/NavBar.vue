@@ -3,10 +3,7 @@
     <div class="navbar-start">
       <!-- Navigation menu on small screens -->
       <div class="dropdown">
-        <label
-          tabindex="0"
-          class="btn btn-ghost md:hidden"
-        >
+        <label tabindex="0" class="btn btn-ghost md:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -28,31 +25,22 @@
         >
           <li tabindex="0">
             <NuxtLink to="/courses">
-              {{
-                $t('courses')
-              }}
+              {{ $t("courses") }}
             </NuxtLink>
           </li>
           <li>
             <NuxtLink to="/upload">
-              {{
-                $t('submit')
-              }}
+              {{ $t("submit") }}
             </NuxtLink>
           </li>
           <li>
             <NuxtLink to="/about">
-              {{
-                $t('about')
-              }}
+              {{ $t("about") }}
             </NuxtLink>
           </li>
         </ul>
       </div>
-      <NuxtLink
-        to="/"
-        class="btn btn-ghost normal-case text-xl"
-      >
+      <NuxtLink to="/" class="btn btn-ghost normal-case text-xl">
         PSUT Archive
       </NuxtLink>
     </div>
@@ -61,23 +49,17 @@
       <ul class="menu menu-horizontal px-1">
         <li tabindex="0">
           <NuxtLink to="/courses">
-            {{
-              $t('courses')
-            }}
+            {{ $t("courses") }}
           </NuxtLink>
         </li>
         <li>
           <NuxtLink to="/upload">
-            {{
-              $t('submit')
-            }}
+            {{ $t("submit") }}
           </NuxtLink>
         </li>
         <li>
           <NuxtLink to="/about">
-            {{
-              $t('about')
-            }}
+            {{ $t("about") }}
           </NuxtLink>
         </li>
       </ul>
@@ -85,21 +67,13 @@
     <div class="navbar-end">
       <form>
         <select v-model="locale" class="select">
-          <option value="en">
-            English
-          </option>
-          <option value="ar">
-            Arabic
-          </option>
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
         </select>
       </form>
       <!-- Theme toggle -->
       <label class="swap swap-rotate">
-        <input
-          type="checkbox"
-          class="mx-4"
-          @change="toggleTheme"
-        >
+        <input type="checkbox" class="mx-4" @change="toggleTheme" />
         <svg
           class="swap-on"
           xmlns="http://www.w3.org/2000/svg"
@@ -132,5 +106,5 @@
 const toggleTheme = () => {
   useTheme().value = useTheme().value == "light" ? "dark" : "light";
 };
-const {locale} = useI18n();
+const { locale } = useI18n();
 </script>

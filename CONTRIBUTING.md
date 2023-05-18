@@ -1,6 +1,6 @@
 # Contributing to PSUT Archive Front End
 
-*This guideline is for Marje3 dev team*. There will be another one for all contributors after the first production release.
+_This guideline is for Marje3 dev team_. There will be another one for all contributors after the first production release.
 
 ## Understanding the tech stack
 
@@ -34,7 +34,7 @@ The tasks will be assigned within the [GitHub project board](https://github.com/
 
 ### II. Create a separate branch from `dev` branch for your task
 
-Always create a new branch from the `dev` branch for *each new task*.
+Always create a new branch from the `dev` branch for _each new task_.
 
 Follow this branch naming convention:
 `<prefix>/branch-name`
@@ -60,8 +60,8 @@ A commit message should describe the changes made in the commit in a clear and c
 
 - Limit the first line of the commit message to 72 characters or less.
 - Use the imperative mood and present tense in the subject line, e.g. "Add footer" instead of "Added footer".
-- Use the body of the commit message to provide additional context or details, *if necessary*.
-  - Use bullet points in the body of the commit message to break down changes, *if necessary*.
+- Use the body of the commit message to provide additional context or details, _if necessary_.
+  - Use bullet points in the body of the commit message to break down changes, _if necessary_.
 
 ### IV. Always check your code formatting and linting before pushing
 
@@ -73,7 +73,7 @@ Fix these issues before pushing your code.
 
 ### V. Do not hardcode strings in the code
 
-To maintain localization for strings, never hardcode strings in the code. But instead, write each new *translatable* string inside [`i18n.config.ts`](https://github.com/Marje3PSUT/psutarchive/blob/dev/i18n.config.ts) with the English and Arabic translations. Then call the string in the code using `$t('string_key')` where `string_key` is the property key you chose for the string (the key should be the same for both languages).
+To maintain localization for strings, never hardcode strings in the code. But instead, write each new _translatable_ string inside [`i18n.config.ts`](https://github.com/Marje3PSUT/psutarchive/blob/dev/i18n.config.ts) with the English and Arabic translations. Then call the string in the code using `$t('string_key')` where `string_key` is the property key you chose for the string (the key should be the same for both languages).
 
 For more information, check out [i18n documentation](https://v8.i18n.nuxtjs.org/getting-started/basic-usage).
 
@@ -84,9 +84,9 @@ When you're assigned to a new task, follow this workflow:
 1. After setting up your local environment, create a new branch for your task, according to the convention described above.
 2. Test your feature / bugfix, then fix linting issues, if any (run `npm run lint` to see the issues).
 3. **Before pushing your changes**, check if the base branch (dev branch) has newer changes and rebase your branch on top of it. This ensures that your changes are built on top of the latest codebase. Just run `git pull --rebase origin dev` while on your branch.
-Try to resolve any merge conflicts that *may* occur after this step.
+   Try to resolve any merge conflicts that _may_ occur after this step.
 4. Commit your changes according to the convention above, then push them to your new branch (`git push -u origin your-branch-name`).
-*If you've pushed to your branch before, then you can just run `git push`*.
+   _If you've pushed to your branch before, then you can just run `git push`_.
 5. Create a pull request.
 
 ## Resources
