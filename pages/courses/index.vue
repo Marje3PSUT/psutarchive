@@ -1,29 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <!-- TODO: Separate this into a component -->
-    <div
-      v-if="state.courses"
-      class="flex flex-wrap"
-    >
-      <div
-        v-for="item, i in state.courses.data"
-        :key="i"
-        class="card w-96 bg-base-100 shadow-xl"
-      >
-        <div class="card-body">
-          <h2 class="card-title">
-            {{ item.attributes.Name }}
-          </h2>
-          <p>{{ item.attributes.School }}</p>
-          <p>{{ item.attributes.CourseID }}</p>
-          <div class="card-actions justify-start mt-4">
-            <button class="btn btn-primary">
-              See Exams
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CoursesListItem :courses="state.courses" />
   </div>
 </template>
 <script setup>
