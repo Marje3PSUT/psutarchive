@@ -1,5 +1,6 @@
 <template>
   <div class="container mx-auto">
+    <!-- TODO: Separate this into a component -->
     <div
       v-if="state.courses"
       class="flex flex-wrap"
@@ -26,6 +27,8 @@
   </div>
 </template>
 <script setup>
+// TODO: use typescript to create a type for courses and exams
+// TODO: use a global state (pinia) to save fetched content to it
 const state = reactive({
   courses: []
 })
