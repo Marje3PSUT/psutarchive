@@ -1,3 +1,5 @@
 <template>
-  <div>home page</div>
+  <div>
+    <SearchBar />
+  </div>
 </template>
