@@ -106,7 +106,7 @@
 <script setup>
 // TODO: make this theme toggle a global composable
 const toggleTheme = () => {
-  useTheme().value = useTheme().value == "dracula-light" ? "dracula" : "dracula-light";
+  useTheme().value = useTheme().value == "light" ? "dark" : "light";
 };
 const { locale } = useI18n();
 </script>

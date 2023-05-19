@@ -1,1 +1,1 @@
-export const useTheme = () => useState("theme", () => "dracula");
+export const useTheme = () => useState("theme", () => "dark");
