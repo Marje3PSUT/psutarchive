@@ -9,18 +9,12 @@
       :key="i"
       class="card-compact w-64 lg:w-96 bg-base-100 shadow-xl border rounded-md"
     >
-      <div class="card-body">
-        <h4 class="card-title">
-          {{ course.attributes.Name }}
-        </h4>
-        <p>{{ course.attributes.School }}</p>
-        <p>{{ course.attributes.CourseID }}</p>
-        <div class="card-actions justify-start mt-4">
-          <button class="btn btn-primary">
-            See Exams
-          </button>
-        </div>
-      </div>
+      <CoursesListItem
+        :name="course.attributes.Name"
+        :name-ar="course.attributes.ArabicName"
+        :school="course.attributes.School"
+        :course-id="course.attributes.CourseID"
+      />
     </div>
   </div>
 </template>
