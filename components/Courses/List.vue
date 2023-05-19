@@ -2,12 +2,12 @@
 <template>
   <div
     v-if="props.courses"
-    class="courses-list container flex flex-wrap mx-auto justify-center gap-4 p-4"
+    class="courses-list container"
   >
     <div
       v-for="course, i in props.courses.data"
       :key="i"
-      class="card-compact w-64 bg-base-100 shadow-xl border rounded-md sm:max-w-xs"
+      class="card-compact w-full max-h-32 bg-base-100 shadow-xl border rounded-md"
     >
       <CoursesListItem
         :name="course.attributes.Name"
@@ -27,8 +27,10 @@ const props = defineProps({
 })
 </script>
 <style scoped lang="postcss">
-.courses-list > .card-compact {
-  flex: 1 0 33.333333%;
-  min-width: 200px;
+.courses-list {
+  @apply mx-auto justify-center p-4;
+  @apply grid grid-cols-1;
+  @apply sm:grid-cols-2 lg:grid-cols-3;
+  grid-gap: 1rem;
 }
 </style>

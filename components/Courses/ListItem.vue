@@ -5,11 +5,6 @@
     </h4>
     <p>{{ props.school }}</p>
     <p>{{ props.courseId }}</p>
-    <div class="card-actions justify-start mt-4">
-      <button class="btn btn-primary">
-        See Exams
-      </button>
-    </div>
   </div>
 </template>
 <script setup>
