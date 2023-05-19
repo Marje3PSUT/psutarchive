@@ -3,7 +3,7 @@
     :data-theme="useTheme().value"
     class="w-screen h-screen"
   >
-    <HomeNavBar />
+    <NavBar />
     <NuxtPage />
   </div>
 </template>

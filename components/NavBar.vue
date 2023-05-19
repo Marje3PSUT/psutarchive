@@ -74,6 +74,7 @@
       <!-- Theme toggle -->
       <label class="swap swap-rotate">
         <input type="checkbox" class="mx-4" @change="toggleTheme" />
+        <!-- FIXME: Use Solar dark/light themes icons -->
         <svg
           class="swap-on"
           xmlns="http://www.w3.org/2000/svg"
