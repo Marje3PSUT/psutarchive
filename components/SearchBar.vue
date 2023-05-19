@@ -7,7 +7,7 @@
     >
   </div>
 </template>
-<style scoped>
+<style scoped lang="postcss">
 input.search-input {
   @apply bg-no-repeat;
   /* TODO: use mainly Solar svg icons https://icones.js.org/collection/solar */
