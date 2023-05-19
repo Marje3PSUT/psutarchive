@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
     <SearchBar />
-    <CoursesListItem :courses="state.courses" />
+    <CoursesList :courses="state.courses" />
   </div>
 </template>
 <script setup>
