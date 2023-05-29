@@ -1,20 +1,22 @@
 <template>
   <div class="card-body">
-    <h4 class="card-title">
-      {{
-        locale === 'ar' ?
-          props.nameAr
-          : props.name
-      }}
-    </h4>
-    <p>
-      {{
-        locale === 'ar' ?
-          props.category.attributes.ArabicName
-          : props.category.attributes.Name
-      }}
-    </p>
-    <p>{{ props.courseId }}</p>
+    <NuxtLink :to="'/courses/' + props.courseId">
+      <h4 class="card-title">
+        {{
+          locale === 'ar' ?
+            props.nameAr
+            : props.name
+        }}
+      </h4>
+      <p>
+        {{
+          locale === 'ar' ?
+            props.category.attributes.ArabicName
+            : props.category.attributes.Name
+        }}
+      </p>
+      <p>{{ props.courseId }}</p>
+    </NuxtLink>
   </div>
 </template>
 <script setup>
