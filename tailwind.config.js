@@ -24,7 +24,7 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [require("tailwindcss-flip"), require("daisyui")],
   // daisyUI config
   daisyui: {
     styled: true,

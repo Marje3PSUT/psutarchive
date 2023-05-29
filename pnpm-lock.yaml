@@ -42,6 +42,9 @@ devDependencies:
   tailwindcss:
     specifier: ^3.3.1
     version: 3.3.1(postcss@8.4.23)
+  tailwindcss-flip:
+    specifier: ^1.0.0
+    version: 1.0.0
 
 packages:
 
@@ -3604,6 +3607,10 @@ packages:
     resolution: {integrity: sha512-dS2j+W26TQ7taQBGN8Lbbq04ssV3emRw4NY58WErlTO29pIqS0HmoT5aJ9+TUQ1N3G+JOZSji4eugsWwGp9yPA==}
     dev: true
 
+  /lodash.flatmap@4.5.0:
+    resolution: {integrity: sha512-/OcpcAGWlrZyoHGeHh3cAoa6nGdX6QYtmzNP84Jqol6UEQQ2gIaU3H+0eICcjcKGl0/XF8LWOujNn9lffsnaOg==}
+    dev: true
+
   /lodash.flatten@4.4.0:
     resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
     dev: true
@@ -5238,6 +5245,12 @@ packages:
       css-tree: 2.3.1
       csso: 5.0.5
       picocolors: 1.0.0
+    dev: true
+
+  /tailwindcss-flip@1.0.0:
+    resolution: {integrity: sha512-7zGjiIgw11cKcVKp8zz1YJQZ6H/bbdaENRo1Y9oXffwilZh0HhJFOM1daXrKIhOXJbpPgIVJa5yQ2vrZA+D8TQ==}
+    dependencies:
+      lodash.flatmap: 4.5.0
     dev: true
 
   /tailwindcss@3.3.1(postcss@8.4.23):
