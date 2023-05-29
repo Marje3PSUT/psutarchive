@@ -2,7 +2,7 @@
   <div class="flex justify-center m-4">
     <input
       type="text"
-      placeholder="Search courses..."
+      :placeholder="$t('search') + '...'"
       class="search-input input input-bordered input-primary w-full max-w-2xl"
       :style="locale == 'ar' ? 'background-position: 3% center;' : ''"
     >
