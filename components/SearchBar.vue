@@ -4,9 +4,13 @@
       type="text"
       placeholder="Search courses..."
       class="search-input input input-bordered input-primary w-full max-w-2xl"
+      :style="locale == 'ar' ? 'background-position: 3% center;' : ''"
     >
   </div>
 </template>
+<script setup>
+const { locale } = useI18n();
+</script>
 <style scoped lang="postcss">
 input.search-input {
   @apply bg-no-repeat;

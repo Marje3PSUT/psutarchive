@@ -7,7 +7,7 @@
     <div
       v-for="course, i in props.courses.data"
       :key="i"
-      class="card-compact w-full max-h-32 bg-base-100 shadow-xl border rounded-md"
+      class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered"
     >
       <CoursesListItem
         :name="course.attributes.Name"
