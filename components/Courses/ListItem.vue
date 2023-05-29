@@ -1,9 +1,19 @@
 <template>
   <div class="card-body">
     <h4 class="card-title">
-      {{ props.name }}
+      {{
+        locale === 'ar' ?
+          props.nameAr
+          : props.name
+      }}
     </h4>
-    <p>{{ props.school }}</p>
+    <p>
+      {{
+        locale === 'ar' ?
+          props.category.attributes.ArabicName
+          : props.category.attributes.Name
+      }}
+    </p>
     <p>{{ props.courseId }}</p>
   </div>
 </template>
@@ -17,7 +27,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  school: {
+  category: {
     type: String,
     required: true
   },
@@ -48,4 +58,5 @@ const props = defineProps({
     default: false
   }
 })
+const { locale } = useI18n();
 </script>
