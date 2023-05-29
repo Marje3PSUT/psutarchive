@@ -3,7 +3,10 @@
     <div class="navbar-start">
       <!-- Navigation menu on small screens -->
       <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost md:hidden">
+        <label
+          tabindex="0"
+          class="btn btn-ghost md:hidden"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -40,7 +43,10 @@
           </li>
         </ul>
       </div>
-      <NuxtLink to="/" class="btn btn-ghost normal-case text-xl">
+      <NuxtLink
+        class="btn btn-ghost normal-case text-xl"
+        to="/"
+      >
         PSUT Archive
       </NuxtLink>
     </div>
@@ -66,14 +72,25 @@
     </div>
     <div class="navbar-end">
       <form>
-        <select v-model="locale" class="select">
-          <option value="en">English</option>
-          <option value="ar">Arabic</option>
+        <select
+          v-model="locale"
+          class="select"
+        >
+          <option value="en">
+            English
+          </option>
+          <option value="ar">
+            العربية
+          </option>
         </select>
       </form>
       <!-- Theme toggle -->
       <label class="swap swap-rotate">
-        <input type="checkbox" class="mx-4" @change="toggleTheme" />
+        <input
+          type="checkbox"
+          class="mx-4"
+          @change="toggleTheme"
+        >
         <!-- FIXME: Use Solar dark/light themes icons -->
         <svg
           class="swap-on"
