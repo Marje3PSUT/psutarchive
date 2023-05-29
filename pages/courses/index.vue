@@ -13,7 +13,9 @@ const state = reactive({
 const { find } = useStrapi()
 console.log(useStrapiUrl()) // FIXME: Strapi can only read the URL in .env on the client side
 onMounted(async() => {
-  const courses = await find('courses');
+  const courses = await find('courses', {
+    populate: 'Category'
+  });
   state.courses = courses;
 })
 </script>
