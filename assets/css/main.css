@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Background colors for course categories */
+.bg-IT {
+  @apply bg-course-cat-IT;
+}
+.bg-ENG {
+  @apply bg-course-cat-ENG;
+}
+.bg-MATH {
+  @apply bg-course-cat-MATH;
+}
+.bg-BIZ {
+  @apply bg-course-cat-BIZ;
+}
+.bg-ELECT {
+  @apply bg-course-cat-ELECT;
+}
+
+/* Border colors for course categories */
+.border-IT {
+  @apply border-course-cat-IT;
+}
+.border-ENG {
+  @apply border-course-cat-ENG;
+}
+.border-MATH {
+  @apply border-course-cat-MATH;
+}
+.border-BIZ {
+  @apply border-course-cat-BIZ;
+}
+.border-ELECT {
+  @apply border-course-cat-ELECT;
+}
