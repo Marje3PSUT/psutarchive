@@ -27,17 +27,17 @@
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-60 border"
         >
           <li tabindex="0">
-            <NuxtLink to="/courses">
+            <NuxtLink :to="localePath('/courses')">
               {{ $t("courses") }}
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/upload">
+            <NuxtLink :to="localePath('/upload')">
               {{ $t("submit") }}
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/about">
+            <NuxtLink :to="localePath('/about')">
               {{ $t("about") }}
             </NuxtLink>
           </li>
@@ -45,45 +45,39 @@
       </div>
       <NuxtLink
         class="btn btn-ghost normal-case text-xl"
-        to="/"
+        :to="localePath('/')"
       >
-        PSUT Archive
+        {{ $t("psutarchive") }}
       </NuxtLink>
     </div>
     <!-- Navigation menu on md/lg screens -->
     <div class="navbar-center hidden md:flex">
       <ul class="menu menu-horizontal px-1">
         <li tabindex="0">
-          <NuxtLink to="/courses">
+          <NuxtLink :to="localePath('/courses')">
             {{ $t("courses") }}
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/upload">
+          <NuxtLink :to="localePath('/upload')">
             {{ $t("submit") }}
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/about">
+          <NuxtLink :to="localePath('/about')">
             {{ $t("about") }}
           </NuxtLink>
         </li>
       </ul>
     </div>
     <div class="navbar-end">
-      <form>
-        <select
-          v-model="locale"
-          class="select"
-        >
-          <option value="en">
-            English
-          </option>
-          <option value="ar">
-            العربية
-          </option>
-        </select>
-      </form>
+      <!-- Language toggle -->
+      <NuxtLink
+        class="me-2"
+        :to="locale === 'en' ? switchLocalePath('ar') : switchLocalePath('en')"
+      >
+        {{ locale === 'en' ? '🇯🇴' : '🇬🇧' }}
+      </NuxtLink>
       <!-- Theme toggle -->
       <label class="swap swap-rotate">
         <input
@@ -121,9 +115,10 @@
   </div>
 </template>
 <script setup>
-// TODO: make this theme toggle a global composable
+// TODO: make this theme and lang toggles a global composable
+const { locale } = useI18n();
+const switchLocalePath = useSwitchLocalePath()
 const toggleTheme = () => {
   useTheme().value = useTheme().value == "light" ? "dark" : "light";
 };
-const { locale } = useI18n();
 </script>

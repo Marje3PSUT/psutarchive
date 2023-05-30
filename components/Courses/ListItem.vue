@@ -1,6 +1,6 @@
 <template>
   <div class="card-body">
-    <NuxtLink :to="'/courses/' + props.courseId">
+    <NuxtLink :to="localePath('/courses/' + props.courseId)">
       <h4 class="card-title">
         {{
           locale === 'ar' ?
@@ -30,7 +30,7 @@ const props = defineProps({
     required: true
   },
   category: {
-    type: String,
+    type: Object,
     required: true
   },
   courseId: {
