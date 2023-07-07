@@ -1,4 +1,14 @@
 const customDaisyUiVariables = {
+  "primary": "#38bdf8",
+  "secondary": "#818CF8",
+  "accent": "#F471B5",
+  "neutral": "#1E293B",
+  "neutral-focus": "#273449",
+  "base-100": "#0F172A",
+  "info": "#0CA5E9",
+  "success": "#2DD4BF",
+  "warning": "#F4BF50",
+  "error": "#FB7085",
   "--rounded-box": "1rem", // border radius rounded-box utility class, used in card and other large boxes
   "--rounded-btn": "0.5rem", // border radius rounded-btn utility class, used in buttons and similar element
   "--rounded-badge": "1.9rem", // border radius rounded-badge utility class, used in badges and similar
@@ -38,18 +48,17 @@ module.exports = {
     themes: [
       {
         "dark": {
-          ...require("daisyui/src/colors/themes")["[data-theme=dracula]"],
+          "color-scheme": "dark",
           ...customDaisyUiVariables,
         },
       },
       {
         "light": {
-          ...require("daisyui/src/colors/themes")["[data-theme=dracula]"],
           // light colors
-          "neutral": "#333c4d",
+          ...customDaisyUiVariables,
           "base-100": "#fafafa",
           "base-content": "#080802",
-          ...customDaisyUiVariables,
+          "color-scheme": "light",
       }
       },
     ],
