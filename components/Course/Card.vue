@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="card-body">
     <NuxtLink :to="localePath('/courses/' + props.courseId)">
