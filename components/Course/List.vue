@@ -4,19 +4,14 @@
     v-if="props.courses"
     class="courses-list container"
   >
-    <div
+    <CourseCard
       v-for="course, i in props.courses.data"
       :key="i"
-      class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered border-2"
-      :class="'border-' + course.attributes.Category.data.attributes.Abbreviation"
-    >
-      <CourseCard
-        :name="course.attributes.Name"
-        :name-ar="course.attributes.ArabicName"
-        :category="course.attributes.Category.data"
-        :course-id="course.attributes.CourseID"
-      />
-    </div>
+      :name="course.attributes.Name"
+      :name-ar="course.attributes.ArabicName"
+      :category="course.attributes.Category.data"
+      :course-id="course.attributes.CourseID"
+    />
   </div>
 </template>
 <script setup>
