@@ -10,7 +10,7 @@
       class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered border-2"
       :class="'border-' + course.attributes.Category.data.attributes.Abbreviation"
     >
-      <CoursesListItem
+      <CourseListItem
         :name="course.attributes.Name"
         :name-ar="course.attributes.ArabicName"
         :category="course.attributes.Category.data"
