@@ -14,7 +14,6 @@ const { locale } = useI18n();
 <style scoped lang="postcss">
 input.search-input {
   @apply bg-no-repeat;
-  /* TODO: use mainly Solar svg icons https://icones.js.org/collection/solar */
   background-image: url('~/assets/icons/SolarMagniferLinear.svg');
   background-position: 97% center;
   background-size: 1.5rem;

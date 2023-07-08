@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/strapi", "@nuxtjs/i18n"],
+  modules: ["@nuxtjs/strapi", "@nuxtjs/i18n", 'nuxt-icon'],
   css: ["~/assets/css/main.css"],
   postcss: {
     plugins: {
