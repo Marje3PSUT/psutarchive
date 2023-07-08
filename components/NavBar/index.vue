@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="navbar bg-base-200 mb-16">
     <div class="navbar-start">

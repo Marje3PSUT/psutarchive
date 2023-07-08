@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <ul class="menu menu-horizontal px-1">
     <li tabindex="0">

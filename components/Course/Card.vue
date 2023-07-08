@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
     class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered"
