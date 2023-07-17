@@ -73,7 +73,7 @@ Fix these issues before pushing your code.
 
 ### V. Do not hardcode strings in the code
 
-To maintain localization for strings, never hardcode strings in the code. But instead, write each new _translatable_ string inside [`i18n.config.ts`](https://github.com/Marje3PSUT/psutarchive/blob/dev/i18n.config.ts) with the English and Arabic translations. Then call the string in the code using `$t('string_key')` where `string_key` is the property key you chose for the string (the key should be the same for both languages).
+To maintain localization for strings, never hardcode strings in the code. But instead, write each new _translatable_ string inside [`/lang`](https://github.com/Marje3PSUT/psutarchive/tree/dev/lang) with the English and Arabic translations. Then call the string in the code using `$t('string_key')` where `string_key` is the property key you chose for the string (the key must be the same for both languages).
 
 For more information, check out [i18n documentation](https://v8.i18n.nuxtjs.org/getting-started/basic-usage).
 
