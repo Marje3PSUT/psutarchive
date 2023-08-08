@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/strapi", "@nuxtjs/i18n", 'nuxt-icon'],
+  modules: ["@nuxtjs/i18n", "nuxt-icon"],
   css: ["~/assets/css/main.css"],
   postcss: {
     plugins: {
@@ -18,24 +18,24 @@ export default defineNuxtConfig({
   i18n: {
     locales: [
       {
-        code: 'en',
-        name: 'English',
-        iso: 'en',
-        dir: 'ltr',
-        file: 'en.json',
+        code: "en",
+        name: "English",
+        iso: "en",
+        dir: "ltr",
+        file: "en.json",
       },
       {
-        code: 'ar',
-        name: 'العربية',
-        iso: 'ar',
-        dir: 'rtl',
-        file: 'ar.json',
+        code: "ar",
+        name: "العربية",
+        iso: "ar",
+        dir: "rtl",
+        file: "ar.json",
       },
     ],
     lazy: true,
-    langDir: 'lang',
-    defaultLocale: 'en',
-    baseUrl: 'http://localhost:3000/',
+    langDir: "lang",
+    defaultLocale: "en",
+    baseUrl: "http://localhost:3000/",
     debug: false,
   },
 });
