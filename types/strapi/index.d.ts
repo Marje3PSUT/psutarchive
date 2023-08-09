@@ -22,16 +22,14 @@ declare global {
   }
   interface StrapiResponse<T> {
     data: StrapiItem<T>[];
-    meta?: {
-      pagination: Pagination;
+    meta: {
+      pagination?: Pagination;
       // TODO: add SEO
     };
   }
   interface StrapiResponseSingle<T> {
     data: StrapiItem<T>;
-    meta: {
-      pagination: Pagination;
-    };
+    meta: {};
   }
 }
 

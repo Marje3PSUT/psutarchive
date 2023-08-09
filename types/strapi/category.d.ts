@@ -3,7 +3,7 @@ declare global {
     name: string;
     name_ar: string;
     abbreviation: string;
-    courses: RelationSingle<CourseAttributes>;
+    courses?: RelationMulti<CourseAttributes>;
   }
 }
 export {};
