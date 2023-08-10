@@ -4,7 +4,7 @@
     class="w-screen h-screen"
     :dir="locale == 'ar' ? 'rtl' : 'ltr'"
   >
-    <NavBar />
+    <UINavBar />
     <NuxtPage />
   </div>
 </template>
