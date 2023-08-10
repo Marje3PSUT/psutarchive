@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/i18n", "nuxt-icon"],
+  modules: ["@nuxtjs/i18n", "nuxt-icon", "nuxt-api-party"],
   css: ["~/assets/css/main.css"],
   postcss: {
     plugins: {
@@ -37,5 +37,13 @@ export default defineNuxtConfig({
     defaultLocale: "en",
     baseUrl: "http://localhost:3000/",
     debug: false,
+  },
+  apiParty: {
+    endpoints: {
+      baseApi: {
+        url: process.env.API_BASE_URL!,
+        token: process.env.API_BASE_TOKEN!,
+      },
+    },
   },
 });

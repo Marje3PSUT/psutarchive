@@ -4889,6 +4889,18 @@ nuxi@3.6.5:
   optionalDependencies:
     fsevents "~2.3.2"
 
+nuxt-api-party@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/nuxt-api-party/-/nuxt-api-party-0.13.0.tgz#48a926a30253ef8ce4dea288dd3639d6ee969a90"
+  integrity sha512-YBavVC+ioCyChtAGwjn6RsvM61JP1hwbJGbHzNWI5biy7QaUW1ELYV/G1xgG9KVCGpvceLVkkYNL4ZWbdz5GTA==
+  dependencies:
+    "@nuxt/kit" "^3.6.1"
+    defu "^6.1.2"
+    ofetch "^1.1.1"
+    ohash "^1.1.2"
+    scule "^1.0.0"
+    ufo "^1.1.2"
+
 nuxt-icon@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/nuxt-icon/-/nuxt-icon-0.4.2.tgz#040efe9463b06d0d48d8e84702582758a5e76357"
@@ -6896,6 +6908,7 @@ widest-line@^4.0.1:
     string-width "^5.0.1"
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
