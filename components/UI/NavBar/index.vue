@@ -1,7 +1,10 @@
 <template>
   <div class="navbar bg-base-200 mb-16">
     <div class="navbar-start">
-      <NuxtLink class="btn btn-ghost normal-case text-xl" :to="localePath('/')">
+      <NuxtLink
+        class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
+        :to="localePath('/')"
+      >
         {{ $t("psutarchive") }}
       </NuxtLink>
     </div>
@@ -11,7 +14,7 @@
       <UINavBarMenu />
     </div>
 
-    <div class="navbar-end">
+    <div class="navbar-end gap-x-2">
       <!-- Language toggle -->
       <UILangSwitcher class="max-md:hidden" />
 

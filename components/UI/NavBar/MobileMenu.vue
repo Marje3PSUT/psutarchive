@@ -1,8 +1,8 @@
 <template>
-  <div class="dropdown md:hidden">
+  <div class="z-10 dropdown md:hidden">
     <label
       tabindex="0"
-      class="btn btn-ghost md:hidden"
+      class="btn btn-ghost md:hidden p-0"
     >
       <Icon
         name="solar:hamburger-menu-outline"
@@ -11,26 +11,42 @@
     </label>
     <ul
       tabindex="0"
-      class="menu menu-compact dropdown-content mt-4 p-2 shadow bg-base-100 rounded-box w-60 border -ms-48"
+      class="menu menu-compact dropdown-content"
     >
-      <li tabindex="0">
+      <li
+        tabindex="0"
+        class="rounded-t-box"
+      >
         <NuxtLink :to="localePath('/courses')">
-          {{ $t("courses") }}
+          {{ $t("courses.title") }}
         </NuxtLink>
       </li>
       <li>
         <NuxtLink :to="localePath('/upload')">
-          {{ $t("submit") }}
+          {{ $t("submit.title") }}
         </NuxtLink>
       </li>
       <li>
         <NuxtLink :to="localePath('/about')">
-          {{ $t("about") }}
+          {{ $t("about.title") }}
         </NuxtLink>
       </li>
-      <li><UILangSwitcher /></li>
+      <li class="rounded-b-box">
+        <UILangSwitcher />
+      </li>
     </ul>
   </div>
 </template>
 <script setup></script>
-<style scoped lang="postcss"></style>
+<style scoped lang="postcss"> 
+  .menu {
+    --tw-bg-opacity: 0.8;
+    @apply mt-2 p-2 w-60 -ms-48;
+    @apply rounded-b-box border border-base-300 border-t-0;
+    @apply shadow bg-base-200;
+  }
+  ul li {
+    @apply bg-base-200;
+    --tw-bg-opacity: 0.8;
+  }
+</style>

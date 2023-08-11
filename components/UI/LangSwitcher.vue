@@ -2,6 +2,7 @@
   <NuxtLink
     class="me-2"
     :to="locale === 'en' ? switchLocalePath('ar') : switchLocalePath('en')"
+    :dir="locale === 'en' ? 'rtl' : 'ltr'"
   >
     {{ locale === 'en' ? 'العربية' : 'English' }}
   </NuxtLink>
