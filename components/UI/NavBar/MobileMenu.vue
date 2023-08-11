@@ -28,7 +28,7 @@
           {{ $t("about") }}
         </NuxtLink>
       </li>
-      <li><NavBarLangSwitcher /></li>
+      <li><UILangSwitcher /></li>
     </ul>
   </div>
 </template>
