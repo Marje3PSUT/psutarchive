@@ -1,7 +1,19 @@
 {
-  "courses": "Courses",
-  "submit": "Submit Papers",
-  "about": "About Us",
+  "psutarchive": "PSUT Archive",
   "search": "Search courses",
-  "psutarchive": "PSUT Archive"
+  "home": {
+    "categories": {
+      "title": "Categories",
+      "all": "All Courses"
+    }
+  },
+  "courses": {
+    "title": "Courses"
+  },
+  "submit": {
+    "title": "Submit Papers"
+  },
+  "about": {
+    "title": "About Us"
+  }
 }

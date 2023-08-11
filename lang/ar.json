@@ -1,7 +1,19 @@
 {
-  "courses": "المواد",
-  "submit": "أرسل مواد",
-  "about": "عنا",
+  "psutarchive": "PSUT Archive",
   "search": "ابحث في المواد",
-  "psutarchive": "PSUT Archive"
+  "home": {
+    "categories": {
+      "title": "الأقسام",
+      "all": "جميع المواد"
+    }
+  },
+  "courses": {
+    "title": "المواد"
+  },
+  "submit": {
+    "title": "أرسل مواد"
+  },
+  "about": {
+    "title": "عنا"
+  }
 }
