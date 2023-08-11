@@ -1,56 +1,34 @@
 <template>
   <div
     class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered"
-    :class="`hover:bg-${category.attributes.Abbreviation} border-${category.attributes.Abbreviation}`"
+    :class="`hover:bg-${item.category?.data.attributes.abbreviation} border-${item.category?.data.attributes.abbreviation}`"
   >
     <div class="card-body">
-      <NuxtLink :to="localePath('/courses/' + props.courseId)">
+      <NuxtLink :to="localePath(`/courses/${item.course_id}`)">
         <h4 class="card-title">
           {{
             locale === 'ar' ?
-              props.nameAr
-              : props.name
+              item.name_ar
+              : item.name
           }}
         </h4>
         <p>
           {{
             locale === 'ar' ?
-              props.category.attributes.ArabicName
-              : props.category.attributes.Name
+              item.category?.data.attributes.name_ar
+              : item.category?.data.attributes.name
           }}
         </p>
-        <p>{{ props.courseId }}</p>
+        <p>{{ item.course_id }}</p>
       </NuxtLink>
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
-  name: {
-    type: String,
-    required: true
-  },
-  nameAr: {
-    type: String,
-    required: true
-  },
-  category: {
-    type: Object,
-    required: true
-  },
-  courseId: {
-    type: String,
-    required: true
-  },
-  examsCount: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  notesCount: {
-    type: Number,
-    required: false,
-    default: 0
+  item: {
+    type: Object as PropType<CourseAttributes>,
+    required: true,
   },
   favorite: {
     type: Boolean,
