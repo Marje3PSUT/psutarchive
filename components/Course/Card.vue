@@ -3,43 +3,54 @@
     class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered"
     :class="`hover:bg-${item.category?.data.attributes.abbreviation} border-${item.category?.data.attributes.abbreviation}`"
   >
-    <div class="card-body">
-      <NuxtLink :to="$nuxt.$localePath(`/courses/${item.course_id}`)">
-        <h4 class="card-title">
-          {{
-            locale === 'ar' ?
-              item.name_ar
-              : item.name
-          }}
-        </h4>
-        <p>
-          {{
-            locale === 'ar' ?
-              item.category?.data.attributes.name_ar
-              : item.category?.data.attributes.name
-          }}
-        </p>
-        <p>{{ item.course_id }}</p>
-      </NuxtLink>
+    <div class="flex justify-between m-2 px-2">
+      <p class="text-xs">
+        {{ item.course_id }}
+      </p>
+      <Icon
+        name="ion:heart-outline"
+        class="cursor-pointer"
+        size="22"
+      />
     </div>
+    <NuxtLink
+      :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
+      class="card-body items-center"
+    >
+      <h4 class="card-title text-center -mt-5">
+        {{
+          locale === 'ar' ?
+            item.name_ar
+            : item.name
+        }}
+      </h4>
+      <div class="flex justify-between text-xs w-full mt-auto">
+        <p class="grow-0">
+          {{ $t('exams.name', item.exams?.data.length) }}
+        </p>
+        <p class="grow-0">
+          {{ $t('notes.name', item.notes?.data.length) }}
+        </p>
+      </div>
+    </NuxtLink>
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps({
-  item: {
-    type: Object as PropType<CourseAttributes>,
-    required: true,
-  },
-  favorite: {
-    type: Boolean,
-    required: false,
-    default: false
-  },
-  listView: {
-    type: Boolean,
-    required: false,
-    default: false
-  }
-})
+  const props = defineProps({
+    item: {
+      type: Object as PropType<CourseAttributes>,
+      required: true,
+    },
+    favorite: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    listView: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  })
 const { locale } = useI18n();
 </script>

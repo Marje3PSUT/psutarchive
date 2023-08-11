@@ -15,5 +15,11 @@
   },
   "about": {
     "title": "About Us"
+  },
+  "exams": {
+    "name": "no exams | 1 exam | {n} exams"
+  },
+  "notes": {
+    "name": "no notes | 1 note | {n} notes"
   }
 }

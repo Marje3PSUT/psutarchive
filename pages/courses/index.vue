@@ -10,7 +10,17 @@
   </div>
 </template>
 <script setup lang="ts">
+  import qs from 'qs'
+
+  const query = qs.stringify({
+    populate: [
+      'category',
+      'exams',
+      'notes'
+    ]
+  })
+
   const { data: courses, pending } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>
-  >(() => $baseApi("courses?populate=category"));
+  >(() => $baseApi(`courses?${query}`));
 </script>
