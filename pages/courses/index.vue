@@ -1,21 +1,16 @@
 <template>
   <div class="container mx-auto">
-    <SearchBar />
-    <CourseList :courses="state.courses" />
+    <List :pending="pending">
+      <CourseCard
+        v-for="item in courses?.data"
+        :key="item.id"
+        :item="item.attributes"
+      />
+    </List>
   </div>
 </template>
-<script setup>
-// TODO: use typescript to create a type for courses and exams
-// TODO: use a global state (pinia) to save fetched content to it
-const state = reactive({
-  courses: []
-})
-const { find } = useStrapi()
-console.log(useStrapiUrl()) // FIXME: Strapi can only read the URL in .env on the client side
-onMounted(async() => {
-  const courses = await find('courses', {
-    populate: 'Category'
-  });
-  state.courses = courses;
-})
+<script setup lang="ts">
+  const { data: courses, pending } = useLazyAsyncData<
+    StrapiResponse<CourseAttributes>
+  >(() => $baseApi("courses?populate=category"));
 </script>
