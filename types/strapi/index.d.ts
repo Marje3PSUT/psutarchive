@@ -10,7 +10,7 @@ declare global {
     attributes: T & {
       createdAt: Date;
       updatedAt: Date;
-      publishedAt?: Date;
+      publishedAt?: Date | null;
     };
   }
 

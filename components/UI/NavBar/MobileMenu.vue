@@ -5,7 +5,7 @@
       class="btn btn-ghost md:hidden p-0"
     >
       <Icon
-        name="solar:hamburger-menu-outline"
+        name="ion:menu"
         size="32"
       />
     </label>
@@ -41,7 +41,7 @@
 <style scoped lang="postcss"> 
   .menu {
     --tw-bg-opacity: 0.8;
-    @apply mt-2 p-2 w-60 -ms-48;
+    @apply mt-2 p-2 w-60 -ms-[12.5rem];
     @apply rounded-b-box border border-base-300 border-t-0;
     @apply shadow bg-base-200;
   }

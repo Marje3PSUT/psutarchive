@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxtjs/i18n", "nuxt-icon", "nuxt-api-party"],
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.css", "~/assets/css/typography.css"],
   postcss: {
     plugins: {
       'tailwindcss/nesting': {},

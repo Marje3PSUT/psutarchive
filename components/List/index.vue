@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- Heading -->
     <div class="flex justify-between items-center m-8">
       <h3
         v-if="props.heading"

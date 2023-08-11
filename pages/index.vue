@@ -20,7 +20,7 @@
         :class="`hover:bg-${cat.attributes.abbreviation} border-${cat.attributes.abbreviation}`"
         :to="`${localePath('/courses')}?cat=${cat.attributes.abbreviation.toLowerCase()}`"
       >
-        <div class="card-body p-4 font-bold justify-center">
+        <div class="card-body p-4 font-bold justify-center items-center text-center">
           {{ locale === "en" ? cat.attributes.name : cat.attributes.name_ar }}
         </div>
       </NuxtLink>
