@@ -45,3 +45,15 @@
 .border-ELECT {
   @apply border-course-cat-ELECT;
 }
+
+
+/* Transition Effects */
+/* Fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s linear;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0.5;
+}
