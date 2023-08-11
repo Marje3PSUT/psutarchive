@@ -4,7 +4,7 @@
     :class="`hover:bg-${item.category?.data.attributes.abbreviation} border-${item.category?.data.attributes.abbreviation}`"
   >
     <div class="card-body">
-      <NuxtLink :to="localePath(`/courses/${item.course_id}`)">
+      <NuxtLink :to="$nuxt.$localePath(`/courses/${item.course_id}`)">
         <h4 class="card-title">
           {{
             locale === 'ar' ?

@@ -8,7 +8,7 @@
       :heading="$t('home.categories.title')"
       class="mx-auto flex-row flex-wrap gap-4"
       :heading-link="{
-        to: localePath('/courses'),
+        to: $nuxt.$localePath('/courses'),
         text: $t('home.categories.all'),
         icon: true
       }"
@@ -18,7 +18,7 @@
         :key="cat.id"
         class="card max-h-24 shadow-xl border max-md:w-40"
         :class="`hover:bg-${cat.attributes.abbreviation} border-${cat.attributes.abbreviation}`"
-        :to="`${localePath('/courses')}?cat=${cat.attributes.abbreviation.toLowerCase()}`"
+        :to="$nuxt.$localePath({ name: 'courses', query: { category: cat.attributes.abbreviation.toLowerCase()}})"
       >
         <div class="card-body p-4 font-bold justify-center items-center text-center">
           {{ locale === "en" ? cat.attributes.name : cat.attributes.name_ar }}

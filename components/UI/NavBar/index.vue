@@ -3,7 +3,7 @@
     <div class="navbar-start">
       <NuxtLink
         class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
-        :to="localePath('/')"
+        :to="$nuxt.$localePath('/')"
       >
         {{ $t("psutarchive") }}
       </NuxtLink>
