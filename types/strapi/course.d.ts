@@ -6,13 +6,12 @@ declare global {
     recordings_url: string | null;
     related_courses?: RelationMulti<CourseAttributes>;
     category?: RelationSingle<CategoryAttributes>;
-    exams?: RelationMulti<ExamAttributes>;
-    notes?: RelationMulti<NoteAttributes>;
+    resources?: RelationMulti<ResourceAttributes>;
     alt_names?: AltName[];
-  }
-  interface AltName {
-    id: number;
-    name: string;
   }
 }
 export {};
+interface AltName {
+  id: number;
+  name: string;
+}
