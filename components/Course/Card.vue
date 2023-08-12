@@ -7,11 +7,13 @@
       <p class="text-xs">
         {{ item.course_id }}
       </p>
-      <Icon
-        name="ion:heart-outline"
-        class="cursor-pointer"
-        size="22"
-      />
+      <div :title="$t('courses.addToFavs')">
+        <Icon
+          name="ion:heart-outline"
+          class="cursor-pointer"
+          size="22"
+        />
+      </div>
     </div>
     <NuxtLink
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"

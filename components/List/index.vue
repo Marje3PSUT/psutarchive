@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- Heading -->
-    <div class="flex justify-between items-center m-8">
+    <div class="flex justify-between flex-wrap items-center m-8 max-sm:m-4">
       <h3
         v-if="props.heading"
       >

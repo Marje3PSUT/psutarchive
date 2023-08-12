@@ -8,7 +8,8 @@
     }
   },
   "courses": {
-    "title": "Courses"
+    "title": "Courses",
+    "addToFavs": "Add to my favourite courses"
   },
   "submit": {
     "title": "Submit Papers"
