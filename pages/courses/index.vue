@@ -15,8 +15,7 @@
   const query = qs.stringify({
     populate: [
       'category',
-      'exams',
-      'notes'
+      'resources'
     ]
   })
 

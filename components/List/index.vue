@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: add pagination -->
   <div class="container">
     <!-- Heading -->
     <div class="flex justify-between flex-wrap items-center m-8 max-sm:m-4">

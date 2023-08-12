@@ -28,10 +28,7 @@
       </h4>
       <div class="flex justify-between text-xs w-full mt-auto">
         <p class="grow-0">
-          {{ $t('exams.name', item.exams?.data.length) }}
-        </p>
-        <p class="grow-0">
-          {{ $t('notes.name', item.notes?.data.length) }}
+          {{ $t('papers.name', item.resources?.data.length) }}
         </p>
       </div>
     </NuxtLink>

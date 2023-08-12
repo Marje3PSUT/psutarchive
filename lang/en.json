@@ -22,5 +22,8 @@
   },
   "notes": {
     "name": "no notes | 1 note | {n} notes"
+  },
+  "papers": {
+    "name": "no papers | 1 paper | {n} papers"
   }
 }
