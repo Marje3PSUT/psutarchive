@@ -1,4 +1,5 @@
 <template>
+  <!-- FIXME: when we switch language, it should replace the route, not push to it -->
   <NuxtLink
     class="me-2"
     :to="locale === 'en' ? switchLocalePath('ar') : switchLocalePath('en')"

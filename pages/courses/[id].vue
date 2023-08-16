@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
     <List
-      :heading="course?.data.attributes.name + ' Resources'"
+      :heading="heading"
       :pending="pending"
       view="auto"
     >
@@ -20,6 +20,7 @@
     validate: async route => /^\d{5}$/.test(route.params.id.toString())
   })
 
+  const { locale, t } = useI18n()
   const urlId = ref(useRoute().params.id)
 
   // Filter courses from API by their course_id attribute
@@ -60,4 +61,11 @@
     }, {
     watch: [urlId],
   });
+
+  const heading = ref('')
+  watch(course, () => {
+    heading.value = locale.value === 'en' ?
+      `${course.value?.data.attributes.name} ${ t('material.resource.title', 2) }` :
+      `${ t('material.resource.title', 2)} ${course.value?.data.attributes.name_ar}`
+  })
 </script>

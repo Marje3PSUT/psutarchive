@@ -11,6 +11,42 @@
     "title": "Courses",
     "addToFavs": "Add to my favourite courses"
   },
+  "material": {
+    "files": "file | files",
+    "megabyte": "MB",
+    "semesters": {
+      "fall": "Fall",
+      "spring": "Spring",
+      "summer": "Summer"
+    },
+    "resource": {
+      "title": "Resource | Resources",
+      "type": {
+        "exam": "Exam",
+        "note": "Note"
+      },
+      "exam": {
+        "type": {
+          "first": "First",
+          "second": "Second",
+          "midterm": "Midterm",
+          "final": "Final",
+          "quiz": "Quiz"
+        },
+        "solved": "Solved"
+      },
+      "note": {
+        "type": {
+          "lecture": "Lecture",
+          "summary": "Summary",
+          "reference": "Reference",
+          "practice": "Practice",
+          "review": "Review",
+          "other": "Other"
+        }
+      }
+    }
+  },
   "submit": {
     "title": "Submit Papers"
   },
@@ -25,5 +61,8 @@
   },
   "papers": {
     "name": "no papers | 1 paper | {n} papers"
+  },
+  "misc": {
+    "by": "by"
   }
 }

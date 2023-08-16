@@ -4,13 +4,13 @@
   >
     <div class="flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="capitalize text-lg font-bold">
-        {{ item.type }} -
+        {{ $t(`material.resource.type.${item.type.toLowerCase()}`) }} -
         <span class="text-secondary-focus">
-          {{ item.material[0].type }}
+          {{ $t(`material.resource.${item.type.toLowerCase()}.type.${item.material[0].type}`) }}
         </span>
       </div>
       <div v-if="item.metadata">
-        {{ item.metadata.semester }} -
+        {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
         <span class="text-secondary font-semibold">
           {{ item.metadata.year }}
         </span>
@@ -19,13 +19,11 @@
         v-if="item.metadata?.uploader?.name"
         class="text-xs opacity-50"
       >
-        <!-- TODO: translation -->
-        by {{ item.metadata.uploader.name }}
+        {{ $t('misc.by') }} {{ item.metadata.uploader.name }}
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <!-- TODO: translation -->
-      <span class="font-normal">{{ item.files?.data.length }} files</span>
+      <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
       <div class="flex gap-2">
         <div
           v-for="file in item.files?.data"
@@ -43,8 +41,8 @@
               name="solar:download-minimalistic-linear"
               size="36"
             />
-            <!-- TODO: translation -->
-            {{ (file.attributes.size / 1024).toFixed(1) }} MB
+            <!-- FIXME: add an arabic font with light / extralight variants -->
+            {{ (file.attributes.size / 1024).toFixed(1) }} {{ $t('material.megabyte') }}
           </NuxtLink>
         </div>
       </div>
@@ -53,7 +51,7 @@
       v-if="item.type === 'exam' && item.material[0].is_solved"
       class="indicator-item indicator-middle badge badge-secondary uppercase font-bold"
       :class="locale === 'en' ? 'indicator-start -rotate-90' : 'indicator-end rotate-90'"
-    >{{ locale === 'en' ? 'solved' : 'مع الحل' }}</span>
+    >{{ $t('material.resource.exam.solved') }}</span>
   </div>
 </template>
 <script setup lang="ts">
