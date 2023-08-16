@@ -16,7 +16,7 @@ h2 {
 
 /* h3 */
 h3 {
-  @apply text-2xl;
+  @apply text-2xl font-semibold;
 }
 
 /* h4 */

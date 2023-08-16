@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.container {
+  @apply px-4 md:px-8;
+}
+
 /* Background colors and hovers for course categories */
 
 .bg-IT, .hover\:bg-IT:hover {

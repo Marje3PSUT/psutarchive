@@ -53,3 +53,8 @@
   })
 const { locale } = useI18n();
 </script>
+<style scoped lang="postcss">
+  .card {
+    --tw-border-opacity: 0.7;
+  }
+</style>

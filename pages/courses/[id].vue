@@ -1,15 +1,17 @@
 <template>
-  <List
-    :heading="course?.data.attributes.name + ' Resources'"
-    :pending="pending"
-    view="flex"
-  >
-    <MaterialCard
-      v-for="item in course?.data.attributes.resources?.data"
-      :key="item.id"
-      :item="item.attributes"
-    />
-  </List>
+  <div class="container mx-auto">
+    <List
+      :heading="course?.data.attributes.name + ' Resources'"
+      :pending="pending"
+      view="auto"
+    >
+      <MaterialCard
+        v-for="item in course?.data.attributes.resources?.data"
+        :key="item.id"
+        :item="item.attributes"
+      />
+    </List>
+  </div>
 </template>
 <script setup lang="ts">
   import qs from 'qs'
