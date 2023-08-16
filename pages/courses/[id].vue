@@ -42,6 +42,7 @@
     populate: [
       'category',
       'resources.metadata',
+      'resources.metadata.uploader',
       'resources.files',
       'resources.material',
     ],
