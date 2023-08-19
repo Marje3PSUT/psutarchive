@@ -8,6 +8,8 @@ declare global {
     url: string;
     hash: string;
     blurhash: string;
+    provider: string;
+    provider_metadata: object | null;
     width: number;
     height: number;
     size: number;

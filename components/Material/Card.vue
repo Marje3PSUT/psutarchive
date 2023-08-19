@@ -58,13 +58,25 @@
   )
 
   const download = async () => {
+    const files = props.item.files?.data
+
+    // If there's only one file, download it directly
+    if (files?.length === 1) {
+      const baseUrl = ref('')
+      if (files[0].attributes.provider === 'local') {
+        const { data } = (await useFetch('/api/apiUrl'))
+        baseUrl.value = String(data.value)
+      }      
+      return navigateTo(baseUrl.value.replace('/api', '') + files[0].attributes.url, {external: true})
+    }
+
     // get urls of files
-    const filesUrls = ref(props.item.files?.data.map(f => f.attributes.url))
+    const urls = ref(files?.map(f => f.attributes.url))
     // zip files together
-    const {data} = await useFetch('/api/zipFiles', {
+    const { data } = await useFetch('/api/zipFiles', {
       method: 'POST',
       body: {
-        files: filesUrls.value,
+        files: urls.value,
       }
     })
     const file = new File([data.value], 'files.zip', { type: 'application/zip'});
