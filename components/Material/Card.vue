@@ -46,6 +46,11 @@
     item: {
       type: Object as PropType<ResourceAttributes>,
       required: true,
+    },
+    courseId: {
+      type: String,
+      required: false,
+      default: ''
     }
   })
   const { locale } = useI18n()
@@ -79,7 +84,8 @@
         files: urls.value,
       }
     })
-    const file = new File([data.value], 'files.zip', { type: 'application/zip'});
+    const fileName = `PSUTArchive-${props.courseId}-${props.item.material[0].type}_${props.item.type}-${props.item.metadata?.semester?.toLowerCase()}_${props.item.metadata?.year}.zip`
+    const file = new File([data.value], fileName , { type: 'application/zip'});
     const downloadLink = window.URL.createObjectURL(file);    
     navigateTo(downloadLink, {external: true})
   }

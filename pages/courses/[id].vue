@@ -9,6 +9,7 @@
         v-for="item in course?.data.attributes.resources?.data"
         :key="item.id"
         :item="item.attributes"
+        :course-id="course?.data.attributes.course_id"
       />
     </List>
   </div>
