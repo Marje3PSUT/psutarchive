@@ -26,14 +26,13 @@
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
       <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
-      <div class="flex gap-2">
-        <Icon
-          name="solar:download-minimalistic-linear"
-          size="36"
-          class="cursor-pointer hover:text-accent transition-[200ms]"
-          @click="download()"
-        />
-      </div>
+      <Icon
+        name="solar:download-minimalistic-linear"
+        size="36"
+        class="cursor-pointer hover:text-accent transition-[200ms]"
+        @click="download()"
+      />
+      <span> {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }} {{ $t('material.megabyte') }} </span>
     </div>
     <span
       v-if="item.type === 'exam' && item.material[0].is_solved"
@@ -50,6 +49,13 @@
     }
   })
   const { locale } = useI18n()
+
+  // get total size of all files of this resource
+  const totalSize = ref(
+    props.item.files?.data
+      .reduce<number>(
+        (sum: number, curr: StrapiItem<MediaAttributes>) => (sum + curr.attributes.size), 0)
+  )
 
   const download = async () => {
     // get urls of files
