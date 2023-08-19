@@ -27,10 +27,15 @@
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
       <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
       <Icon
+        v-if="!loading"
         name="solar:download-minimalistic-linear"
         size="36"
         class="cursor-pointer hover:text-accent transition-[200ms]"
         @click="download()"
+      />
+      <span
+        v-else
+        class="loading loading-spinner loading-lg text-accent"
       />
       <span> {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }} {{ $t('material.megabyte') }} </span>
     </div>
@@ -54,6 +59,7 @@
     }
   })
   const { locale } = useI18n()
+  const loading = ref(false)
 
   // get total size of all files of this resource
   const totalSize = ref(
@@ -63,6 +69,7 @@
   )
 
   const download = async () => {
+    loading.value = true
     const files = props.item.files?.data
 
     // If there's only one file, download it directly
@@ -82,8 +89,9 @@
       method: 'POST',
       body: {
         files: urls.value,
-      }
+      },
     })
+    loading.value = false
     const fileName = `PSUTArchive-${props.courseId}-${props.item.material[0].type}_${props.item.type}-${props.item.metadata?.semester?.toLowerCase()}_${props.item.metadata?.year}.zip`
     const file = new File([data.value], fileName , { type: 'application/zip'});
     const downloadLink = window.URL.createObjectURL(file);    
