@@ -1,5 +1,6 @@
 {
-  "name": "nuxt-app",
+  "name": "psut-archive",
+  "version": "0.2.0-prototype",
   "private": true,
   "scripts": {
     "build": "nuxt build",
