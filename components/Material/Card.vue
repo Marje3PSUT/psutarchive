@@ -72,7 +72,7 @@
         const { data } = (await useFetch('/api/apiUrl'))
         baseUrl.value = String(data.value)
       }      
-      return navigateTo(baseUrl.value.replace('/api', '') + files[0].attributes.url, {external: true})
+      return navigateTo(baseUrl.value.substring(0, baseUrl.value.lastIndexOf('/api')) + files[0].attributes.url, {external: true})
     }
 
     // get urls of files
