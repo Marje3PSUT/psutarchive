@@ -1,0 +1,69 @@
+{
+  "psutarchive": "PSUT Archive",
+  "search": "Search courses",
+  "home": {
+    "categories": {
+      "title": "Categories",
+      "all": "All Courses"
+    }
+  },
+  "courses": {
+    "title": "Courses",
+    "addToFavs": "Add to my favourite courses"
+  },
+  "material": {
+    "files": "file | files",
+    "megabyte": "MB",
+    "semesters": {
+      "fall": "Fall",
+      "spring": "Spring",
+      "summer": "Summer"
+    },
+    "resource": {
+      "title": "Resource | Resources",
+      "type": {
+        "exam": "Exam",
+        "note": "Note"
+      },
+      "exam": {
+        "type": {
+          "first": "First",
+          "second": "Second",
+          "midterm": "Midterm",
+          "final": "Final",
+          "quiz": "Quiz"
+        },
+        "solved": "Solved"
+      },
+      "note": {
+        "type": {
+          "lecture": "Lecture",
+          "summary": "Summary",
+          "slides": "Slides",
+          "reference": "Reference",
+          "practice": "Practice",
+          "review": "Review",
+          "other": "Other"
+        }
+      }
+    }
+  },
+  "submit": {
+    "title": "Submit Papers"
+  },
+  "about": {
+    "title": "About Us"
+  },
+  "exams": {
+    "name": "no exams | 1 exam | {n} exams"
+  },
+  "notes": {
+    "name": "no notes | 1 note | {n} notes"
+  },
+  "papers": {
+    "name": "no papers | 1 paper | {n} papers"
+  },
+  "misc": {
+    "by": "by"
+  }
+}

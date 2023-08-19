@@ -1,21 +1,39 @@
 {
-  "name": "nuxt-app",
+  "name": "psut-archive",
+  "version": "0.2.0-prototype",
   "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lintfix": "prettier --write --list-different . && lint --fix"
   },
   "devDependencies": {
-    "@types/node": "^18",
+    "@nuxt/devtools": "^0.8.0",
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/types": "^2.17.1",
+    "@nuxtjs/i18n": "^8.0.0-beta.11",
+    "@types/node": "^20.4.10",
+    "@types/qs": "^6.9.7",
     "autoprefixer": "^10.4.14",
-    "nuxt": "^3.4.2",
-    "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.1"
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "nuxt": "^3.6.5",
+    "nuxt-api-party": "^0.13.0",
+    "nuxt-icon": "^0.5.0",
+    "postcss": "^8.4.27",
+    "prettier": "^3.0.1",
+    "tailwindcss": "^3.3.3",
+    "tailwindcss-flip": "^1.0.0",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "daisyui": "^2.51.5"
+    "daisyui": "^3.5.1",
+    "jszip": "^3.10.1",
+    "qs": "^6.11.2"
   }
 }

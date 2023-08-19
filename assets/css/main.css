@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container {
+  @apply px-4 md:px-8;
+}
+
+/* Background colors and hovers for course categories */
+
+.bg-IT, .hover\:bg-IT:hover {
+  @apply bg-course-cat-IT;
+}
+.bg-ENG, .hover\:bg-ENG:hover {
+  @apply bg-course-cat-ENG;
+}
+.bg-MATH, .hover\:bg-MATH:hover {
+  @apply bg-course-cat-MATH;
+}
+.bg-BIZ, .hover\:bg-BIZ:hover {
+  @apply bg-course-cat-BIZ;
+}
+.bg-ELECT, .hover\:bg-ELECT:hover {
+  @apply bg-course-cat-ELECT;
+}
+.hover\:bg-IT:hover,
+.hover\:bg-ENG:hover,
+.hover\:bg-MATH:hover,
+.hover\:bg-BIZ:hover,
+.hover\:bg-ELECT:hover {
+  --tw-bg-opacity: 0.3;
+  transition: background-color 0.3s ease-out;
+  -webkit-transition: background-color 0.3s ease-out;
+}
+
+/* Border colors for course categories */
+.border-IT {
+  @apply border-course-cat-IT;
+}
+.border-ENG {
+  @apply border-course-cat-ENG;
+}
+.border-MATH {
+  @apply border-course-cat-MATH;
+}
+.border-BIZ {
+  @apply border-course-cat-BIZ;
+}
+.border-ELECT {
+  @apply border-course-cat-ELECT;
+}
+
+
+/* Transition Effects */
+/* Fade */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s linear;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0.5;
+}

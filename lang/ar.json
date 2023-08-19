@@ -1,0 +1,69 @@
+{
+  "psutarchive": "PSUT Archive",
+  "search": "ابحث في المواد",
+  "home": {
+    "categories": {
+      "title": "الأقسام",
+      "all": "جميع المواد"
+    }
+  },
+  "courses": {
+    "title": "المواد",
+    "addToFavs": "أضف إلى موادي المفضلة"
+  },
+  "material": {
+    "files": "ملف | ملفات",
+    "megabyte": "ميغابايت",
+    "semesters": {
+      "fall": "الفصل الأول",
+      "spring": "الفصل الثاني",
+      "summer": "الفصل الصيفي"
+    },
+    "resource": {
+      "title": "ورقة | أوراق",
+      "type": {
+        "exam": "امتحان",
+        "note": "ملاحظات"
+      },
+      "exam": {
+        "type": {
+          "first": "أول",
+          "second": "ثاني",
+          "midterm": "منتصف الفصل",
+          "final": "نهائي",
+          "quiz": "اختبار قصير"
+        },
+        "solved": "مع الحل"
+      },
+      "note": {
+        "type": {
+          "lecture": "محاضرة",
+          "summary": "ملخص",
+          "slides": "شرائج",
+          "reference": "مراجع",
+          "practice": "تمارين",
+          "review": "مراجعة",
+          "other": "أخرى"
+        }
+      }
+    }
+  },
+  "submit": {
+    "title": "أرسل مواد"
+  },
+  "about": {
+    "title": "عنا"
+  },
+  "exams": {
+    "name": "لا يوجد اختبارات | اختبار واحد | {n} اختبار"
+  },
+  "notes": {
+    "name": "لا يوجد ملاحظات | ملاحظة واحدة | {n} ملاحظة"
+  },
+  "papers": {
+    "name": "لا يوجد أوراق سابقة | ورقة واحدة | {n} أوراق سابقة"
+  },
+  "misc": {
+    "by": "بواسطة"
+  }
+}
