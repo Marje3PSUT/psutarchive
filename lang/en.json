@@ -39,6 +39,7 @@
         "type": {
           "lecture": "Lecture",
           "summary": "Summary",
+          "slides": "Slides",
           "reference": "Reference",
           "practice": "Practice",
           "review": "Review",
