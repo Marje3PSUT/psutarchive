@@ -1,4 +1,6 @@
 <template>
+  <!-- FIXME: make font a bit smaller on smaller screen -->
+  <!-- FIXME: add an arabic font with light / extralight variants -->
   <div
     class="card card-compact indicator"
   >
@@ -25,26 +27,12 @@
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
       <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
       <div class="flex gap-2">
-        <div
-          v-for="file in item.files?.data"
-          :key="file.id"
-          :title="file.attributes.name"
-        >
-          <!-- FIXME: remove hardcoded api link, proxy the request to the server side -->
-          <!-- TODO[idea]: If there's more than one file, zip them in the server side and return them to the client -->
-          <NuxtLink
-            :to="'http://localhost:1337' + file.attributes.url"
-            target="_blank"
-            class="flex flex-col items-center gap-y-2 hover:text-accent transition-[200ms]"
-          >
-            <Icon
-              name="solar:download-minimalistic-linear"
-              size="36"
-            />
-            <!-- FIXME: add an arabic font with light / extralight variants -->
-            {{ (file.attributes.size / 1024).toFixed(1) }} {{ $t('material.megabyte') }}
-          </NuxtLink>
-        </div>
+        <Icon
+          name="solar:download-minimalistic-linear"
+          size="36"
+          class="cursor-pointer hover:text-accent transition-[200ms]"
+          @click="download()"
+        />
       </div>
     </div>
     <span
@@ -55,13 +43,28 @@
   </div>
 </template>
 <script setup lang="ts">
-  defineProps({
+  const props = defineProps({
     item: {
       type: Object as PropType<ResourceAttributes>,
       required: true,
     }
   })
   const { locale } = useI18n()
+
+  const download = async () => {
+    // get urls of files
+    const filesUrls = ref(props.item.files?.data.map(f => f.attributes.url))
+    // zip files together
+    const {data} = await useFetch('/api/zipFiles', {
+      method: 'POST',
+      body: {
+        files: filesUrls.value,
+      }
+    })
+    const file = new File([data.value], 'files.zip', { type: 'application/zip'});
+    const downloadLink = window.URL.createObjectURL(file);    
+    navigateTo(downloadLink, {external: true})
+  }
 </script>
 <style scoped lang="postcss">
   .card {
