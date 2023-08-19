@@ -10,7 +10,7 @@
       <div :title="$t('courses.addToFavs')">
         <Icon
           name="ion:heart-outline"
-          class="cursor-pointer"
+          class="cursor-pointer hover:scale-110 transition-all"
           size="22"
         />
       </div>
