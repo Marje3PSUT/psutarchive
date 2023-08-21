@@ -63,10 +63,9 @@
     watch: [urlId],
   });
 
-  const heading = ref('')
-  watch(course, () => {
-    heading.value = locale.value === 'en' ?
-      `${course.value?.data.attributes.name} ${ t('material.resource.title', 2) }` :
-      `${ t('material.resource.title', 2)} ${course.value?.data.attributes.name_ar}`
-  })
+  const heading = computed<string>(
+    () =>locale.value === 'en' ?
+        `${course.value?.data.attributes.name} ${ t('material.resource.title', 2) }`
+        : `${ t('material.resource.title', 2)} ${course.value?.data.attributes.name_ar}`
+    )
 </script>
