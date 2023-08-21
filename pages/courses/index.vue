@@ -11,13 +11,21 @@
 </template>
 <script setup lang="ts">
   import qs from 'qs'
+  const route = useRoute()
 
   const query = qs.stringify({
     populate: [
       'category',
       'resources'
-    ]
-  })
+    ],
+    filters: {
+      category: {
+        slug: {
+          $eqi: route.query.category ? route.query.category : undefined
+        }
+      }
+    },
+  }, { encodeValuesOnly: true })
 
   const { data: courses, pending } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>

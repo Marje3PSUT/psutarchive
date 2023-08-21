@@ -17,8 +17,8 @@
         v-for="cat in categories?.data"
         :key="cat.id"
         class="card max-h-24 shadow-xl border max-md:w-40"
-        :class="`hover:bg-${cat.attributes.abbreviation} border-${cat.attributes.abbreviation}`"
-        :to="$nuxt.$localePath({ name: 'courses', query: { category: cat.attributes.abbreviation.toLowerCase()}})"
+        :class="`hover:bg-${cat.attributes.slug.toUpperCase()} border-${cat.attributes.slug.toUpperCase()}`"
+        :to="$nuxt.$localePath({ name: 'courses', query: { category: cat.attributes.slug.toLowerCase()}})"
       >
         <div class="card-body p-4 font-bold justify-center items-center text-center">
           {{ locale === "en" ? cat.attributes.name : cat.attributes.name_ar }}

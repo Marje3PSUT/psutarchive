@@ -2,7 +2,7 @@ declare global {
   interface CategoryAttributes {
     name: string;
     name_ar: string;
-    abbreviation: string;
+    slug: string;
     courses?: RelationMulti<CourseAttributes>;
   }
 }

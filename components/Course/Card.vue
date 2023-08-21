@@ -1,7 +1,7 @@
 <template>
   <div
     class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered"
-    :class="`hover:bg-${item.category?.data.attributes.abbreviation} border-${item.category?.data.attributes.abbreviation}`"
+    :class="`hover:bg-${item.category?.data.attributes.slug.toUpperCase()} border-${item.category?.data.attributes.slug.toUpperCase()}`"
   >
     <div class="flex justify-between m-2 px-2">
       <p class="text-xs">
@@ -35,7 +35,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  const props = defineProps({
+  defineProps({
     item: {
       type: Object as PropType<CourseAttributes>,
       required: true,
