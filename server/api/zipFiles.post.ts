@@ -1,4 +1,5 @@
 import JSZip from "jszip"
+import { fileTypeFromBuffer } from 'file-type'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -6,6 +7,29 @@ export default defineEventHandler(async (event) => {
   const apiUrl  = config.apiParty.endpoints.baseApi.url
 
   const files: string[] = body.files;
+
+  // Return the file without zipping if it's a single file
+  if (files.length === 1) {
+    const file = Buffer.from(await fetch(
+      apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + files[0])
+      .then(
+        res => res.arrayBuffer()
+      )
+    )
+    const fileType = await fileTypeFromBuffer(Buffer.from(file))
+    const responseHeaders = {
+      'Content-Disposition': `attachment; filename="${
+        files[0].substring(
+          files[0].lastIndexOf('/') + 1,
+          files[0].lastIndexOf('_')
+        )}.${fileType?.ext}"`,
+      'Content-Type': fileType?.mime as string,
+      'File-Extension': fileType?.ext as string
+    };
+    setResponseHeaders(event, responseHeaders)
+    return file
+  }
+
   const zip = new JSZip();
 
   // TODO: Error handling with h3 errors
@@ -18,7 +42,8 @@ export default defineEventHandler(async (event) => {
 
   const responseHeaders = {
     'Content-Disposition': 'attachment; filename="files.zip"',
-    'Content-Type': 'application/zip'
+    'Content-Type': 'application/zip',
+    'File-Extension': 'zip'
   };
   setResponseHeaders(event, responseHeaders)
   try {

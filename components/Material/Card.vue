@@ -74,29 +74,40 @@
     loading.value = true
     const files = props.item.files?.data
 
-    // If there's only one file, download it directly
-    if (files?.length === 1) {
-      const baseUrl = ref('')
-      if (files[0].attributes.provider === 'local') {
-        const { data } = (await useFetch('/api/apiUrl'))
-        baseUrl.value = String(data.value)
-      }      
-      return navigateTo(baseUrl.value.substring(0, baseUrl.value.lastIndexOf('/api')) + files[0].attributes.url, {external: true})
-    }
-
     // get urls of files
     const urls = ref(files?.map(f => f.attributes.url))
-    // zip files together
+
+    const fileExt = ref('')
+    const fileType = ref('')
+
     const { data } = await useFetch('/api/zipFiles', {
       method: 'POST',
       body: {
         files: urls.value,
       },
+      onResponse({ response }) {
+        const ext: string | null = response.headers.get('file-extension')
+        fileExt.value = ext ? `.${ext}` : ''
+        fileType.value = response.headers.get('content-type') as string
+      }
     })
+    const fileName = [
+      'PSUTArchive',
+      `${props.courseId}`,
+      [
+        props.item.material[0].type ? props.item.material[0].type : null,
+        props.item.type ? props.item.type : null
+      ].filter(Boolean).join('-'),
+      [
+        props.item.metadata?.semester? props.item.metadata?.semester?.toLowerCase() : null,
+        props.item.metadata?.year
+      ].filter(Boolean).join('-')
+    ].join('.')
+
+    const file = new File([data.value], `${fileName}${fileExt.value}` , { type: fileType.value});
+    const downloadLink = window.URL.createObjectURL(file);
+
     loading.value = false
-    const fileName = `PSUTArchive-${props.courseId}-${props.item.material[0].type}_${props.item.type}-${props.item.metadata?.semester?.toLowerCase()}_${props.item.metadata?.year}.zip`
-    const file = new File([data.value], fileName , { type: 'application/zip'});
-    const downloadLink = window.URL.createObjectURL(file);    
     navigateTo(downloadLink, {external: true})
   }
 </script>
