@@ -7,6 +7,7 @@
     <NuxtLoadingIndicator />
     <UINavBar />
     <slot />
+    <LazyDevDeployInfo v-if="config.public.env === 'dev' " />
   </div>
 </template>
 <script setup>
@@ -14,6 +15,7 @@
     addDirAttribute: true,
     addSeoAttributes: true,
   })
+  const config = useRuntimeConfig()
 </script>
 <style>
   html, body, #__nuxt, #__nuxt > div {

@@ -41,4 +41,13 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig:{
+    public: {
+      buildCommitSha: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_SHA,
+      buildCommitMessage: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_MESSAGE,
+      buildCommitBranch: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_REF,
+      repoUrl: '',
+      env: 'dev'
+    }
+  }
 });
