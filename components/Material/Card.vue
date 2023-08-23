@@ -12,7 +12,9 @@
         </span>
       </div>
       <div v-if="item.metadata">
-        {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+        <span v-if="item.metadata.semester">
+          {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+        </span>
         <span class="text-secondary font-semibold">
           {{ item.metadata.year }}
         </span>
