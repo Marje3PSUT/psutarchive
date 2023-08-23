@@ -31,5 +31,5 @@
   const { locale } = useI18n();
   const { data: categories, pending } = useLazyAsyncData<
     StrapiResponse<CategoryAttributes>
-  >(() => $baseApi("categories"));
+  >(() => $baseApi("categories", { cache: true }));
 </script>

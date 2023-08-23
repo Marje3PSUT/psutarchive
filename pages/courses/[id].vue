@@ -33,9 +33,7 @@
     }
   }, { encodeValuesOnly: true })
   const { data: courses } = await  useAsyncData<StrapiResponse<CourseAttributes>>(
-    async () => await $baseApi(`courses?${filterQuery}`), {
-      watch: [urlId]
-  });
+    async () => await $baseApi(`courses?${filterQuery}`, { cache: true }));
 
 
   // Get and populate the course attributes using its API ID
@@ -58,10 +56,9 @@
           statusMessage: `Course #${urlId.value} not found.`,
         })
       }
-      return await $baseApi(`courses/${id}?${query}`)
-    }, {
-    watch: [urlId],
-  });
+      return await $baseApi(`courses/${id}?${query}`, {cache: true})
+    },
+  );
 
   const heading = computed<string>(
     () =>locale.value === 'en' ?

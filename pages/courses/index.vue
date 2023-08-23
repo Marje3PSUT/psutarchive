@@ -29,5 +29,5 @@
 
   const { data: courses, pending } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>
-  >(() => $baseApi(`courses?${query}`));
+  >(() => $baseApi(`courses?${query}`, { cache: true }));
 </script>
