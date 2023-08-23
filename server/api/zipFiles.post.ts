@@ -8,46 +8,48 @@ export default defineEventHandler(async (event) => {
 
   const files: string[] = body.files;
 
-  // Return the file without zipping if it's a single file
-  if (files.length === 1) {
-    const file = Buffer.from(await fetch(
-      apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + files[0])
-      .then(
-        res => res.arrayBuffer()
-      )
-    )
-    const fileType = await fileTypeFromBuffer(Buffer.from(file))
-    const responseHeaders = {
-      'Content-Disposition': `attachment; filename="${
-        files[0].substring(
-          files[0].lastIndexOf('/') + 1,
-          files[0].lastIndexOf('_')
-        )}.${fileType?.ext}"`,
-      'Content-Type': fileType?.mime as string,
-      'File-Extension': fileType?.ext as string
-    };
-    setResponseHeaders(event, responseHeaders)
-    return file
+  const zip = new JSZip()
+  let fileType
+  const responseHeaders = {
+    'Content-Disposition': '',
+    'Content-Type': '',
+    'File-Extension': ''
   }
-
-  const zip = new JSZip();
 
   // TODO: Error handling with h3 errors
   // Add each file to the zip file
   for (const fileUrl of files) {
-    const file = await fetch(apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + fileUrl).then(res => res.arrayBuffer())
-    zip.file(fileUrl.substring(fileUrl.lastIndexOf('/') + 1), Buffer.from(file))
+    const file = Buffer.from(await $fetch(
+        apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + fileUrl
+      , {cache: "default"}).then(res => res.arrayBuffer())
+    )
+    const fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.lastIndexOf('_'))
+    if (files.length === 1) {
+      // Return the file without zipping if it's a single file
+      fileType = await fileTypeFromBuffer(file)
+      responseHeaders['Content-Disposition'] = `attachment; filename="${fileName}.${fileType?.ext}"`
+      responseHeaders['Content-Type'] = fileType?.mime as string
+      responseHeaders['File-Extension'] = fileType?.ext as string
+      setResponseHeaders(event, responseHeaders)
+      try {
+        return file
+      } catch(err) {
+        console.error(err)
+      }
+    }
+    zip.file(`${fileName}.${fileUrl.substring(fileUrl.lastIndexOf('.') + 1)}`, file)
   }
+  
+  const zipFile = await zip.generateAsync({type: 'uint8array'})
+  fileType = await fileTypeFromBuffer(Buffer.from(zipFile))
 
-
-  const responseHeaders = {
-    'Content-Disposition': 'attachment; filename="files.zip"',
-    'Content-Type': 'application/zip',
-    'File-Extension': 'zip'
-  };
+  responseHeaders['Content-Disposition'] = 'attachment; filename="files.zip"'
+  responseHeaders['Content-Type'] = fileType?.mime as string
+  responseHeaders['File-Extension'] = fileType?.ext as string
   setResponseHeaders(event, responseHeaders)
+  
   try {
-    return zip.generateAsync({type : "uint8array"})
+    return zipFile
   } catch (err) {
     console.error(err)
   }
