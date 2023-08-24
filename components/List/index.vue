@@ -2,7 +2,10 @@
   <!-- TODO: add pagination -->
   <div class="container">
     <!-- Heading -->
-    <div class="flex justify-between flex-wrap items-center m-8 max-sm:m-4">
+    <div
+      v-if="heading || headingLink"
+      class="flex justify-between flex-wrap items-center m-8 max-sm:m-4"
+    >
       <h3
         v-if="props.heading"
       >
@@ -124,7 +127,7 @@
   }
   .list.view-auto {
     /* Always list / full-width view on mobile */
-    @apply max-sm:flex md:grid;
+    @apply max-sm:flex sm:grid;
   }
   .list {
     transition: all 0.25s linear;

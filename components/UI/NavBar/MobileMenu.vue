@@ -37,12 +37,14 @@
     </ul>
   </div>
 </template>
-<script setup></script>
+<script setup>
+  const localePath = useLocalePath()
+</script>
 <style scoped lang="postcss"> 
   .menu {
     --tw-bg-opacity: 0.8;
     @apply mt-2 p-2 w-60 -ms-[12.5rem];
-    @apply rounded-b-box border border-base-300 border-t-0;
+    @apply rounded-b-box ltr:rounded-br-none rtl:rounded-bl-none border border-base-300 border-t-0;
     @apply shadow bg-base-200;
   }
   ul li {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card card-compact w-full max-h-32 bg-base-100 shadow-xl card-bordered"
+    class="card card-compact w-full max-sm:h-24 max-h-32 bg-base-100 shadow-xl card-bordered"
     :class="`hover:bg-${item.category?.data.attributes.slug.toUpperCase()} border-${item.category?.data.attributes.slug.toUpperCase()}`"
   >
     <div class="flex justify-between m-2 px-2">
@@ -19,7 +19,7 @@
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
       class="card-body items-center"
     >
-      <h4 class="card-title text-center -mt-5">
+      <h4 class="card-title text-lg max-sm:text-sm text-center -mt-5 line-clamp-1">
         {{
           locale === 'ar' ?
             item.name_ar

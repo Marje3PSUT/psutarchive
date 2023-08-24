@@ -7,6 +7,7 @@
       :to="`${config.public.repoUrl}/commits/${config.public.buildCommitBranch}`"
       :title="config.public.buildCommitMessage"
       class="link hover:text-primary"
+      target="_blank"
     >
       {{ config.public.buildCommitSha ? config.public.buildCommitSha.slice(0, 7) : 'commits' }}
     </NuxtLink>
