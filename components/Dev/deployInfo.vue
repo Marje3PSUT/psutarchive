@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  const {data: version} = await useFetch('/api/getVersion')
+  const { data: version } = await useFetch('/api/version')
   const config = useRuntimeConfig()
 </script>
 <style scoped lang="postcss">
