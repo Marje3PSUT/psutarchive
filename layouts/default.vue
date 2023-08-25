@@ -18,7 +18,7 @@
   const config = useRuntimeConfig()
 </script>
 <style>
-  html, body, #__nuxt, #__nuxt > div {
-    height: 100%;
+  body, #__nuxt, #__layout, #__nuxt > div {
+    @apply min-h-screen h-full w-full;
   }
 </style>
