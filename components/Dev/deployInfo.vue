@@ -1,27 +1,41 @@
 <template>
-  <div class="deploy-info-container">
-    <div>
-      v{{ version }}
+  <div
+    v-if="open"
+    class="deploy-info-container"
+    dir="ltr"
+  >
+    <div class="ms-auto">
+      Development v{{ version }}
     </div>
-    <NuxtLink
-      :to="`${config.public.repoUrl}/commits/${config.public.buildCommitBranch}`"
-      :title="config.public.buildCommitMessage"
-      class="link hover:text-primary"
-      target="_blank"
+    <span class="mx-2">•</span>
+    <p class="me-auto">
+      Last update:
+      <NuxtLink
+        :to="`${config.public.repoUrl}/commits/${config.public.buildCommitBranch}`"
+        :title="config.public.buildCommitMessage"
+        class="link hover:text-primary"
+        target="_blank"
+      >
+        {{ config.public.buildCommitSha ? config.public.buildCommitSha.slice(0, 7) : 'commits' }}
+      </NuxtLink>
+    </p>
+    <button
+      title="close banner"
+      class="cursor-pointer hover:text-primary"
+      @click="open = false"
     >
-      {{ config.public.buildCommitSha ? config.public.buildCommitSha.slice(0, 7) : 'commits' }}
-    </NuxtLink>
+      [x]
+    </button>
   </div>
 </template>
 <script setup lang="ts">
   const { data: version } = await useFetch('/api/version')
   const config = useRuntimeConfig()
+  const open = ref(true)
 </script>
 <style scoped lang="postcss">
   .deploy-info-container {
-    @apply flex flex-col justify-center items-center gap-2;
-    @apply p-2 mx-auto absolute bottom-5 right-0 left-0 w-72;
-    @apply rounded-xl bg-neutral font-mono text-[white];
-    --tw-bg-opacity: 0.4;
+    @apply flex flex-row justify-center items-center gap-x-2 p-1;
+    @apply bg-neutral font-mono text-[white];
   } 
 </style>

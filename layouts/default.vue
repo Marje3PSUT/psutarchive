@@ -4,10 +4,10 @@
     :dir="head.htmlAttrs.dir"
     :lang="head.htmlAttrs.lang"
   >
+    <LazyDevDeployInfo v-if="config.public.env === 'dev'" />
     <NuxtLoadingIndicator />
     <UINavBar />
     <slot />
-    <LazyDevDeployInfo v-if="config.public.env === 'dev' " />
   </div>
 </template>
 <script setup>
