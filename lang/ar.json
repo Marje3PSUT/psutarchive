@@ -1,6 +1,5 @@
 {
-  "psutarchive": "PSUT Archive",
-  "search": "ابحث في المواد",
+  "psutarchive": "أرشيف الجامعة",
   "home": {
     "categories": {
       "title": "الأقسام",
@@ -65,5 +64,8 @@
   },
   "misc": {
     "by": "بواسطة"
+  },
+  "lists": {
+    "search": "ابحث"
   }
 }

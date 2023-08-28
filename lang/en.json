@@ -1,6 +1,5 @@
 {
   "psutarchive": "PSUT Archive",
-  "search": "Search courses",
   "home": {
     "categories": {
       "title": "Categories",
@@ -65,5 +64,8 @@
   },
   "misc": {
     "by": "by"
+  },
+  "lists": {
+    "search": "Search"
   }
 }

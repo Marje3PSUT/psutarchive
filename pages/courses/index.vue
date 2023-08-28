@@ -1,6 +1,11 @@
 <template>
   <div class="container mx-auto">
-    <List :pending="pending">
+    <List
+      :pending="pending"
+      show-search
+      :heading="$t('courses.title')"
+      @searched="q => (state.search = q)"
+    >
       <CourseCard
         v-for="item in courses?.data"
         :key="item.id"
@@ -13,21 +18,37 @@
   import qs from 'qs'
   const route = useRoute()
 
-  const query = qs.stringify({
+  const state = reactive({
+    search: undefined as string | undefined,
+    activeSort: undefined as string | undefined,
+    // activeFilters: undefined as ActiveFilters | undefined,
+  })
+
+  const query = reactive({
     populate: [
       'category',
       'resources'
     ],
-    filters: {
-      category: {
-        slug: {
-          $eqi: route.query.category ? route.query.category : undefined
-        }
+    filters: computed(() => {
+      return {
+        category: {
+          slug: {
+            $eqi: route.query.category ? route.query.category : undefined
+          }
+        },
+        // search query
+        // TODO: also search in alternative names
+        name: {
+          $containsi: state.search?.length ? state.search : undefined,
+        },
       }
-    },
-  }, { encodeValuesOnly: true })
+    }),
+    sort: ['category.slug:desc']
+  })
 
   const { data: courses, pending } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>
-  >(() => $baseApi(`courses?${query}`, { cache: true }));
+  >(() => $baseApi(`courses?${qs.stringify(query, { encodeValuesOnly: true })}`), {
+    watch: [query]
+  });
 </script>

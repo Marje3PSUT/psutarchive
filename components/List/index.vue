@@ -24,10 +24,18 @@
         />
       </NuxtLink>
     </div>
+
     <!-- Search, filters, and sort -->
-    <div v-if="props.showSearch"> 
-      <!-- TODO -->
+    <div
+      v-if="props.showSearch"
+      class="container flex-col my-8"
+    > 
+      <ListSearch
+        v-bind="$attrs"
+        @searched="q => $emit('searched', q)"
+      />
     </div>
+
     <!-- grid / list / auto views -->
     <Transition name="fade">
       <div
@@ -93,6 +101,7 @@
     },
   })
   const { locale } = useI18n()
+  const emit = defineEmits(["searched"]);
 </script>
 <style scoped lang="postcss">
   .list.view-flex {
