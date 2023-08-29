@@ -4,9 +4,11 @@
       :heading="heading"
       :pending="pending"
       view="auto"
+      show-search
+      @searched="q => (state.search = q)"
     >
       <MaterialCard
-        v-for="item in course?.data.attributes.resources?.data"
+        v-for="item in resources"
         :key="item.id"
         :item="item.attributes"
         :course-id="course?.data.attributes.course_id"
@@ -24,6 +26,12 @@
   const { locale, t } = useI18n()
   const urlId = ref(useRoute().params.id)
 
+  const state = reactive({
+    search: undefined as string | undefined,
+    activeSort: undefined as string | undefined,
+    // activeFilters: undefined as ActiveFilters | undefined,
+  })
+
   // Filter courses from API by their course_id attribute
   const filterQuery = qs.stringify({
     filters: {
@@ -38,7 +46,7 @@
 
   // Get and populate the course attributes using its API ID
   const id = courses.value?.data[0]?.id
-  const query = qs.stringify({
+  const query = reactive({
     populate: [
       'category',
       'resources.metadata',
@@ -46,7 +54,7 @@
       'resources.files',
       'resources.material',
     ],
-  }, { encodeValuesOnly: true });
+  });
   const { data: course, pending } = useAsyncData<StrapiResponseSingle<CourseAttributes>>(
     async () => {      
       if (!id) {
@@ -56,9 +64,24 @@
           statusMessage: `Course #${urlId.value} not found.`,
         })
       }
-      return await $baseApi(`courses/${id}?${query}`, {cache: true})
+      return await $baseApi(`courses/${id}?${qs.stringify(query, { encodeValuesOnly: true })}`, {cache: true})
     },
+    { watch: [query] }
   );
+
+  const resources = computed(() => {
+    return ref(course.value?.data.attributes.resources?.data).value?.filter(item => {
+      if (!state.search) return true
+      else return [
+        item.attributes.type,
+        item.attributes.material[0].type,
+        item.attributes.material[0].title,
+        item.attributes.metadata?.semester,
+        item.attributes.metadata?.year
+      ].some(item => String(item).toLowerCase().includes((state.search as string).toLowerCase()))
+      
+    })
+  })
 
   const heading = computed<string>(
     () =>locale.value === 'en' ?
