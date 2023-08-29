@@ -17,7 +17,7 @@
     </div>
     <NuxtLink
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
-      class="card-body items-center"
+      class="card-body items-center focus:border focus:p-6 border-primary"
     >
       <h4 class="card-title text-lg max-sm:text-sm text-center -mt-5 line-clamp-1">
         {{

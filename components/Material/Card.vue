@@ -28,13 +28,16 @@
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
       <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
-      <Icon
+      <button
         v-if="!loading"
-        name="solar:download-minimalistic-linear"
-        size="36"
-        class="cursor-pointer hover:text-accent transition-[200ms]"
         @click="download()"
-      />
+      >
+        <Icon
+          name="solar:download-minimalistic-linear"
+          size="36"
+          class="cursor-pointer hover:text-accent transition-[200ms]"
+        />
+      </button>
       <span
         v-else
         class="loading loading-spinner loading-lg text-accent"
