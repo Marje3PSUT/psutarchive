@@ -27,7 +27,8 @@
   const query = reactive({
     populate: [
       'category',
-      'resources'
+      'resources',
+      'alt_names'
     ],
     filters: computed(() => {
       return {
@@ -37,10 +38,25 @@
           }
         },
         // search query
-        // TODO: also search in alternative names
-        name: {
-          $containsi: state.search?.length ? state.search : undefined,
-        },
+        $or: [
+          {
+            name: {
+              $containsi: state.search?.length ? state.search : undefined,
+            }
+          },
+          {
+            name_ar: {
+              $containsi: state.search?.length ? state.search : undefined,
+            }
+          },
+          {
+            alt_names: {
+              name: {
+                $containsi:  state.search?.length ? state.search : undefined,
+              },
+            }
+          }
+        ]
       }
     }),
     sort: ['category.slug:desc']
