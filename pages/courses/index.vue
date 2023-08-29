@@ -55,6 +55,11 @@
                 $containsi:  state.search?.length ? state.search : undefined,
               },
             }
+          },
+          {
+            course_id: {
+              $containsi:  state.search?.length ? state.search : undefined,
+            }
           }
         ]
       }
