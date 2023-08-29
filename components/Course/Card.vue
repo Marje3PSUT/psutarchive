@@ -17,9 +17,14 @@
     </div>
     <NuxtLink
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
-      class="card-body items-center focus:border focus:p-6 border-primary"
+      class="card-body items-center"
     >
-      <h4 class="card-title text-lg max-sm:text-sm text-center -mt-5 line-clamp-1">
+      <h4
+        class="card-title text-lg max-sm:text-sm text-center -mt-5 line-clamp-1"
+        :title="locale === 'ar' ?
+          item.name_ar
+          : item.name"
+      >
         {{
           locale === 'ar' ?
             item.name_ar

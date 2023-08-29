@@ -69,7 +69,7 @@
 
   const { data: courses, pending } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>
-  >(() => $baseApi(`courses?${qs.stringify(query, { encodeValuesOnly: true })}`), {
+  >(() => $baseApi(`courses?${qs.stringify(query, { encodeValuesOnly: true })}`, { cache: true }), {
     watch: [query]
   });
 </script>
