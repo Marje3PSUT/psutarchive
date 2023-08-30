@@ -7,12 +7,17 @@
       show-search
       @searched="q => (state.search = q)"
     >
-      <MaterialCard
-        v-for="item in resources"
-        :key="item.id"
-        :item="item.attributes"
-        :course-id="course?.data.attributes.course_id"
-      />
+      <TransitionGroup name="list">
+        <div
+          v-for="item in resources"
+          :key="item.id"
+        >
+          <MaterialCard
+            :item="item.attributes"
+            :course-id="course?.data.attributes.course_id"
+          />
+        </div>
+      </TransitionGroup>
     </List>
   </div>
 </template>
@@ -89,3 +94,17 @@
         : `${ t('material.resource.title', 2)} ${course.value?.data.attributes.name_ar}`
     )
 </script>
+<style scoped lang="postcss">
+  .list-enter-active,
+  .list-leave-active {
+    transition: all 0.5s ease;
+  }
+  .list-enter-from,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  .list-leave-active {
+    position: absolute;
+  }
+</style>
