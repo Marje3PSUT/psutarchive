@@ -4,6 +4,8 @@
       :pending="pending"
       show-search
       :heading="$t('courses.title')"
+      :sort-options="sortOptions"
+      @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
     >
       <CourseCard
@@ -17,12 +19,28 @@
 <script setup lang="ts">
   import qs from 'qs'
   const route = useRoute()
+  const { t } = useI18n()
 
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
     // activeFilters: undefined as ActiveFilters | undefined,
   })
+
+  const sortOptions : SortOptions = [
+    {
+      key: 'updatedAt:desc',
+      title: t('courses.sort.last-updated')
+    },
+    {
+      key: 'resources.count:desc',
+      title: t('courses.sort.res-count')
+    },
+    {
+      key: 'category.slug:desc',
+      title: t('courses.sort.category')
+    }
+  ]
 
   const query = reactive({
     populate: [
@@ -64,7 +82,7 @@
         ]
       }
     }),
-    sort: ['category.slug:desc']
+    sort: computed(()  => state.activeSort ? state.activeSort : sortOptions[2].key)
   })
 
   const { data: courses, pending } = useLazyAsyncData<

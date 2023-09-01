@@ -8,7 +8,12 @@
   },
   "courses": {
     "title": "Courses",
-    "addToFavs": "Add to my favourite courses"
+    "addToFavs": "Add to my favourite courses",
+    "sort": {
+      "last-updated": "Last updated",
+      "res-count": "Resources count",
+      "category": "Category"
+    }
   },
   "material": {
     "files": "file | files",
@@ -67,6 +72,10 @@
     "by": "by"
   },
   "lists": {
-    "search": "Search"
+    "search": "Search",
+    "sort": {
+      "title": "Sort by",
+      "default": "Default order"
+    }
   }
 }

@@ -28,13 +28,21 @@
     <!-- Search, filters, and sort -->
     <div
       v-if="props.showSearch"
-      class="container flex-col my-8"
+      class="container flex flex-col my-8 justify-start  gap-y-4 mx-auto max-w-[768px]"
     > 
       <ListSearch
         v-bind="$attrs"
         :search-placeholder="props.searchPlaceholder"
         @searched="q => $emit('searched', q)"
       />
+      <!-- Sort and filter -->
+      <div class="flex flex-wrap mx-auto w-full">
+        <ListSort
+          v-if="props.showSort"
+          :sort-options="props.sortOptions"
+          @sort="(q: string) => $emit('sorted', q)"
+        />
+      </div>
     </div>
 
     <!-- grid / list / auto views -->
@@ -75,6 +83,14 @@
       required: false,
       default: false,
     },
+    showSort: {
+      type: Boolean,
+      default: true,
+    },
+    sortOptions: {
+      type: Array as PropType<SortOptions>,
+      default: () => [],
+    },
     view: {
       type: String as PropType<"grid" | "flex" | "auto">,
       required: false,
@@ -106,7 +122,7 @@
     }
   })
   const { locale } = useI18n()
-  const emit = defineEmits(["searched"]);
+  const emit = defineEmits(["searched", "sorted"]);
 </script>
 <style scoped lang="postcss">
   .list.view-flex {
