@@ -30,6 +30,7 @@
       <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
       <button
         v-if="!loading"
+        aria-label="download-button"
         @click="download()"
       >
         <Icon

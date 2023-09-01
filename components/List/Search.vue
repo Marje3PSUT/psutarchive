@@ -70,7 +70,7 @@ const props = defineProps({
   searchPlaceholder: {
     type: String,
     required: false,
-    default: "",
+    default: null,
   },
   searchError: {
     type: Boolean,

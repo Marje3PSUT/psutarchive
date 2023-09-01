@@ -32,6 +32,7 @@
     > 
       <ListSearch
         v-bind="$attrs"
+        :search-placeholder="props.searchPlaceholder"
         @searched="q => $emit('searched', q)"
       />
     </div>
@@ -99,6 +100,10 @@
       required: false,
       default: null,
     },
+    searchPlaceholder: {
+      type: String,
+      default: null,
+    }
   })
   const { locale } = useI18n()
   const emit = defineEmits(["searched"]);

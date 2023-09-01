@@ -13,6 +13,7 @@
   "material": {
     "files": "file | files",
     "megabyte": "MB",
+    "search": "Search by type, semester, or year",
     "semesters": {
       "fall": "Fall",
       "spring": "Spring",

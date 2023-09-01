@@ -5,6 +5,7 @@
       :pending="pending"
       view="auto"
       show-search
+      :search-placeholder="$t('material.search')+ '...'"
       @searched="q => (state.search = q)"
     >
       <TransitionGroup name="list">
