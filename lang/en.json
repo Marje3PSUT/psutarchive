@@ -12,7 +12,8 @@
     "sort": {
       "last-updated": "Last updated",
       "res-count": "Resources count",
-      "category": "Category"
+      "category": "Category",
+      "alphapetical": "Alphapetical"
     }
   },
   "material": {

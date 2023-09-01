@@ -12,7 +12,8 @@
     "sort": {
       "last-updated": "تم تحديثه مؤخرا",
       "res-count": "عدد الأوراق",
-      "category": "الفئة"
+      "category": "الفئة",
+      "alphapetical": "أبجديًا"
     }
   },
   "material": {

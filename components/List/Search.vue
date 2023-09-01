@@ -94,7 +94,8 @@ const clear = () => {
 .search-input {
   @apply flex justify-between items-center;
   @apply max-w-[768px] mx-auto p-1;
-  @apply border rounded-xl bg-base-100;
+  @apply border border-base-content rounded-xl bg-base-100;
+  --tw-border-opacity: 0.5;
 
   .search-icon {
     @apply w-1/12 max-sm:w-1/3 h-12;

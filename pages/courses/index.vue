@@ -9,7 +9,7 @@
       @searched="q => (state.search = q)"
     >
       <CourseCard
-        v-for="item in courses?.data"
+        v-for="item in list"
         :key="item.id"
         :item="item.attributes"
       />
@@ -19,7 +19,7 @@
 <script setup lang="ts">
   import qs from 'qs'
   const route = useRoute()
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
 
   const state = reactive({
     search: undefined as string | undefined,
@@ -27,20 +27,25 @@
     // activeFilters: undefined as ActiveFilters | undefined,
   })
 
-  const sortOptions : SortOptions = [
+  // sort keys that start with '!' are handled locally, not from the API
+  const sortOptions = ref<SortOptions>([
     {
       key: 'updatedAt:desc',
       title: t('courses.sort.last-updated')
     },
     {
-      key: 'resources.count:desc',
+      key: '!resources.count',
       title: t('courses.sort.res-count')
+    },
+    {
+      key: locale.value === 'en' ? 'name:asc' : 'name_ar:asc',
+      title: t('courses.sort.alphapetical')
     },
     {
       key: 'category.slug:desc',
       title: t('courses.sort.category')
     }
-  ]
+  ])
 
   const query = reactive({
     populate: [
@@ -82,7 +87,7 @@
         ]
       }
     }),
-    sort: computed(()  => state.activeSort ? state.activeSort : sortOptions[2].key)
+    sort: computed(()  => state.activeSort || !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
   })
 
   const { data: courses, pending } = useLazyAsyncData<
@@ -90,4 +95,14 @@
   >(() => $baseApi(`courses?${qs.stringify(query, { encodeValuesOnly: true })}`, { cache: true }), {
     watch: [query]
   });
+  const list = computed(() => {
+    if (state.activeSort?.startsWith('!')) {
+      // sort by resources count
+      if (state.activeSort === sortOptions.value[1].key) {
+        return courses.value?.data.sort((a, b) =>
+          (b.attributes.resources?.data.length as number) - (a.attributes.resources?.data.length as number))
+      }
+    }
+    return courses.value?.data
+  })
 </script>
