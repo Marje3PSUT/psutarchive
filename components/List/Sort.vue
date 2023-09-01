@@ -21,6 +21,7 @@
       :value="sortOption.key"
       :selected="selected === sortOption.key"
     >
+      {{ selected === sortOption.key ? $t('lists.sort.title') + ': ' : '' }}
       {{ sortOption.title }}
     </option>
     <!-- TODO: add a button to reverse sort (just append either ':asc' or ':desc' to the sort key) -->

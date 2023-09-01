@@ -6,6 +6,8 @@
       view="auto"
       show-search
       :search-placeholder="$t('material.search')+ '...'"
+      :sort-options="sortOptions"
+      @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
     >
       <TransitionGroup name="list">
@@ -37,6 +39,60 @@
     activeSort: undefined as string | undefined,
     // activeFilters: undefined as ActiveFilters | undefined,
   })
+  const sortOptions = ref<SortOptions>([
+    {
+      key: 'new',
+      title: t('material.sort.new'),
+      // @ts-ignore
+      sortHandler: (a: StrapiItem<ResourceAttributes>, b: StrapiItem<ResourceAttributes>) => {
+        const dateA = new Date(a.attributes.createdAt);
+        const dateB = new Date(b.attributes.createdAt);
+        return dateB.getTime() - dateA.getTime();
+      }
+    },
+    {
+      key: 'year',
+      title: t('material.sort.year'),
+      // @ts-ignore
+      sortHandler: (a: StrapiItem<ResourceAttributes>, b: StrapiItem<ResourceAttributes>) => {
+        const yearA = Number(a.attributes.metadata?.year)
+        const yearB = Number(b.attributes.metadata?.year)
+        return yearB - yearA
+      }
+    },
+    {
+      key: 'sem',
+      title: t('material.sort.semester'),
+      // @ts-ignore
+      sortHandler: (a: StrapiItem<ResourceAttributes>, b: StrapiItem<ResourceAttributes>) => {
+        const semA = a.attributes.metadata?.semester,
+          semB = b.attributes.metadata?.semester
+        if (semA && semB) return semB.toString() < semA.toString()
+      }
+    },
+    {
+      key: 'type',
+      title: t('material.sort.type'),
+      // @ts-ignore
+      sortHandler: (a: StrapiItem<ResourceAttributes>, b: StrapiItem<ResourceAttributes>) => {
+        const typeA = a.attributes.material[0].type,
+          typeB = b.attributes.material[0].type
+        if (typeA && typeB) return typeA.toString() < typeB.toString()
+      }
+    },
+    {
+      key: 'size',
+      title: t('material.sort.size'),
+      // @ts-ignore
+      sortHandler: (a: StrapiItem<ResourceAttributes>, b: StrapiItem<ResourceAttributes>) => {
+        const sizeA = a.attributes.files?.data.reduce<number>(
+        (sum: number, curr: StrapiItem<MediaAttributes>) => (sum + curr.attributes.size), 0),
+          sizeB = b.attributes.files?.data.reduce<number>(
+        (sum: number, curr: StrapiItem<MediaAttributes>) => (sum + curr.attributes.size), 0)
+        if (sizeA && sizeB) return sizeB - sizeA
+      }
+    }
+  ])
 
   // Filter courses from API by their course_id attribute
   const filterQuery = qs.stringify({
@@ -76,7 +132,8 @@
   );
 
   const resources = computed(() => {
-    return ref(course.value?.data.attributes.resources?.data).value?.filter(item => {
+    // filter or search
+    const list =  ref(course.value?.data.attributes.resources?.data).value?.filter(item => {
       if (!state.search) return true
       else return [
         item.attributes.type,
@@ -87,6 +144,13 @@
       ].some(item => String(item).toLowerCase().includes((state.search as string).toLowerCase()))
       
     })
+    if (state.activeSort) {
+      const selectedSort = unref(sortOptions).filter(option => option.key === state.activeSort)[0]
+      if (selectedSort) {
+        list?.sort(selectedSort.sortHandler)
+      }
+    }
+    return list
   })
 
   const heading = computed<string>(

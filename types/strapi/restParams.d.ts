@@ -9,7 +9,8 @@ declare global {
   // Sort
   type SortOptions = {
     title: string
-    key: string
+    key: string,
+    sortHandler?: (a: StrapiItem<Record<any, any>>, b: StrapiItem<Record<any, any>>) => number
   }[]
 }
 export {}

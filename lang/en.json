@@ -52,6 +52,14 @@
           "other": "Other"
         }
       }
+    },
+    "sort": {
+      "year": "Year",
+      "semester": "Semester",
+      "type": "Type",
+      "solved": "Solved first",
+      "size": "File size",
+      "new": "Newly added"
     }
   },
   "submit": {
