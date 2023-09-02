@@ -25,8 +25,9 @@ export const useFavCourses = () => {
    */
   const addCourse = (courseId: number) => {
     let list = getCourses()
-    if (list && list.indexOf(courseId) === -1) {
-      list.push(courseId)
+    if (list) {
+      if (list.indexOf(courseId) === -1) list.push(courseId)
+      else return
     }
     else list = [courseId]
     saveFavCourses(list)
@@ -43,6 +44,7 @@ export const useFavCourses = () => {
       if (idx !== -1) {
         list.splice(idx, 1)
       }
+      else return
     }
     else list = []
     saveFavCourses(list)

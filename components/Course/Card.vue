@@ -7,13 +7,17 @@
       <p class="text-xs">
         {{ item.course_id }}
       </p>
-      <div :title="$t('courses.addToFavs')">
+      <button
+        :title="$t('courses.addToFavs')"
+        @click="switchFavState(id)"
+      >
         <Icon
-          name="ion:heart-outline"
+          :name="isFavorite ? 'ion:heart': 'ion:heart-outline'"
           class="cursor-pointer hover:scale-110 transition-all"
+          :class="{ 'text-[#fb6f84]': isFavorite }"
           size="22"
         />
-      </div>
+      </button>
     </div>
     <NuxtLink
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
@@ -40,15 +44,14 @@
   </div>
 </template>
 <script setup lang="ts">
-  defineProps({
+  const props = defineProps({
     item: {
       type: Object as PropType<CourseAttributes>,
       required: true,
     },
-    favorite: {
-      type: Boolean,
-      required: false,
-      default: false
+    id: {
+      type: Number,
+      default: null
     },
     listView: {
       type: Boolean,
@@ -56,7 +59,25 @@
       default: false
     }
   })
-const { locale } = useI18n();
+
+  const { locale } = useI18n();
+  const { addCourse, removeCourse, getCourses } = useFavCourses()
+  
+  const isFavorite = ref(false)
+
+  const switchFavState = (id: number) => {
+    if (!isFavorite.value) {
+      addCourse(id)
+    }
+    else {
+      removeCourse(id)
+    }
+    isFavorite.value = !isFavorite.value
+  }
+
+  onMounted(() => {
+    isFavorite.value = getCourses()?.indexOf(props.id) !== -1
+  })
 </script>
 <style scoped lang="postcss">
   .card {

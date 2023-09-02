@@ -10,6 +10,7 @@
     >
       <CourseCard
         v-for="item in list"
+        :id="item.id"
         :key="item.id"
         :item="item.attributes"
       />
