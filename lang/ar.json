@@ -8,7 +8,9 @@
   },
   "courses": {
     "title": "المواد",
+    "favorite": "موادي المفضلة",
     "addToFavs": "أضف إلى موادي المفضلة",
+    "noFavsMsg": "سظهر المواد المفضلة هنا",
     "sort": {
       "last-updated": "تم تحديثه مؤخرا",
       "res-count": "عدد الأوراق",

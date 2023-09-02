@@ -1,7 +1,7 @@
 declare global {
   // Filters
   /** Use to create a filter query using qs */
-  type StrapiRestFilters<T extends Record<string, unknown>> = {
+  type StrapiRestFilters<T extends Record<any, any>> = {
     [K in keyof T]?: FilterPropertyValue<T[K]> | StrapiRestFilters<T[K]>
   }
   type ActiveFilters = { [key: string]: string }

@@ -1,7 +1,5 @@
 <template>
   <div class="container mx-auto">
-    <!-- <ListSearch />
-    <HomeCategoriesList /> -->
     <List
       :pending="pending"
       view="flex"
@@ -25,11 +23,62 @@
         </div>
       </NuxtLink>
     </List>
+    <!-- Favorite courses list -->
+    <div class="divider my-10" />
+    <List
+      :pending="favPending"
+      :heading="$t('courses.favorite')"
+    >
+      <template v-if="favCourses">
+        <CourseCard
+          v-for="item in favCourses?.data"
+          :id="item.id"
+          :key="item.id"
+          :item="item.attributes"
+          class="border-base-content hover:bg-base-content hover:bg-opacity-10"
+        />
+      </template>
+      <div v-else>
+        {{ $t('courses.noFavsMsg') }}
+      </div>
+    </List>
   </div>
 </template>
 <script setup lang="ts">
+  import qs from 'qs';
   const { locale } = useI18n();
+
   const { data: categories, pending } = useLazyAsyncData<
     StrapiResponse<CategoryAttributes>
   >(() => $baseApi("categories", { cache: true }));
+
+  // Get the list of favorite courses
+  const favList = ref<number[] | null>([])
+  const favQuery = reactive({
+    filters: computed(() => {
+      if (favList.value && favList.value.length > 0)
+        return {
+          id: {
+            $in: favList.value
+          }
+        } as StrapiRestFilters<StrapiItem<CourseAttributes>>
+      else return null
+    })
+  })
+
+  const { data: favCourses, pending: favPending } = useLazyAsyncData<
+    StrapiResponse<CourseAttributes>
+  >(() => {
+    if (favQuery.filters) {
+      return $baseApi(`courses?${qs.stringify(favQuery, { encodeValuesOnly: true })}`, { cache: true })
+    }
+    else return
+  }, {
+    watch: [favQuery]
+  });
+
+  onMounted(() => {
+    const { getCourses } = useFavCourses()
+    favList.value = getCourses()
+  })
 </script>

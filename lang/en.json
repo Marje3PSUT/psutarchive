@@ -8,7 +8,9 @@
   },
   "courses": {
     "title": "Courses",
-    "addToFavs": "Add to my favourite courses",
+    "favorite": "Favorite courses",
+    "addToFavs": "Add to my favorite courses",
+    "noFavsMsg": "Favorite courses will appear here",
     "sort": {
       "last-updated": "Last updated",
       "res-count": "Resources count",

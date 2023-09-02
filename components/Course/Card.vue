@@ -1,7 +1,7 @@
 <template>
   <div
     class="card card-compact w-full max-sm:h-24 max-h-32 bg-base-100 shadow-xl card-bordered"
-    :class="`hover:bg-${item.category?.data.attributes.slug.toUpperCase()} border-${item.category?.data.attributes.slug.toUpperCase()}`"
+    :class="`hover:bg-${item.category?.data.attributes.slug.toUpperCase()} border-${item.category?.data.attributes.slug.toUpperCase()} ${$attrs.class ? $attrs.class : ''}`"
   >
     <div class="flex justify-between m-2 px-2">
       <p class="text-xs">
@@ -9,6 +9,7 @@
       </p>
       <button
         :title="$t('courses.addToFavs')"
+        :aria-label="$t('courses.addToFavs')"
         @click="switchFavState(id)"
       >
         <Icon
@@ -76,7 +77,8 @@
   }
 
   onMounted(() => {
-    isFavorite.value = getCourses()?.indexOf(props.id) !== -1
+    const favList = getCourses()
+    isFavorite.value = favList? favList?.indexOf(props.id) !== -1 : false
   })
 </script>
 <style scoped lang="postcss">
