@@ -55,6 +55,7 @@
   // Get the list of favorite courses
   const favList = ref<number[] | null>([])
   const favQuery = reactive({
+    populate: ['resources'],
     filters: computed(() => {
       if (favList.value && favList.value.length > 0)
         return {
