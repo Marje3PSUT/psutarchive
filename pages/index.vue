@@ -67,11 +67,11 @@
     })
   })
 
-  const { data: favCourses, pending: favPending } = useLazyAsyncData<
-    StrapiResponse<CourseAttributes>
-  >(() => {
+  const { data: favCourses, pending: favPending } =
+    await useLazyAsyncData(async (): Promise<StrapiResponse<CourseAttributes> | undefined> => {
     if (favQuery.filters) {
-      return $baseApi(`courses?${qs.stringify(favQuery, { encodeValuesOnly: true })}`, { cache: true })
+      // fetch favorite courses only if they exist
+      return await $baseApi(`courses?${qs.stringify(favQuery, { encodeValuesOnly: true })}`, { cache: true })
     }
     else return
   }, {
