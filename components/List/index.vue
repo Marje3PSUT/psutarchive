@@ -4,7 +4,7 @@
     <!-- Heading -->
     <div
       v-if="heading || headingLink"
-      class="flex justify-between flex-wrap items-center m-8 max-sm:m-4"
+      class="flex justify-between flex-wrap items-center m-8 max-sm:m-4 gap-2"
     >
       <h3
         v-if="props.heading"
@@ -14,7 +14,7 @@
       <NuxtLink
         v-if="props.headingLink"
         :to="headingLink.to"
-        class="btn btn-sm btn-ghost"
+        class="btn btn-sm btn-ghost p-1 ms-auto"
       >
         {{ headingLink.text }}
         <Icon
