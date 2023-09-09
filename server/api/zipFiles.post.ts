@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const apiUrl  = config.apiParty.endpoints.baseApi.url
 
-  const files: string[] = body.files;
+  const files: [string, string][] = body.files;
 
   const zip = new JSZip()
   let fileType
@@ -18,26 +18,28 @@ export default defineEventHandler(async (event) => {
 
   // TODO: Error handling with h3 errors
   // Add each file to the zip file
-  for (const fileUrl of files) {
-    const file = Buffer.from(await $fetch(
-        apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + fileUrl
-      , {cache: "default"}).then(res => res.arrayBuffer())
-    )
-    const fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1, fileUrl.lastIndexOf('_'))
+  for (const file of files) {
+    // check if the file is uploaded on the API locally or a separate storage provider
+    const fileUrl = file[1] === 'local' ?
+      apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + file[0] : file[0]
+
+    const fileBuffer = Buffer.from(await $fetch(fileUrl, {cache: "default"}).then(res => res.arrayBuffer()))
+    const fileName = file[0].substring(file[0].lastIndexOf('/') + 1, file[0].lastIndexOf('_'))
     if (files.length === 1) {
       // Return the file without zipping if it's a single file
-      fileType = await fileTypeFromBuffer(file)
+      fileType = await fileTypeFromBuffer(fileBuffer)
       responseHeaders['Content-Disposition'] = `attachment; filename="${fileName}.${fileType?.ext}"`
       responseHeaders['Content-Type'] = fileType?.mime as string
       responseHeaders['File-Extension'] = fileType?.ext as string
       setResponseHeaders(event, responseHeaders)
       try {
-        return file
+        return fileBuffer
       } catch(err) {
         console.error(err)
+        return
       }
     }
-    zip.file(`${fileName}.${fileUrl.substring(fileUrl.lastIndexOf('.') + 1)}`, file)
+    zip.file(`${fileName}.${file[0].substring(file[0].lastIndexOf('.') + 1)}`, fileBuffer)
   }
   
   const zipFile = await zip.generateAsync({type: 'uint8array'})

@@ -79,7 +79,7 @@
     const files = props.item.files?.data
 
     // get urls of files
-    const urls = ref(files?.map(f => f.attributes.url))
+    const urls = ref(files?.map(f => [f.attributes.url, f.attributes.provider]))
 
     const fileExt = ref('')
     const fileType = ref('')
