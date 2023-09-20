@@ -10,7 +10,7 @@
     >
       Skip to content
     </a>
-    <LazyDevDeployInfo v-if="config.public.env === 'dev'" />
+    <LazyDevDeployInfo v-if="config.public.env === 'development'" />
     <NuxtLoadingIndicator />
     <UINavBar />
     <main id="main">

@@ -47,7 +47,7 @@ export default defineNuxtConfig({
       buildCommitMessage: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_MESSAGE,
       buildCommitBranch: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_REF,
       repoUrl: '',
-      env: 'dev'
+      env: process.env.NODE_ENV || 'development'
     }
   }
 });
