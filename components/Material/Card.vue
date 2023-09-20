@@ -6,9 +6,9 @@
   >
     <div class="flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="capitalize text-lg font-bold">
-        {{ $t(`material.resource.type.${item.type.toLowerCase()}`) }} -
+        {{ $t(`material.resource.type.${resourceType}`) }} -
         <span class="text-secondary-focus">
-          {{ $t(`material.resource.${item.type.toLowerCase()}.type.${item.material[0].type}`) }}
+          {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
         </span>
       </div>
       <div v-if="item.metadata">
@@ -46,7 +46,7 @@
       <span> {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }} {{ $t('material.megabyte') }} </span>
     </div>
     <span
-      v-if="item.type === 'exam' && item.material[0].is_solved"
+      v-if="resourceType === 'exam' && item.material[0]?.is_solved"
       class="indicator-item indicator-middle badge badge-secondary uppercase font-bold"
       :class="locale === 'en' ? 'indicator-start -rotate-90' : 'indicator-end rotate-90'"
     >{{ $t('material.resource.exam.solved') }}</span>
@@ -66,6 +66,7 @@
   })
   const { locale } = useI18n()
   const loading = ref(false)
+  const resourceType = ref(props.item.material[0]?.__component?.includes('exam') ? 'exam' : 'note')
 
   // get total size of all files of this resource
   const totalSize = ref(
@@ -99,12 +100,12 @@
       'PSUTArchive',
       `${props.courseId}`,
       [
-        props.item.material[0].type ? props.item.material[0].type : null,
-        props.item.type ? props.item.type : null
+        props.item.material[0]?.type,
+        resourceType.value,
       ].filter(Boolean).join('-'),
       [
-        props.item.metadata?.semester? props.item.metadata?.semester?.toLowerCase() : null,
-        props.item.metadata?.year
+        props.item.metadata?.semester?.toLowerCase(),
+        props.item.metadata?.year,
       ].filter(Boolean).join('-')
     ].join('.')
 
