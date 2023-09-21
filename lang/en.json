@@ -71,10 +71,12 @@
     "title": "About Us"
   },
   "exams": {
-    "name": "no exams | 1 exam | {n} exams"
+    "name": "no exams | 1 exam | {n} exams",
+    "title": "Exam | Exams"
   },
   "notes": {
-    "name": "no notes | 1 note | {n} notes"
+    "name": "no notes | 1 note | {n} notes",
+    "title": "Note | Notes"
   },
   "papers": {
     "name": "no papers | 1 paper | {n} papers"

@@ -45,6 +45,22 @@
       </div>
     </div>
 
+    <!-- Tabs -->
+    <div
+      v-if="props.tabs.length"
+      class="tabs tabs-boxed justify-center gap-4 bg-transparent mb-8"
+    >
+      <button
+        v-for="tab, i in props.tabs"
+        :key="i"
+        class="tab"
+        :class="{ 'tab-active': activeTab === i }"
+        @click="activeTab = i; $emit('activeTab', i)"
+      >
+        {{ tab.title }}
+      </button>
+    </div>
+
     <!-- grid / list / auto views -->
     <Transition name="fade">
       <div
@@ -66,11 +82,16 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
   type HeadingLink = {
     to: string
     text: string
     icon: boolean
+  }
+  type TabItem = {
+    title: string
+    value: string
   }
   const props = defineProps({
     heading: {
@@ -119,11 +140,19 @@
     searchPlaceholder: {
       type: String,
       default: null,
+    },
+    tabs: {
+      type: Array as PropType<TabItem[]>,
+      default: () => []
     }
   })
   const { locale } = useI18n()
-  const emit = defineEmits(["searched", "sorted"]);
+
+  defineEmits(["searched", "sorted", "activeTab"]);
+  const activeTab = ref(0)
+
 </script>
+
 <style scoped lang="postcss">
   .list.view-flex {
     @apply flex;

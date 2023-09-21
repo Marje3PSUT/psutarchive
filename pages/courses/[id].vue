@@ -4,11 +4,13 @@
       :heading="heading"
       :pending="pending"
       view="auto"
+      :tabs="tabsList"
       show-search
       :search-placeholder="$t('material.search')+ '...'"
       :sort-options="sortOptions"
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
+      @active-tab="t => (state.activeTab = t)"
     >
       <TransitionGroup name="list">
         <div
@@ -34,9 +36,21 @@
   const { locale, t } = useI18n()
   const urlId = ref(useRoute().params.id)
 
+  const tabsList = [
+    {
+      title: t('exams.title', 2),
+      value: 'exam'
+    },
+    {
+      title: t('notes.title', 2),
+      value: 'note'
+    }
+  ]
+
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
+    activeTab: 0, // index of active tab
     // activeFilters: undefined as ActiveFilters | undefined,
   })
   const sortOptions = ref<SortOptions>([
@@ -150,7 +164,8 @@
         item.attributes.metadata?.year
       ].some(item => String(item).toLowerCase().includes((state.search as string).toLowerCase()))
       
-    })
+    }).filter(item => // filter by current active tab
+      item.attributes.material[0].__component.includes(tabsList[state.activeTab].value.toLowerCase()))
     if (state.activeSort) {
       const selectedSort = unref(sortOptions).filter(option => option.key === state.activeSort)[0]
       if (selectedSort) {
