@@ -4,7 +4,7 @@
     <!-- Heading -->
     <div
       v-if="heading || headingLink"
-      class="flex justify-between flex-wrap items-center m-8 max-sm:m-4 gap-2"
+      class="flex justify-between flex-wrap items-center m-4 gap-2"
     >
       <h3
         v-if="props.heading"
@@ -28,7 +28,7 @@
     <!-- Search, filters, and sort -->
     <div
       v-if="props.showSearch"
-      class="container flex flex-col my-8 justify-start  gap-y-4 mx-auto max-w-[768px]"
+      class="container flex flex-col my-8 justify-start gap-y-4 mx-auto"
     > 
       <ListSearch
         v-bind="$attrs"

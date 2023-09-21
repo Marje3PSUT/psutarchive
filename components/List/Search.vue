@@ -1,6 +1,6 @@
 <template>
   <form
-    class="container mt-4 !p-0"
+    class="mt-4"
     @submit.prevent
   >
     <div class="search-input">
@@ -93,7 +93,7 @@ const clear = () => {
 <style scoped lang="postcss">
 .search-input {
   @apply flex justify-between items-center;
-  @apply max-w-[768px] mx-auto p-1;
+  @apply mx-auto p-1;
   @apply border border-base-content rounded-xl bg-base-100;
   --tw-border-opacity: 0.5;
 

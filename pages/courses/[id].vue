@@ -15,9 +15,9 @@
           v-for="item in resources"
           :key="item.id"
         >
-          <MaterialCard
+          <ResourceCard
             :item="item.attributes"
-            :course-id="course?.data.attributes.course_id"
+            :course-id="course?.attributes.course_id"
           />
         </div>
       </TransitionGroup>
@@ -95,7 +95,7 @@
   ])
 
   // Filter courses from API by their course_id attribute
-  const filterQuery = qs.stringify({
+  const coursesQuery = qs.stringify({
     filters: {
       course_id: {
         '$eq': urlId.value
@@ -103,21 +103,29 @@
     }
   }, { encodeValuesOnly: true })
   const { data: courses } = await  useAsyncData<StrapiResponse<CourseAttributes>>(
-    async () => await $baseApi(`courses?${filterQuery}`, { cache: true }));
+    async () => await $baseApi(`courses?${coursesQuery}`, { cache: true }));
 
+  const course = courses.value?.data[0]
+  const id = course?.id // API id of the chosen course
 
-  // Get and populate the course attributes using its API ID
-  const id = courses.value?.data[0]?.id
+  // Get and populate resources
   const query = reactive({
     populate: [
-      'category',
-      'resources.metadata',
-      'resources.metadata.uploader',
-      'resources.files',
-      'resources.material',
+      'course',
+      'metadata',
+      'metadata.uploader',
+      'files',
+      'material',
     ],
+    filters: {
+      course: {
+        course_id: {
+          $eq: urlId.value
+        }
+      }
+    } as StrapiRestFilters<ResourceAttributes>
   });
-  const { data: course, pending } = useAsyncData<StrapiResponseSingle<CourseAttributes>>(
+  const { data: resourcesList, pending } = useAsyncData<StrapiResponse<ResourceAttributes>>(
     async () => {      
       if (!id) {
         // If the course does not exist throw 404
@@ -126,17 +134,16 @@
           statusMessage: `Course #${urlId.value} not found.`,
         })
       }
-      return await $baseApi(`courses/${id}?${qs.stringify(query, { encodeValuesOnly: true })}`, {cache: true})
+      return await $baseApi(`resources?${qs.stringify(query, { encodeValuesOnly: true })}`, {cache: true})
     },
     { watch: [query] }
   );
 
   const resources = computed(() => {
     // filter or search
-    const list =  ref(course.value?.data.attributes.resources?.data).value?.filter(item => {
+    const list =  ref(resourcesList.value?.data).value?.filter(item => {
       if (!state.search) return true
       else return [
-        item.attributes.type,
         item.attributes.material[0].type,
         item.attributes.material[0].title,
         item.attributes.metadata?.semester,
@@ -155,8 +162,8 @@
 
   const heading = computed<string>(
     () =>locale.value === 'en' ?
-        `${course.value?.data.attributes.name} ${ t('material.resource.title', 2) }`
-        : `${ t('material.resource.title', 2)} ${course.value?.data.attributes.name_ar}`
+        `${course?.attributes?.name} ${ t('material.resource.title', 2) }`
+        : `${ t('material.resource.title', 2)} ${course?.attributes?.name_ar}`
     )
 </script>
 <style scoped lang="postcss">
