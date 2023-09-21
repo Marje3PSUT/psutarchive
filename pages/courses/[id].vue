@@ -15,7 +15,7 @@
           v-for="item in resources"
           :key="item.id"
         >
-          <MaterialCard
+          <ResourceCard
             :item="item.attributes"
             :course-id="course?.data.attributes.course_id"
           />
@@ -136,7 +136,6 @@
     const list =  ref(course.value?.data.attributes.resources?.data).value?.filter(item => {
       if (!state.search) return true
       else return [
-        item.attributes.type,
         item.attributes.material[0].type,
         item.attributes.material[0].title,
         item.attributes.metadata?.semester,
