@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
+      <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length as number) }}</span>
       <button
         v-if="!loading"
         aria-label="download-button"
@@ -85,7 +85,7 @@
     const fileExt = ref('')
     const fileType = ref('')
 
-    const { data } = await useFetch('/api/zipFiles', {
+    const { data } = await useFetch<Blob>('/api/zipFiles', {
       method: 'POST',
       body: {
         files: urls.value,
@@ -109,11 +109,13 @@
       ].filter(Boolean).join('-')
     ].join('.')
 
-    const file = new File([data.value], `${fileName}${fileExt.value}` , { type: fileType.value});
+    const file = new File([data.value as Blob], `${fileName}${fileExt.value}` , { type: fileType.value});
     const downloadLink = window.URL.createObjectURL(file);
-
+    const a = document.createElement("a");
+    a.href = downloadLink;
+    a.download = `${fileName}${fileExt.value}`;
+    a.click();
     loading.value = false
-    navigateTo(downloadLink, {external: true})
   }
 </script>
 <style scoped lang="postcss">
