@@ -3,7 +3,7 @@
     <List
       :heading="heading"
       :pending="pending"
-      view="auto"
+      view="grid"
       :tabs="tabsList"
       show-search
       :search-placeholder="$t('material.search')+ '...'"
@@ -20,6 +20,7 @@
           <ResourceCard
             :item="item.attributes"
             :course-id="course?.attributes.course_id"
+            class="h-full"
           />
         </div>
       </TransitionGroup>
@@ -176,9 +177,8 @@
   })
 
   const heading = computed<string>(
-    () =>locale.value === 'en' ?
-        `${course?.attributes?.name} ${ t('material.resource.title', 2) }`
-        : `${ t('material.resource.title', 2)} ${course?.attributes?.name_ar}`
+    () => locale.value === 'en' ? course?.attributes?.name as string
+        : course?.attributes?.name_ar as string
     )
 </script>
 <style scoped lang="postcss">
