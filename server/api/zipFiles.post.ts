@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     const fileUrl = file[1] === 'local' ?
       apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + file[0] : file[0]
 
-    const fileBuffer = Buffer.from(await $fetch(fileUrl, {cache: "default"}).then(res => res.arrayBuffer()))
+    const fileBuffer = Buffer.from(await $fetch(fileUrl, {cache: "default"}).then(res => (res as Response).arrayBuffer()))
     const fileName = file[0].substring(file[0].lastIndexOf('/') + 1, file[0].lastIndexOf('_'))
     if (files.length === 1) {
       // Return the file without zipping if it's a single file
