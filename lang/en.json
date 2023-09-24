@@ -1,6 +1,5 @@
 {
   "psutarchive": "PSUT Archive",
-  "search": "Search courses",
   "home": {
     "categories": {
       "title": "Categories",
@@ -9,11 +8,20 @@
   },
   "courses": {
     "title": "Courses",
-    "addToFavs": "Add to my favourite courses"
+    "favorite": "Favorite courses",
+    "addToFavs": "Add to my favorite courses",
+    "noFavsMsg": "Favorite courses will appear here",
+    "sort": {
+      "last-updated": "Last updated",
+      "res-count": "Resources count",
+      "category": "Category",
+      "alphapetical": "Alphapetical"
+    }
   },
   "material": {
     "files": "file | files",
     "megabyte": "MB",
+    "search": "Search by type, semester, or year",
     "semesters": {
       "fall": "Fall",
       "spring": "Spring",
@@ -46,6 +54,14 @@
           "other": "Other"
         }
       }
+    },
+    "sort": {
+      "year": "Year",
+      "semester": "Semester",
+      "type": "Type",
+      "solved": "Solved first",
+      "size": "File size",
+      "new": "Newly added"
     }
   },
   "submit": {
@@ -55,15 +71,24 @@
     "title": "About Us"
   },
   "exams": {
-    "name": "no exams | 1 exam | {n} exams"
+    "name": "no exams | 1 exam | {n} exams",
+    "title": "Exam | Exams"
   },
   "notes": {
-    "name": "no notes | 1 note | {n} notes"
+    "name": "no notes | 1 note | {n} notes",
+    "title": "Note | Notes"
   },
   "papers": {
     "name": "no papers | 1 paper | {n} papers"
   },
   "misc": {
     "by": "by"
+  },
+  "lists": {
+    "search": "Search",
+    "sort": {
+      "title": "Sort by",
+      "default": "Default order"
+    }
   }
 }

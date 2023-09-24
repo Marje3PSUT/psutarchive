@@ -2,7 +2,10 @@
   <!-- TODO: add pagination -->
   <div class="container">
     <!-- Heading -->
-    <div class="flex justify-between flex-wrap items-center m-8 max-sm:m-4">
+    <div
+      v-if="heading || headingLink"
+      class="flex justify-between flex-wrap items-center m-4 gap-2"
+    >
       <h3
         v-if="props.heading"
       >
@@ -11,7 +14,7 @@
       <NuxtLink
         v-if="props.headingLink"
         :to="headingLink.to"
-        class="btn btn-sm btn-ghost"
+        class="btn btn-sm btn-ghost p-1 ms-auto"
       >
         {{ headingLink.text }}
         <Icon
@@ -21,10 +24,43 @@
         />
       </NuxtLink>
     </div>
+
     <!-- Search, filters, and sort -->
-    <div v-if="props.showSearch"> 
-      <!-- TODO -->
+    <div
+      v-if="props.showSearch"
+      class="container flex flex-col my-8 justify-start gap-y-4 mx-auto"
+    > 
+      <ListSearch
+        v-bind="$attrs"
+        :search-placeholder="props.searchPlaceholder"
+        @searched="q => $emit('searched', q)"
+      />
+      <!-- Sort and filter -->
+      <div class="flex flex-wrap mx-auto w-full">
+        <ListSort
+          v-if="props.showSort"
+          :sort-options="props.sortOptions"
+          @sort="(q: string) => $emit('sorted', q)"
+        />
+      </div>
     </div>
+
+    <!-- Tabs -->
+    <div
+      v-if="props.tabs.length"
+      class="tabs tabs-boxed justify-center gap-4 bg-transparent mb-8"
+    >
+      <button
+        v-for="tab, i in props.tabs"
+        :key="i"
+        class="tab"
+        :class="{ 'tab-active': activeTab === i }"
+        @click="activeTab = i; $emit('activeTab', i)"
+      >
+        {{ tab.title }}
+      </button>
+    </div>
+
     <!-- grid / list / auto views -->
     <Transition name="fade">
       <div
@@ -46,11 +82,16 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
   type HeadingLink = {
     to: string
     text: string
     icon: boolean
+  }
+  type TabItem = {
+    title: string
+    value: string
   }
   const props = defineProps({
     heading: {
@@ -62,6 +103,14 @@
       type: Boolean,
       required: false,
       default: false,
+    },
+    showSort: {
+      type: Boolean,
+      default: true,
+    },
+    sortOptions: {
+      type: Array as PropType<SortOptions>,
+      default: () => [],
     },
     view: {
       type: String as PropType<"grid" | "flex" | "auto">,
@@ -88,9 +137,22 @@
       required: false,
       default: null,
     },
+    searchPlaceholder: {
+      type: String,
+      default: null,
+    },
+    tabs: {
+      type: Array as PropType<TabItem[]>,
+      default: () => []
+    }
   })
   const { locale } = useI18n()
+
+  defineEmits(["searched", "sorted", "activeTab"]);
+  const activeTab = ref(0)
+
 </script>
+
 <style scoped lang="postcss">
   .list.view-flex {
     @apply flex;
@@ -124,7 +186,7 @@
   }
   .list.view-auto {
     /* Always list / full-width view on mobile */
-    @apply max-sm:flex md:grid;
+    @apply max-sm:flex sm:grid;
   }
   .list {
     transition: all 0.25s linear;

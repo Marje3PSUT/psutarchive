@@ -6,27 +6,27 @@ h1, h2, h3, h4, h5, h6 {
 
 /* h1 */
 h1 {
-  @apply text-4xl;
+  @apply text-4xl max-sm:text-3xl;
 }
 
 /* h2 */
 h2 {
-  @apply text-3xl;
+  @apply text-3xl max-sm:text-2xl;
 }
 
 /* h3 */
 h3 {
-  @apply text-2xl font-semibold;
+  @apply text-2xl max-sm:text-xl font-semibold;
 }
 
 /* h4 */
 h4 {
-  @apply text-xl;
+  @apply text-xl max-sm:text-lg;
 }
 
 /* h5 */
 h5 {
-  @apply text-lg;
+  @apply text-lg max-sm:text-base;
 }
 
 /* h6 */

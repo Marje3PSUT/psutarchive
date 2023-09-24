@@ -6,13 +6,15 @@
   >
     <div class="flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="capitalize text-lg font-bold">
-        {{ $t(`material.resource.type.${item.type.toLowerCase()}`) }} -
+        {{ $t(`material.resource.type.${resourceType}`) }} -
         <span class="text-secondary-focus">
-          {{ $t(`material.resource.${item.type.toLowerCase()}.type.${item.material[0].type}`) }}
+          {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
         </span>
       </div>
       <div v-if="item.metadata">
-        {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+        <span v-if="item.metadata.semester">
+          {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+        </span>
         <span class="text-secondary font-semibold">
           {{ item.metadata.year }}
         </span>
@@ -25,17 +27,26 @@
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length) }}</span>
-      <Icon
-        name="solar:download-minimalistic-linear"
-        size="36"
-        class="cursor-pointer hover:text-accent transition-[200ms]"
+      <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length as number) }}</span>
+      <button
+        v-if="!loading"
+        aria-label="download-button"
         @click="download()"
+      >
+        <Icon
+          name="solar:download-minimalistic-linear"
+          size="36"
+          class="cursor-pointer hover:text-accent transition-[200ms]"
+        />
+      </button>
+      <span
+        v-else
+        class="loading loading-spinner loading-lg text-accent"
       />
       <span> {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }} {{ $t('material.megabyte') }} </span>
     </div>
     <span
-      v-if="item.type === 'exam' && item.material[0].is_solved"
+      v-if="resourceType === 'exam' && item.material[0]?.is_solved"
       class="indicator-item indicator-middle badge badge-secondary uppercase font-bold"
       :class="locale === 'en' ? 'indicator-start -rotate-90' : 'indicator-end rotate-90'"
     >{{ $t('material.resource.exam.solved') }}</span>
@@ -54,6 +65,8 @@
     }
   })
   const { locale } = useI18n()
+  const loading = ref(false)
+  const resourceType = ref(props.item.material[0]?.__component?.includes('exam') ? 'exam' : 'note')
 
   // get total size of all files of this resource
   const totalSize = ref(
@@ -63,31 +76,46 @@
   )
 
   const download = async () => {
+    loading.value = true
     const files = props.item.files?.data
 
-    // If there's only one file, download it directly
-    if (files?.length === 1) {
-      const baseUrl = ref('')
-      if (files[0].attributes.provider === 'local') {
-        const { data } = (await useFetch('/api/apiUrl'))
-        baseUrl.value = String(data.value)
-      }      
-      return navigateTo(baseUrl.value.substring(0, baseUrl.value.lastIndexOf('/api')) + files[0].attributes.url, {external: true})
-    }
-
     // get urls of files
-    const urls = ref(files?.map(f => f.attributes.url))
-    // zip files together
-    const { data } = await useFetch('/api/zipFiles', {
+    const urls = ref(files?.map(f => [f.attributes.url, f.attributes.provider]))
+
+    const fileExt = ref('')
+    const fileType = ref('')
+
+    const { data } = await useFetch<Blob>('/api/zipFiles', {
       method: 'POST',
       body: {
         files: urls.value,
+      },
+      onResponse({ response }) {
+        const ext: string | null = response.headers.get('file-extension')
+        fileExt.value = ext ? `.${ext}` : ''
+        fileType.value = response.headers.get('content-type') as string
       }
     })
-    const fileName = `PSUTArchive-${props.courseId}-${props.item.material[0].type}_${props.item.type}-${props.item.metadata?.semester?.toLowerCase()}_${props.item.metadata?.year}.zip`
-    const file = new File([data.value], fileName , { type: 'application/zip'});
-    const downloadLink = window.URL.createObjectURL(file);    
-    navigateTo(downloadLink, {external: true})
+    const fileName = [
+      'PSUTArchive',
+      `${props.courseId}`,
+      [
+        props.item.material[0]?.type,
+        resourceType.value,
+      ].filter(Boolean).join('-'),
+      [
+        props.item.metadata?.semester?.toLowerCase(),
+        props.item.metadata?.year,
+      ].filter(Boolean).join('-')
+    ].join('.')
+
+    const file = new File([data.value as Blob], `${fileName}${fileExt.value}` , { type: fileType.value});
+    const downloadLink = window.URL.createObjectURL(file);
+    const a = document.createElement("a");
+    a.href = downloadLink;
+    a.download = `${fileName}${fileExt.value}`;
+    a.click();
+    loading.value = false
   }
 </script>
 <style scoped lang="postcss">
