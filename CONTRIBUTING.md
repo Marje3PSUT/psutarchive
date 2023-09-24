@@ -8,13 +8,13 @@ This project is built with [Nuxt 3](https://nuxt.com/) and it gets the data from
 
 ## Set up your local development environment
 
-First, make sure that you have [Git installed](https://git-scm.com/downloads) as well as [Node v18](https://nodejs.org/en). Then follow these steps to download and run the project locally:
+First, make sure that you have [Git installed](https://git-scm.com/downloads) as well as [Node v18](https://nodejs.org/en). Enable [`yarn`](https://yarnpkg.com/getting-started/install) then follow these steps to download and run the project locally:
 
 1. Run `git clone https://github.com/Marje3PSUT/psutarchive.git`
 2. `cd psutarchive`
-3. `npm i`
-4. Copy `.env.example` into `.env`, or run `cat .env.example > .env`
-5. Start the local development server: `npm run dev`
+3. `yarn install`
+4. Create `.env` file and copy the content of `.env.example` into it, then add the required environment variables to connect to the API. (You can run the API locally with [these steps](https://github.com/Marje3PSUT/psutarchive-api#run-locally), make sure to [generate your API token](https://docs.strapi.io/user-docs/settings/API-tokens) and add it to `.env`)
+5. Start the local development server: `yarn dev`
 
 Installing the following VS Code extensions is highly recommended:
 
@@ -30,7 +30,7 @@ Now you're good to go.
 
 ### I. Only work on the tasks assigned to you
 
-The tasks will be assigned within the [GitHub project board](https://github.com/orgs/Marje3PSUT/projects/1/views/1). Please only work on the tasks assigned to you to avoid overlapping or duplicate work.
+Only work on things with an [open issue](https://github.com/Marje3PSUT/psutarchive/issues?q=is%3Aopen+is%3Aissue), if there is not an issue, then [create one](https://github.com/Marje3PSUT/psutarchive/issues/new). Please only work on the issues assigned to you to avoid overlapping or duplicate work (ask me to assign the issue to you).
 
 ### II. Create a separate branch from `dev` branch for your task
 
@@ -82,7 +82,7 @@ For more information, check out [i18n documentation](https://v8.i18n.nuxtjs.org/
 When you're assigned to a new task, follow this workflow:
 
 1. After setting up your local environment, create a new branch for your task, according to the convention described above.
-2. Test your feature / bugfix, then fix linting issues, if any (run `npm run lint` to see the issues).
+2. Test your feature / bugfix, then fix linting issues, if any (run `yarn lint` to see the issues).
 3. **Before pushing your changes**, check if the base branch (dev branch) has newer changes and rebase your branch on top of it. This ensures that your changes are built on top of the latest codebase. Just run `git pull --rebase origin dev` while on your branch.
    Try to resolve any merge conflicts that _may_ occur after this step.
 4. Commit your changes according to the convention above, then push them to your new branch (`git push -u origin your-branch-name`).
