@@ -18,7 +18,7 @@
     </template>
 
     <button
-      v-for="page in pagesToShow"
+      v-for="page in pagesToShow.filter(p => showEllipsisAfter ? p !== props.end : showEllipsisBefore ? p !== props.start : true)"
       :key="page"
       :class="{ 'btn-secondary': page === activePage }"
       class="join-item btn"
