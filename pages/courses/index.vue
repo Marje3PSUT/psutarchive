@@ -43,7 +43,7 @@
       title: t('courses.sort.alphapetical')
     },
     {
-      key: 'category.slug:desc',
+      key: 'categories.slug:desc',
       title: t('courses.sort.category')
     }
   ])
@@ -88,7 +88,7 @@
         ]
       }
     }),
-    sort: computed(()  => state.activeSort || !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
+    sort: computed(()  => state.activeSort && !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
   })
 
   const { data: courses, pending } = useLazyAsyncData<
