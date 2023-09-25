@@ -72,6 +72,14 @@
         <slot />
       </div>
     </Transition>
+    <ListPagination
+      v-if="props.pagination"
+      :start="pagination?.start"
+      :end="(pagination?.end as number)"
+      :active="pagination?.active"
+      :limit="pagination?.limit"
+      :show-arrows="pagination?.showArrows"
+    />
     <div
       v-if="pending"
       class="flex justify-center"
@@ -92,6 +100,13 @@
   type TabItem = {
     title: string
     value: string
+  }
+  type PaginationOptions = {
+    start?: number
+    end: number
+    active?: number
+    limit?: number
+    showArrows?: boolean
   }
   const props = defineProps({
     heading: {
@@ -143,7 +158,11 @@
     },
     tabs: {
       type: Array as PropType<TabItem[]>,
-      default: () => []
+      default: () => [],
+    },
+    pagination: {
+      type: Object as PropType<PaginationOptions | null>,
+      default: null,
     }
   })
   const { locale } = useI18n()
