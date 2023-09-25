@@ -1,6 +1,6 @@
 {
   "name": "psut-archive",
-  "version": "0.9.0-beta",
+  "version": "0.10.0-beta",
   "private": true,
   "scripts": {
     "build": "nuxt build",

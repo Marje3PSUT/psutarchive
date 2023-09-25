@@ -5,8 +5,13 @@
       show-search
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
+      :pagination="{
+        end: courses?.meta.pagination?.pageCount as number,
+        active: courses?.meta.pagination?.page
+      }"
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
+      @active-page="p => (state.activePage = p)"
     >
       <CourseCard
         v-for="item in list"
@@ -25,6 +30,7 @@
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
+    activePage: 1 as number | undefined
     // activeFilters: undefined as ActiveFilters | undefined,
   })
 
@@ -54,6 +60,12 @@
       'resources',
       'alt_names'
     ],
+    pagination: computed(() => {
+      return {
+        page: state.activePage,
+        pageSize: 9,
+      }
+    }),
     filters: computed(() => {
       return {
         categories: {

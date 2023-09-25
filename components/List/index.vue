@@ -79,6 +79,7 @@
       :active="pagination?.active"
       :limit="pagination?.limit"
       :show-arrows="pagination?.showArrows"
+      @active-page="p => $emit('activePage', p)"
     />
     <div
       v-if="pending"
@@ -167,7 +168,7 @@
   })
   const { locale } = useI18n()
 
-  defineEmits(["searched", "sorted", "activeTab"]);
+  defineEmits(["searched", "sorted", "activeTab", 'activePage']);
   const activeTab = ref(0)
 
 </script>
