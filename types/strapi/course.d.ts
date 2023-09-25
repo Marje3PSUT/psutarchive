@@ -5,7 +5,7 @@ declare global {
     course_id: string;
     recordings_url: string | null;
     related_courses?: RelationMulti<CourseAttributes>;
-    category?: RelationSingle<CategoryAttributes>;
+    categories?: RelationMulti<CategoryAttributes>;
     resources?: RelationMulti<ResourceAttributes>;
     alt_names?: AltName[];
   }

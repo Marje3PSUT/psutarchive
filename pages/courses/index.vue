@@ -50,15 +50,15 @@
 
   const query = reactive({
     populate: [
-      'category',
+      'categories',
       'resources',
       'alt_names'
     ],
     filters: computed(() => {
       return {
-        category: {
+        categories: {
           slug: {
-            $eqi: route.query.category ? route.query.category : undefined
+            $contains: route.query.category
           }
         },
         // search query
