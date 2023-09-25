@@ -6,7 +6,7 @@
       :class="{ 'btn-disabled': activePage === start }"
       @click="movePage(-1)"
     >
-      <Icon name="ion:ios-arrow-left" />
+      <Icon :name="locale === 'en' ? 'ion:ios-arrow-left': 'ion:ios-arrow-right'" />
     </button>
     <template v-if="showEllipsisBefore">
       <button class="join-item btn">
@@ -41,7 +41,7 @@
       :class="{ 'btn-disabled': activePage === end }"
       @click="movePage(1)"
     >
-      <Icon name="ion:ios-arrow-right" />
+      <Icon :name="locale === 'en' ? 'ion:ios-arrow-right': 'ion:ios-arrow-left'" />
     </button>
   </div>
 </template>
@@ -69,6 +69,7 @@
       default: true,
     }
   })
+  const { locale } = useI18n()
   const emit = defineEmits(['activePage'])
 
   const activePage = ref(props.active)
