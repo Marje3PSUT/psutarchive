@@ -9,7 +9,10 @@
       <Icon :name="locale === 'en' ? 'ion:ios-arrow-left': 'ion:ios-arrow-right'" />
     </button>
     <template v-if="showEllipsisBefore">
-      <button class="join-item btn">
+      <button
+        class="join-item btn"
+        @click="activePage = start; emit('activePage', activePage)"
+      >
         {{ start }}
       </button>
       <button class="join-item btn btn-disabled">
@@ -31,7 +34,10 @@
       <button class="join-item btn btn-disabled">
         ...
       </button>
-      <button class="join-item btn">
+      <button
+        class="join-item btn"
+        @click="activePage = end; emit('activePage', activePage)"
+      >
         {{ end }}
       </button>
     </template>
