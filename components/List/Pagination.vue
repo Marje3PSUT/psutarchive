@@ -102,6 +102,10 @@
     activePage.value += n
     emit('activePage', activePage.value)
   }
+
+  onMounted(() => {
+    activePage.value = props.active
+  })
 </script>
 
 <style lang="postcss" scoped></style>
