@@ -32,7 +32,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "daisyui": "^3.5.1",
+    "daisyui": "^3.8.0",
     "file-type": "^18.5.0",
     "jszip": "^3.10.1",
     "qs": "^6.11.2"
