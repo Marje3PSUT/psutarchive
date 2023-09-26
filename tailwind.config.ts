@@ -36,7 +36,7 @@ module.exports = {
     colors: {
       "course-cat-IT": "#ED8B00",
       "course-cat-ENG": "#F9423A",
-      "course-cat-BIZ": "#FFCD00", // business
+      "course-cat-BUSINESS": "#FFCD00", // business
       "course-cat-MATH": "#20ADA6", // just random colors for now
       "course-cat-ELECT": "#BE986A",
     }
