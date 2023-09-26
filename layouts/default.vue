@@ -3,6 +3,7 @@
     :data-theme="useTheme().value"
     :dir="head.htmlAttrs.dir"
     :lang="head.htmlAttrs.lang"
+    class="flex flex-col"
   >
     <a
       href="#main"
@@ -16,6 +17,7 @@
     <main id="main">
       <slot />
     </main>
+    <UIFooter />
   </div>
 </template>
 <script setup>

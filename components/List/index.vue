@@ -80,6 +80,16 @@
         class="loading loading-infinity loading-lg"
       />
     </div>
+    <ListPagination
+      v-if="props.pagination"
+      :start="pagination?.start"
+      :end="(pagination?.end as number)"
+      :active="pagination?.active"
+      :limit="pagination?.limit"
+      :show-arrows="pagination?.showArrows"
+      class="my-12"
+      @active-page="p => $emit('activePage', p)"
+    />
   </div>
 </template>
 
@@ -92,6 +102,13 @@
   type TabItem = {
     title: string
     value: string
+  }
+  type PaginationOptions = {
+    start?: number
+    end: number
+    active?: number
+    limit?: number
+    showArrows?: boolean
   }
   const props = defineProps({
     heading: {
@@ -143,12 +160,16 @@
     },
     tabs: {
       type: Array as PropType<TabItem[]>,
-      default: () => []
+      default: () => [],
+    },
+    pagination: {
+      type: Object as PropType<PaginationOptions | null>,
+      default: null,
     }
   })
   const { locale } = useI18n()
 
-  defineEmits(["searched", "sorted", "activeTab"]);
+  defineEmits(["searched", "sorted", "activeTab", 'activePage']);
   const activeTab = ref(0)
 
 </script>

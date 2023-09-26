@@ -17,8 +17,8 @@
 .bg-MATH, .hover\:bg-MATH:hover {
   @apply bg-course-cat-MATH;
 }
-.bg-BIZ, .hover\:bg-BIZ:hover {
-  @apply bg-course-cat-BIZ;
+.bg-BUSINESS, .hover\:bg-BUSINESS:hover {
+  @apply bg-course-cat-BUSINESS;
 }
 .bg-ELECT, .hover\:bg-ELECT:hover {
   @apply bg-course-cat-ELECT;
@@ -26,7 +26,7 @@
 .hover\:bg-IT:hover,
 .hover\:bg-ENG:hover,
 .hover\:bg-MATH:hover,
-.hover\:bg-BIZ:hover,
+.hover\:bg-BUSINESS:hover,
 .hover\:bg-ELECT:hover {
   --tw-bg-opacity: 0.3;
   transition: background-color 0.3s ease-out;
@@ -43,8 +43,8 @@
 .border-MATH {
   @apply border-course-cat-MATH;
 }
-.border-BIZ {
-  @apply border-course-cat-BIZ;
+.border-BUSINESS {
+  @apply border-course-cat-BUSINESS;
 }
 .border-ELECT {
   @apply border-course-cat-ELECT;

@@ -90,5 +90,13 @@
       "title": "Sort by",
       "default": "Default order"
     }
+  },
+  "footer": {
+    "links": {
+      "courses": "Courses List",
+      "submit": "Submit Papers",
+      "about": "About Us",
+      "contact": "Contact Us"
+    }
   }
 }

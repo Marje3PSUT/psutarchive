@@ -5,8 +5,13 @@
       show-search
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
+      :pagination="{
+        end: courses?.meta.pagination?.pageCount as number,
+        active: courses?.meta.pagination?.page
+      }"
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
+      @active-page="p => (state.activePage = p)"
     >
       <CourseCard
         v-for="item in list"
@@ -25,6 +30,7 @@
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
+    activePage: 1 as number | undefined
     // activeFilters: undefined as ActiveFilters | undefined,
   })
 
@@ -43,22 +49,28 @@
       title: t('courses.sort.alphapetical')
     },
     {
-      key: 'category.slug:desc',
+      key: 'categories.slug:desc',
       title: t('courses.sort.category')
     }
   ])
 
   const query = reactive({
     populate: [
-      'category',
+      'categories',
       'resources',
       'alt_names'
     ],
+    pagination: computed(() => {
+      return {
+        page: state.activePage,
+        pageSize: 18,
+      }
+    }),
     filters: computed(() => {
       return {
-        category: {
+        categories: {
           slug: {
-            $eqi: route.query.category ? route.query.category : undefined
+            $contains: route.query.category
           }
         },
         // search query
@@ -88,7 +100,7 @@
         ]
       }
     }),
-    sort: computed(()  => state.activeSort || !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
+    sort: computed(()  => state.activeSort && !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
   })
 
   const { data: courses, pending } = useLazyAsyncData<

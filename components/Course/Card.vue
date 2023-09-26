@@ -1,12 +1,12 @@
 <template>
   <div
-    class="card card-compact w-full max-sm:h-24 max-h-32 bg-base-100 shadow-xl card-bordered"
-    :class="`hover:bg-${item.category?.data.attributes.slug.toUpperCase()} border-${item.category?.data.attributes.slug.toUpperCase()} ${$attrs.class ? $attrs.class : ''}`"
+    class="card card-compact w-full max-sm:h-24 max-h-32 bg-base-100 shadow-xl card-bordered border-base-content hover:bg-base-content hover:bg-opacity-10 transition-colors"
+    :class="`hover:bg-${item.categories?.data[0]?.attributes.slug.toUpperCase()} border-${item.categories?.data[0]?.attributes.slug.toUpperCase()} ${$attrs.class ? $attrs.class : ''}`"
   >
     <div class="flex justify-between m-2 px-2">
-      <p class="text-xs">
-        {{ item.course_id }}
-      </p>
+      <span class="text-xs badge bg-transparent border border-base-content border-opacity-40">
+        #{{ item.course_id }}
+      </span>
       <button
         :title="$t('courses.addToFavs')"
         :aria-label="$t('courses.addToFavs')"
@@ -37,9 +37,19 @@
         }}
       </h4>
       <div class="flex justify-between text-xs w-full mt-auto">
-        <p class="grow-0">
-          {{ $t('papers.name', item.resources?.data.length ? item.resources.data.length : 0 ) }}
-        </p>
+        <span
+          v-if="item.categories?.data.length"
+          :title="categories"
+          class="badge badge-sm badge-ghost border-0 line-clamp-1 max-w-[55%]"
+        >
+          {{ categories }}
+        </span>
+        <span
+          class="grow-0 ms-auto badge badge-sm bg-transparent border-0"
+          :class="{ '!badge-secondary': resCount > 0 }"
+        >
+          {{ $t('papers.name', resCount) }}
+        </span>
       </div>
     </NuxtLink>
   </div>
@@ -75,6 +85,9 @@
     }
     isFavorite.value = !isFavorite.value
   }
+
+  const categories = ref(props.item.categories?.data.map(c => locale.value === 'en' ? c.attributes.name : c.attributes.name_ar).join(', '))
+  const resCount = ref(props.item.resources?.data.length ? props.item.resources.data.length : 0)
 
   onMounted(() => {
     const favList = getCourses()
