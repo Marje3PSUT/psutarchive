@@ -72,15 +72,6 @@
         <slot />
       </div>
     </Transition>
-    <ListPagination
-      v-if="props.pagination"
-      :start="pagination?.start"
-      :end="(pagination?.end as number)"
-      :active="pagination?.active"
-      :limit="pagination?.limit"
-      :show-arrows="pagination?.showArrows"
-      @active-page="p => $emit('activePage', p)"
-    />
     <div
       v-if="pending"
       class="flex justify-center"
@@ -89,6 +80,16 @@
         class="loading loading-infinity loading-lg"
       />
     </div>
+    <ListPagination
+      v-if="props.pagination"
+      :start="pagination?.start"
+      :end="(pagination?.end as number)"
+      :active="pagination?.active"
+      :limit="pagination?.limit"
+      :show-arrows="pagination?.showArrows"
+      class="my-12"
+      @active-page="p => $emit('activePage', p)"
+    />
   </div>
 </template>
 

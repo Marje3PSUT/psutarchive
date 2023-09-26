@@ -1,8 +1,8 @@
 <template>
-  <div class="join w-full justify-center my-4">
+  <div class="join flex-wrap w-full justify-center">
     <button
       v-if="showArrows"
-      class="btn join-item"
+      class="btn join-item max-sm:btn-sm"
       :class="{ 'btn-disabled': activePage === start }"
       @click="movePage(-1)"
     >
@@ -10,12 +10,12 @@
     </button>
     <template v-if="showEllipsisBefore">
       <button
-        class="join-item btn"
+        class="join-item btn max-sm:btn-sm"
         @click="activePage = start; emit('activePage', activePage)"
       >
         {{ start }}
       </button>
-      <button class="join-item btn btn-disabled">
+      <button class="join-item btn btn-disabled max-sm:btn-sm">
         ...
       </button>
     </template>
@@ -24,18 +24,18 @@
       v-for="page in pagesToShow.filter(p => showEllipsisAfter ? p !== props.end : showEllipsisBefore ? p !== props.start : true)"
       :key="page"
       :class="{ 'btn-secondary': page === activePage }"
-      class="join-item btn"
+      class="join-item btn max-sm:btn-sm"
       @click="activePage = page; emit('activePage', activePage)"
     >
       {{ page }}
     </button>
 
     <template v-if="showEllipsisAfter">
-      <button class="join-item btn btn-disabled">
+      <button class="join-item btn btn-disabled max-sm:btn-sm">
         ...
       </button>
       <button
-        class="join-item btn"
+        class="join-item btn max-sm:btn-sm"
         @click="activePage = end; emit('activePage', activePage)"
       >
         {{ end }}
@@ -43,7 +43,7 @@
     </template>
     <button
       v-if="showArrows"
-      class="btn join-item"
+      class="btn join-item max-sm:btn-sm"
       :class="{ 'btn-disabled': activePage === end }"
       @click="movePage(1)"
     >

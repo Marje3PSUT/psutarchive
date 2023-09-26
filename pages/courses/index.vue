@@ -63,7 +63,7 @@
     pagination: computed(() => {
       return {
         page: state.activePage,
-        pageSize: 9,
+        pageSize: 18,
       }
     }),
     filters: computed(() => {
