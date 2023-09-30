@@ -72,6 +72,8 @@
         <slot />
       </div>
     </Transition>
+    
+    <!-- Loading animation -->
     <div
       v-if="pending"
       class="flex justify-center"
@@ -80,6 +82,11 @@
         class="loading loading-infinity loading-lg"
       />
     </div>
+
+    <!-- Messages -->
+    <slot name="message" />
+
+    <!-- Pagination -->
     <ListPagination
       v-if="props.pagination"
       :start="pagination?.start"
