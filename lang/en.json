@@ -98,5 +98,14 @@
       "about": "About Us",
       "contact": "Contact Us"
     }
+  },
+  "messages": {
+    "no-data": {
+      "generic": "No data found",
+      "course": "No courses were found",
+      "exam": "No exams were found",
+      "note": "No notes were found"
+    },
+    "error": "We're sorry, an error has occured"
   }
 }

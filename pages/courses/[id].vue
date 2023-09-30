@@ -24,6 +24,22 @@
           />
         </div>
       </TransitionGroup>
+      <template #message>
+        <!-- no data info message -->
+        <UIMessage
+          v-if="!error && resources?.length === 0"
+          :message="$t(`messages.no-data.${tabsList[state.activeTab].value}`)"
+          class="bg-neutral text-neutral-content max-w-max mx-auto"
+        />
+
+        <!-- error message -->
+        <UIMessage
+          v-if="error"
+          :message="$t('messages.error')"
+          class="max-w-max mx-auto"
+          type="error"
+        />
+      </template>
     </List>
   </div>
 </template>
@@ -140,7 +156,7 @@
       }
     } as StrapiRestFilters<ResourceAttributes>
   });
-  const { data: resourcesList, pending } = useAsyncData<StrapiResponse<ResourceAttributes>>(
+  const { data: resourcesList, pending, error } = useAsyncData<StrapiResponse<ResourceAttributes>>(
     async () => {      
       if (!id) {
         // If the course does not exist throw 404

@@ -19,6 +19,22 @@
         :key="item.id"
         :item="item.attributes"
       />
+      <template #message>
+        <!-- no data info message -->
+        <UIMessage
+          v-if="!error && list?.length === 0"
+          :message="$t('messages.no-data.course')"
+          class="bg-neutral text-neutral-content max-w-max mx-auto"
+        />
+
+        <!-- error message -->
+        <UIMessage
+          v-if="error"
+          :message="$t('messages.error')"
+          class="max-w-max mx-auto"
+          type="error"
+        />
+      </template>
     </List>
   </div>
 </template>
@@ -103,7 +119,7 @@
     sort: computed(()  => state.activeSort && !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
   })
 
-  const { data: courses, pending } = useLazyAsyncData<
+  const { data: courses, pending, error } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>
   >(() => $baseApi(`courses?${qs.stringify(query, { encodeValuesOnly: true })}`, { cache: true }), {
     watch: [query]
