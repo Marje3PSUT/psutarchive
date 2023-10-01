@@ -31,4 +31,7 @@
   body, #__nuxt, #__layout, #__nuxt > div {
     @apply min-h-screen h-full w-full;
   }
+  #main {
+    margin-bottom: auto;
+  }
 </style>

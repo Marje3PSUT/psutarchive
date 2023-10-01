@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer mt-auto gap-y-8 footer-center p-10 bg-base-200 text-base-content">
+  <footer class="footer mt-16 gap-y-8 footer-center p-10 bg-base-200 text-base-content">
     <nuxt-link
       :to="$nuxt.$localePath('/')"
       title="homepage"
