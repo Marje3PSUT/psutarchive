@@ -114,5 +114,41 @@
       "note": "No notes were found"
     },
     "error": "We're sorry, an error has occured"
-  }
+  },
+  "aboutweb": "About the website",
+  "aboutdesc": "This website is a project for Marje3 club team at Princess Sumaya University for Technology (PSUT).",
+  "origin": "Club Story",
+  "vision": "Our vision is to support the student from all academic and advisory aspects, promote the values ​​of cooperation and teamwork, support skills, build an educational life and social experience, help students to communicate and to discuss.",
+
+  "values": "Club values",
+  "clubValues": "Excellence in performance, teamwork, affiliation, and responsibility.",
+
+  "objectivesTitle": "Objectives:",
+  "objective1": "Encouraging volunteer tendencies, serving students, promoting the concept of teamwork, and consolidating the values ​​of cooperation among students.",
+  "objective2": "Supporting academic majors with a practical aspect to raise students’ technical efficiency and help them.",
+  "objective3": "Follow up students who fail academically.",
+  "objective4": "Breaking the barrier of fear among students and getting to know new colleagues.",
+  "objective5": "Create a database.",
+  "objective6": "Finally, returned something of the kindness that our dear university offered us.",
+
+  "management": "The club manages, plans and organizes activities and programs, also provides academic and advisory services through the following:",
+  "activity1": "Forming a volunteer team to serve the university and students.",
+  "activity2": "Team of lectures and material references (year questions, books, summaries, notebooks).",
+  "activity3": "Social media and design team.",
+  "activity4": "Receiving new students and introducing them to the university and its majors.",
+  "activity5": "Guiding and assisting students (in selecting subjects before the start of registration in each semester).",
+  "activity6": "Holding revision classes before the exams period by students who excel in the subject.",
+
+  "supportingBodiesTitle": "Supporting bodies:",
+  "supportBody1": "University students.",
+  "supportBody2": "Learning support office.",
+  "supportBody3": "Employees in various departments and deanships.",
+  "supportBody4": "Club heads.",
+  "supportBody5": "Social Counselor.",
+  "supportBody6": "Consultation and training center.",
+
+  "additionalIdeasTitle": "Additional ideas:",
+  "idea1": "Gathering Erasmus students and cultural exchange to talk about their experiences and help students in their application + making an explanatory video.",
+  "idea2": "Organizing trips to companies (according to specialization).",
+  "idea3": "Photographing university life and highlighting it in the best way."
 }
