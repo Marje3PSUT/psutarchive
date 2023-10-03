@@ -53,6 +53,11 @@
       link: "#"
     },
     {
+      name: "Discord",
+      icon: "ion:logo-discord",
+      link: "#"
+    },
+    {
       name: "GitHub",
       icon: "ion:logo-github",
       link: "https://github.com/Marje3PSUT/"
