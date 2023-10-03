@@ -38,12 +38,10 @@ export enum Semesters {
   Summer = "summer"
 }
 export enum NoteTypes {
-  Lecture = "lecture",
   Summary = "summary",
   Slides = "slides",
-  Reference = "reference",
-  Practice = "practice",
-  Review = "review",
+  Assignment = "assignment",
+  Project = "project",
   Other = "other",
 }
 export enum ExamTypes {

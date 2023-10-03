@@ -45,12 +45,10 @@
       },
       "note": {
         "type": {
-          "lecture": "محاضرة",
           "summary": "ملخص",
-          "slides": "شرائح",
-          "reference": "مراجع",
-          "practice": "تمارين",
-          "review": "مراجعة",
+          "slides": "شرائح العرض",
+          "assignment": "واجب",
+          "project": "مشروع",
           "other": "أخرى"
         }
       }

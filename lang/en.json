@@ -45,12 +45,10 @@
       },
       "note": {
         "type": {
-          "lecture": "Lecture",
+          "assignment": "Assignment",
           "summary": "Summary",
           "slides": "Slides",
-          "reference": "Reference",
-          "practice": "Practice",
-          "review": "Review",
+          "project": "Project",
           "other": "Other"
         }
       }
