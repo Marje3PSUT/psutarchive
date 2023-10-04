@@ -8,6 +8,7 @@
       show-search
       :search-placeholder="$t('material.search')+ '...'"
       :sort-options="sortOptions"
+      :active-tab="state.activeTab"
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-tab="t => (state.activeTab = t)"
@@ -53,6 +54,7 @@
 
   const { locale, t } = useI18n()
   const urlId = ref(useRoute().params.id)
+  const route = useRoute()
 
   const tabsList = [
     {
@@ -158,7 +160,7 @@
     } as StrapiRestFilters<ResourceAttributes>
   });
   const { data: resourcesList, pending, error } = useAsyncData<StrapiResponse<ResourceAttributes>>(
-    async () => {      
+    async () => {
       if (!id) {
         // If the course does not exist throw 404
         throw showError({ // TODO: use createError instead and handle it manually with a custom 404 page
@@ -196,7 +198,20 @@
   const heading = computed<string>(
     () => locale.value === 'en' ? course?.attributes?.name as string
         : course?.attributes?.name_ar as string
-    )
+  )
+  watch(state , () => {
+    return navigateTo({
+      query: {
+        tab: tabsList[state.activeTab].value
+      }
+    })
+  })
+  onMounted(() => {
+    const tabs = tabsList.map(i => i.value)
+    if (route.query.tab && tabs.includes(route.query.tab as string)) {
+      state.activeTab = tabs.indexOf(route.query.tab as string)
+    }
+  })
 </script>
 <style scoped lang="postcss">
   .list-enter-active,

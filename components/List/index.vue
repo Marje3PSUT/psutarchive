@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: add pagination -->
   <div class="container">
     <!-- Heading -->
     <div
@@ -55,7 +54,7 @@
         :key="i"
         class="tab"
         :class="{ 'tab-active': activeTab === i }"
-        @click="activeTab = i; $emit('activeTab', i)"
+        @click="$emit('activeTab', i)"
       >
         {{ tab.title }}
       </button>
@@ -165,6 +164,10 @@
       type: String,
       default: null,
     },
+    activeTab: {
+      type: Number,
+      default: 0,
+    },
     tabs: {
       type: Array as PropType<TabItem[]>,
       default: () => [],
@@ -177,7 +180,6 @@
   const { locale } = useI18n()
 
   defineEmits(["searched", "sorted", "activeTab", 'activePage']);
-  const activeTab = ref(0)
 
 </script>
 

@@ -36,9 +36,21 @@
       required: true,
     },
   })
+  const route = useRoute()
   const emit = defineEmits(['closed'])
+
   const closeModal = () => {
     emit('closed')
+
+    // remove url query
+    const query = {
+      ...route.query,
+      res: undefined,
+    }
+    return navigateTo({
+      path: route.fullPath,
+      query: query
+    })
   }
 </script>
 

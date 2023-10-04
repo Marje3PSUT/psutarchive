@@ -139,6 +139,8 @@
     }
   })
   const { locale } = useI18n()
+  const route = useRoute()
+
   const loading = ref(false)
   const resourceType = ref(props.item.material[0]?.__component?.includes('exam') ? 'exam' : 'note')
   const filesCount = ref<number>(props.item.files?.data.length as number)
@@ -194,9 +196,26 @@
 
   const modalIsOpen = ref(false)
   const openModal = () => {
+    // open modal
     modalIsOpen.value = true;
     (document.getElementById(`res_${props.resourceId}`) as HTMLDialogElement).showModal()
+
+    // add url query
+    const query = {
+      ...route.query,
+      res: props.resourceId,
+    }
+    return navigateTo({
+      path: route.fullPath,
+      query: query
+    })
   }
+
+  onMounted(() => {
+    if (route.query.res === props.resourceId.toString()) {
+      openModal()
+    }
+  })
 </script>
 <style scoped lang="postcss">
   .card {
