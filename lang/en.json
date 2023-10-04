@@ -22,6 +22,9 @@
     "files": "file | files",
     "megabyte": "MB",
     "search": "Search by type, semester, or year",
+    "download": "Download file | Download all files",
+    "preview": "Preview files",
+    "open": "Open file | Open files",
     "semesters": {
       "fall": "Fall",
       "spring": "Spring",

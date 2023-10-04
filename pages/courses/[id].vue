@@ -20,6 +20,7 @@
           <ResourceCard
             :item="item.attributes"
             :course-id="course?.attributes.course_id"
+            :resource-id="item.id"
             class="h-full"
           />
         </div>

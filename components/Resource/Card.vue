@@ -1,6 +1,4 @@
 <template>
-  <!-- FIXME: make font a bit smaller on smaller screen -->
-  <!-- FIXME: add an arabic font with light / extralight variants -->
   <div
     class="card card-compact indicator"
   >
@@ -27,29 +25,101 @@
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <span class="font-normal">{{ item.files?.data.length }} {{ $t('material.files', item.files?.data.length as number) }}</span>
-      <button
-        v-if="!loading"
-        aria-label="download-button"
-        @click="download()"
-      >
-        <Icon
-          name="solar:download-minimalistic-linear"
-          size="36"
-          class="cursor-pointer hover:text-accent transition-[200ms]"
+      <span class="font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
+      <div class="flex justify-center items-center gap-1">
+        <button
+          v-if="!loading"
+          aria-label="download-button"
+          class="tooltip tooltip-accent z-20"
+          :data-tip="$t('material.download', filesCount)"
+          @click="download(item.files?.data)"
+        >
+          <Icon
+            name="ion:md-download"
+            size="36"
+            class="cursor-pointer hover:text-accent transition-[200ms]"
+          />
+        </button>
+        <span
+          v-else
+          class="loading loading-spinner w-9 text-accent"
         />
-      </button>
-      <span
-        v-else
-        class="loading loading-spinner loading-lg text-accent"
-      />
-      <span> {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }} {{ $t('material.megabyte') }} </span>
+        <button
+          v-if="filesCount > 1"
+          aria-label="see-files-button"
+          class="tooltip tooltip-accent z-20"
+          :data-tip="$t('material.preview')"
+          @click="openModal()"
+        >
+          <Icon
+            name="ion:folder"
+            size="36"
+            class="cursor-pointer hover:text-accent transition-[200ms]"
+          />
+        </button>
+      </div>
+      <span class="text-center">
+        {{ totalSize ? (totalSize / 1024).toFixed(2) : 0 }}
+        {{ $t('material.megabyte') }}
+      </span>
     </div>
+
+    <!-- solved exam indicator -->
     <span
       v-if="resourceType === 'exam' && item.material[0]?.is_solved"
       class="indicator-item indicator-middle badge badge-secondary uppercase font-bold"
       :class="locale === 'en' ? 'indicator-start -rotate-90' : 'indicator-end rotate-90'"
     >{{ $t('material.resource.exam.solved') }}</span>
+
+    <!-- preview files modal -->
+    <ResourceModal
+      v-if="filesCount > 1"
+      :id="resourceId"
+      @closed="modalIsOpen = false"
+    >
+      <template
+        v-if="modalIsOpen"
+        #content
+      >
+        <div class="flex flex-col mt-4 gap-2">
+          <div
+            v-for="file in item.files?.data"
+            :key="file.id"
+            dir="ltr"
+            class="border-b border-base-content border-opacity-25 p-2 flex items-center gap-4 last:border-none"
+          >
+            <span class="font-mono">{{ file.attributes.name }}</span>
+            <span class="text-center text-sm ms-auto">
+              {{ (file.attributes.size / 1024).toFixed(2) }}
+              {{ $t('material.megabyte') }}
+            </span>
+            <a
+              :href="file.attributes.url"
+              target="_blank"
+              :download="file.attributes.name"
+              :title="$t('material.open')"
+            >
+              <Icon
+                name="ion:md-open"
+                size="24"
+                class="cursor-pointer hover:text-accent transition-[200ms]"
+              />
+            </a>
+            <button
+              aria-label="download-button"
+              :title="$t('material.download')"
+              @click="download([file])"
+            >
+              <Icon
+                name="ion:md-download"
+                size="24"
+                class="cursor-pointer hover:text-accent transition-[200ms]"
+              />
+            </button>
+          </div>
+        </div>
+      </template>
+    </ResourceModal>
   </div>
 </template>
 <script setup lang="ts">
@@ -62,11 +132,16 @@
       type: String,
       required: false,
       default: ''
+    },
+    resourceId: {
+      type: Number,
+      required: true,
     }
   })
   const { locale } = useI18n()
   const loading = ref(false)
   const resourceType = ref(props.item.material[0]?.__component?.includes('exam') ? 'exam' : 'note')
+  const filesCount = ref<number>(props.item.files?.data.length as number)
 
   // get total size of all files of this resource
   const totalSize = ref(
@@ -75,9 +150,8 @@
         (sum: number, curr: StrapiItem<MediaAttributes>) => (sum + curr.attributes.size), 0)
   )
 
-  const download = async () => {
+  const download = async (files: StrapiItem<MediaAttributes>[] | undefined = props.item.files?.data) => {
     loading.value = true
-    const files = props.item.files?.data
 
     // get urls of files
     const urls = ref(files?.map(f => [f.attributes.url, f.attributes.provider]))
@@ -116,6 +190,12 @@
     a.download = `${fileName}${fileExt.value}`;
     a.click();
     loading.value = false
+  }
+
+  const modalIsOpen = ref(false)
+  const openModal = () => {
+    modalIsOpen.value = true;
+    (document.getElementById(`res_${props.resourceId}`) as HTMLDialogElement).showModal()
   }
 </script>
 <style scoped lang="postcss">
