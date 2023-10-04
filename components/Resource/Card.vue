@@ -18,10 +18,10 @@
         </span>
       </div>
       <div
-        v-if="item.createdBy"
-        class="text-xs opacity-50"
+        v-if="item.material[0]?.title"
+        class="text-xs opacity-75 max-h-10 line-clamp-3 overflow-clip"
       >
-        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}` }}
+        {{ item.material[0]?.title }}
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
@@ -76,6 +76,12 @@
         {{ totalSize ? (totalSize / 1024).toFixed(2) : 0 }}
         {{ $t('material.megabyte') }}
       </span>
+      <div
+        v-if="item.createdBy"
+        class="text-xs opacity-50 whitespace-nowrap"
+      >
+        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}` }}
+      </div>
     </div>
 
     <!-- solved exam indicator -->
@@ -95,19 +101,27 @@
         v-if="modalIsOpen"
         #content
       >
-        <div class="capitalize text-lg font-bold  flex justify-between px-2 mt-4 mb-2">
-          <span>
-            {{ $t(`material.resource.type.${resourceType}`) }} -
-            <span class="text-secondary-focus">
-              {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
+        <div class="border-b border-base-content border-opacity-50 my-4">
+          <div class="capitalize text-lg font-bold  flex justify-between p-2">
+            <span>
+              {{ $t(`material.resource.type.${resourceType}`) }} -
+              <span class="text-secondary-focus">
+                {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
+              </span>
             </span>
-          </span>
-          <span>
-            <span v-if="item.metadata?.semester">
-              {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+            <span>
+              <span v-if="item.metadata?.semester">
+                {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+              </span>
+              {{ item.metadata?.year }}
             </span>
-            {{ item.metadata?.year }}
-          </span>
+          </div>
+          <div
+            v-if="item.material[0]?.title"
+            class="text-xs p-2"
+          >
+            {{ item.material[0]?.title }}
+          </div>
         </div>
         <div class="flex flex-col gap-2">
           <div
@@ -248,7 +262,7 @@
 <style scoped lang="postcss">
   .card {
     @apply flex-row justify-between;
-    @apply w-full max-h-32 p-4;
+    @apply w-full max-h-40 p-4;
     @apply bg-base-100 shadow-xl;
     @apply card-bordered border-base-content;
     --tw-border-opacity: 0.2;
