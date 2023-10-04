@@ -21,7 +21,7 @@
         v-if="item.createdBy"
         class="text-xs opacity-50"
       >
-        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}`  }}
+        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}` }}
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
@@ -57,6 +57,20 @@
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </button>
+        <a
+          v-else
+          :href="item.files?.data[0].attributes.url"
+          target="_blank"
+          class="tooltip tooltip-accent"
+          :download="item.files?.data[0].attributes.name"
+          :data-tip="$t('material.open')"
+        >
+          <Icon
+            name="ion:md-open"
+            size="36"
+            class="cursor-pointer hover:text-accent transition-[200ms]"
+          />
+        </a>
       </div>
       <span class="text-center">
         {{ totalSize ? (totalSize / 1024).toFixed(2) : 0 }}
