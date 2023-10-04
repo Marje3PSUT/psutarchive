@@ -18,10 +18,10 @@
         </span>
       </div>
       <div
-        v-if="item.metadata?.uploader?.name"
+        v-if="item.createdBy"
         class="text-xs opacity-50"
       >
-        {{ $t('misc.by') }} {{ item.metadata.uploader.name }}
+        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}`  }}
       </div>
     </div>
     <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
