@@ -203,7 +203,8 @@
     return navigateTo({
       query: {
         tab: tabsList[state.activeTab].value
-      }
+      },
+      replace: true,
     })
   })
   onMounted(() => {

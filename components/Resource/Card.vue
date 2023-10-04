@@ -249,7 +249,8 @@
     }
     return navigateTo({
       path: route.fullPath,
-      query: query
+      query: query,
+      replace: true,
     })
   }
 
