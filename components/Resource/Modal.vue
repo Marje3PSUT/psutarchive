@@ -21,6 +21,7 @@
     >
       <button
         aria-label="close dialog"
+        class="cursor-default"
         @click="closeModal"
       >
         close

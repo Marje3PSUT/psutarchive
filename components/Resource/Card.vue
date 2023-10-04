@@ -81,7 +81,21 @@
         v-if="modalIsOpen"
         #content
       >
-        <div class="flex flex-col mt-4 gap-2">
+        <div class="capitalize text-lg font-bold  flex justify-between px-2 mt-4 mb-2">
+          <span>
+            {{ $t(`material.resource.type.${resourceType}`) }} -
+            <span class="text-secondary-focus">
+              {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
+            </span>
+          </span>
+          <span>
+            <span v-if="item.metadata?.semester">
+              {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+            </span>
+            {{ item.metadata?.year }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-2">
           <div
             v-for="file in item.files?.data"
             :key="file.id"
