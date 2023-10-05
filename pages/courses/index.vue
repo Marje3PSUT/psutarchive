@@ -1,7 +1,6 @@
 <template>
   <div class="container mx-auto">
     <List
-      :pending="pending"
       show-search
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
@@ -13,6 +12,12 @@
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
     >
+
+      <CourseSkeleton
+          v-for="index in 3" 
+          :key="index" 
+          v-if="pending"
+      />
       <CourseCard
         v-for="item in list"
         :id="item.id"
