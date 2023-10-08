@@ -1,6 +1,6 @@
 <template>
-  <div class="z-10 dropdown md:hidden">
-    <label
+  <details class="z-10 dropdown md:hidden">
+    <summary
       tabindex="0"
       class="btn btn-ghost md:hidden p-0"
     >
@@ -8,7 +8,7 @@
         name="ion:menu"
         size="32"
       />
-    </label>
+    </summary>
     <ul
       tabindex="0"
       class="menu menu-compact dropdown-content"
@@ -35,7 +35,7 @@
         <UILangSwitcher />
       </li>
     </ul>
-  </div>
+  </details>
 </template>
 <script setup>
   const localePath = useLocalePath()
