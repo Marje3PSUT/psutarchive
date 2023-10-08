@@ -1,5 +1,24 @@
+<script setup>
+  import { ref } from 'vue'
+
+  const localePath = useLocalePath()
+  const detailsElement = ref(null)
+
+  const close = () => {
+    detailsElement.value.removeAttribute("open");
+  }
+
+  const navigateAndClose = (path) => {
+    navigateTo(localePath(path))
+    close()
+  }
+
+</script>
 <template>
-  <details class="z-10 dropdown md:hidden">
+  <details
+    ref="detailsElement"
+    class="z-10 dropdown md:hidden"
+  >
     <summary
       tabindex="0"
       class="btn btn-ghost md:hidden p-0"
@@ -17,29 +36,26 @@
         tabindex="0"
         class="rounded-t-box"
       >
-        <NuxtLink :to="localePath('/courses')">
+        <a @click="navigateAndClose('/courses')">
           {{ $t("courses.title") }}
-        </NuxtLink>
+        </a>
       </li>
       <li>
-        <NuxtLink :to="localePath('/upload')">
+        <a @click="navigateAndClose('/upload')">
           {{ $t("submit.title") }}
-        </NuxtLink>
+        </a>
       </li>
       <li>
-        <NuxtLink :to="localePath('/about')">
+        <a @click="navigateAndClose('/about')">
           {{ $t("about.title") }}
-        </NuxtLink>
+        </a>
       </li>
-      <li class="rounded-b-box">
+      <li @click="close()" class="rounded-b-box">
         <UILangSwitcher />
       </li>
     </ul>
   </details>
 </template>
-<script setup>
-  const localePath = useLocalePath()
-</script>
 <style scoped lang="postcss"> 
   .menu {
     --tw-bg-opacity: 0.8;
