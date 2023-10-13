@@ -80,6 +80,17 @@
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </a>
+        <!-- <button
+          aria-label="share-resource"
+          class="tooltip tooltip-accent z-20"
+          :data-tip="$t('material.preview')"
+        >
+          <Icon
+            name="ion:md-share"
+            size="32"
+            class="cursor-pointer hover:text-accent transition-[200ms]"
+          />
+        </button> -->
       </div>
       <span
         v-if="totalSize"
