@@ -1,7 +1,18 @@
 <template>
-  <div class="resources container mx-auto">
+  <div class="container mx-auto">
+    <div class="container mx-auto flex justify-between items-center">
+      <h2 class="text-2xl">
+        {{ heading }}
+      </h2>
+      <div class="info flex gap-4 items-center">
+        <span>#{{ urlId }}</span>
+        <CourseFavoriteButton
+          :id="(course?.id as number)"
+          size="32"
+        />
+      </div>
+    </div>
     <List
-      :heading="heading"
       :pending="pending"
       :view="state.listView ? 'flex' : 'auto'"
       :tabs="tabsList"
