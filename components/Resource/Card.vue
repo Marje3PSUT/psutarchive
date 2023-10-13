@@ -81,8 +81,11 @@
           />
         </a>
       </div>
-      <span class="res-size text-center">
-        {{ totalSize ? (totalSize / 1024).toFixed(2) : 0 }}
+      <span
+        v-if="totalSize"
+        class="text-center"
+      >
+        {{ totalSize / 1024 > 1 ? (totalSize / 1024).toFixed(2) : `< 1` }}
         {{ $t('material.megabyte') }}
       </span>
     </div>
