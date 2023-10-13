@@ -19,21 +19,35 @@ export default defineEventHandler(async (event) => {
     'File-Extension': ''
   }
 
+  let isText = false
   // TODO: Error handling with h3 errors
   // Add each file to the zip file
   for (const file of files) {
     // check if the file is uploaded on the API locally or a separate storage provider
     const fileUrl = file.source === 'local' ?
-      apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + file.url : file.url
+        apiUrl.substring(0, apiUrl.lastIndexOf('/api')) + file.url : file.url
 
-    const fileBuffer = Buffer.from(await $fetch(fileUrl, {cache: "default"}).then(res => (res as Response).arrayBuffer()))
+    const fileData = await $fetch(fileUrl, {
+        cache: "default",
+        responseType: 'blob',
+        onResponse(context) {
+            if (context.response.headers.get('content-type') === 'text/plain') {
+              isText = true
+            }
+        },
+      }).then(res => (res as Response).arrayBuffer())
+    const fileBuffer = Buffer.from(fileData)
+
     const fileName = file.url.substring(file.url.lastIndexOf('/') + 1, file.url.lastIndexOf('_'))
     if (files.length === 1) {
       // Return the file without zipping if it's a single file
       fileType = await fileTypeFromBuffer(fileBuffer)
       responseHeaders['Content-Disposition'] = `attachment; filename="${fileName}.${fileType?.ext}"`
-      responseHeaders['Content-Type'] = fileType?.mime as string
-      responseHeaders['File-Extension'] = fileType?.ext as string
+      responseHeaders['Content-Type'] =
+        isText ? 'text/plain'
+        : fileType?.mime ? fileType.mime
+        : 'application/octet-stream' // fallback type
+      responseHeaders['File-Extension'] = fileUrl.substring(fileUrl.lastIndexOf('.') + 1)
       setResponseHeaders(event, responseHeaders)
       try {
         return fileBuffer
