@@ -198,12 +198,15 @@
     loading.value = true
 
     // get urls of files
-    const urls = ref(files?.map(f => [f.attributes.url, f.attributes.provider]))
+    const urls = ref(files?.map(f => ({
+      url: f.attributes.url,
+      source: f.attributes.provider
+    })))
 
     const fileExt = ref('')
     const fileType = ref('')
 
-    const { data } = await useFetch<Blob>('/api/zipFiles', {
+    const { data } = await useFetch<Blob>('/api/download', {
       method: 'POST',
       body: {
         files: urls.value,
