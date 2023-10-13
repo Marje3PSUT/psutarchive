@@ -1,9 +1,25 @@
 <template>
   <div class="container mx-auto">
     <div class="container mx-auto flex justify-between items-center">
-      <h2 class="text-2xl">
-        {{ heading }}
-      </h2>
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl">
+          {{ heading }}
+        </h2>
+        <!-- recorded lectures link -->
+        <a
+          v-if="course?.attributes.recordings_url"
+          :href="course.attributes.recordings_url"
+          target="_blank"
+          class="link link-hover text-secondary flex items-center gap-1"
+        >
+          {{ $t('courses.recordings') }}
+          <Icon
+            name="ion:md-open"
+            size="22"
+            class="rtl:-rotate-90"
+          />
+        </a>
+      </div>
       <div class="info flex gap-4 items-center">
         <span>#{{ urlId }}</span>
         <CourseFavoriteButton
