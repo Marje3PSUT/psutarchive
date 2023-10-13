@@ -45,7 +45,7 @@
         >
           <Icon
             name="ion:md-download"
-            size="36"
+            size="32"
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </button>
@@ -62,7 +62,7 @@
         >
           <Icon
             name="ion:folder"
-            size="36"
+            size="32"
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </button>
@@ -76,7 +76,7 @@
         >
           <Icon
             name="ion:md-open"
-            size="36"
+            size="32"
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </a>

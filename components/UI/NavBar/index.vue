@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-200 mb-16">
+  <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
       <NuxtLink
         class="btn btn-ghost hover:bg-base-200 normal-case text-xl"

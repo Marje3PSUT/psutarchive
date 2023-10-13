@@ -37,7 +37,7 @@
         <UIMessage
           v-if="!error && list?.length === 0"
           :message="$t('messages.no-data.course')"
-          class="bg-neutral text-neutral-content max-w-max mx-auto"
+          class="!bg-base-300 !text-base-content max-w-max mx-auto"
         />
 
         <!-- error message -->

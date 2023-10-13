@@ -14,7 +14,7 @@
       <NuxtLink
         v-for="cat in categories?.data"
         :key="cat.id"
-        class="card max-h-24 shadow-xl border max-md:w-40 flex-1"
+        class="card max-h-24 shadow-xl border max-md:w-40 flex-1 grow w-36 min-w-[9rem]"
         :class="`hover:bg-${cat.attributes.slug.toUpperCase()} border-${cat.attributes.slug.toUpperCase()}`"
         :to="$nuxt.$localePath({ name: 'courses', query: { category: cat.attributes.slug.toLowerCase()}})"
       >
