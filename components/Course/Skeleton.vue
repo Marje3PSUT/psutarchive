@@ -20,8 +20,7 @@
 <style scoped>
 .container {
     position: relative;
-    height: fit-content;
-    padding: 20px;
+    height: 8rem;
     border-radius: 10px;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, .23);
 }
@@ -39,7 +38,7 @@
 }
 
 .row~.column {
-    margin-top: 20px;
+
 }
 
 .row:nth-child(3) {
@@ -47,21 +46,21 @@
 }
 
 .circle {
-    height: 30px;
-    width: 30px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
 }
 
 .line {
-    margin-top: 25px;
-    height: 15px;
+    margin-top: 10px;
+    height: 10px;
     border-radius: 50px;
 }
 
 .line1 {
-    height: 20px;
+    height: 10px;
     width: 100px;
-    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 
@@ -72,7 +71,7 @@
 }
 
 .box {
-    height: 25px;
+    height: 10px;
     width: 100px;
     border-radius: 50px;
 }
