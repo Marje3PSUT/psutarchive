@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container mx-auto flex justify-between items-start">
       <div class="flex flex-col gap-2">
         <h2 class="text-2xl">
           {{ heading }}
@@ -20,12 +20,16 @@
           />
         </a>
       </div>
-      <div class="info flex gap-4 items-center">
-        <span>#{{ urlId }}</span>
-        <CourseFavoriteButton
-          :id="(course?.id as number)"
-          size="32"
-        />
+      <div class="info flex flex-col gap-4 items-center max-w-[10rem]">
+        <div class="flex gap-4 items-center justify-between">
+          <span>#{{ urlId }}</span>
+          <CourseFavoriteButton
+            :id="(course?.id as number)"
+            size="32"
+          />
+        </div>
+        <!-- Temporarily hidden -->
+        <ContributeUploadBtn v-if="false" />
       </div>
     </div>
     <List
