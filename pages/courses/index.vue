@@ -1,7 +1,6 @@
 <template>
   <div class="container mx-auto">
     <List
-      :pending="pending"
       show-search
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
@@ -13,13 +12,24 @@
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
     >
-      <CourseCard
-        v-for="item in list"
-        :id="item.id"
-        :key="item.id"
-        :item="item.attributes"
-      />
-      <template #message>
+      <template v-if="pending">
+        <CourseSkeleton
+          v-for="index in 9"  
+          :key="index"
+        />
+      </template>
+      <template v-else>
+        <CourseCard
+          v-for="item in list"
+          :id="item.id"
+          :key="item.id"
+          :item="item.attributes"
+        />
+      </template>
+      <template
+        v-if="!pending"
+        #message
+      >
         <!-- no data info message -->
         <UIMessage
           v-if="!error && list?.length === 0"
