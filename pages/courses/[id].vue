@@ -1,9 +1,9 @@
 <template>
-  <div class="container mx-auto">
+  <div class="resources container mx-auto">
     <List
       :heading="heading"
       :pending="pending"
-      view="grid"
+      :view="state.listView ? 'flex' : 'auto'"
       :tabs="tabsList"
       show-search
       :search-placeholder="$t('material.search')+ '...'"
@@ -12,8 +12,12 @@
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-tab="t => (state.activeTab = t)"
+      @switch-view="state.listView = !state.listView"
     >
-      <TransitionGroup name="list">
+      <TransitionGroup
+        name="list"
+        class="w-full"
+      >
         <div
           v-for="item in resources"
           :key="item.id"
@@ -22,7 +26,7 @@
             :item="item.attributes"
             :course-id="course?.attributes.course_id"
             :resource-id="item.id"
-            class="h-full"
+            :class="{ list: state.listView }"
           />
         </div>
       </TransitionGroup>
@@ -71,6 +75,7 @@
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
     activeTab: 0, // index of active tab
+    listView: false,
     // activeFilters: undefined as ActiveFilters | undefined,
   })
   const sortOptions = ref<SortOptions>([
@@ -214,7 +219,7 @@
     }
   })
 </script>
-<style scoped lang="postcss">
+<style lang="postcss">
   .list-enter-active,
   .list-leave-active {
     transition: all 0.5s ease;
@@ -226,5 +231,9 @@
   }
   .list-leave-active {
     position: absolute;
+  }
+
+  .resources.container .list.wrapper > div {
+    @apply !w-full;
   }
 </style>

@@ -2,6 +2,7 @@
   <div class="container mx-auto">
     <List
       show-search
+      :view="state.listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
       :pagination="{
@@ -11,6 +12,7 @@
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
+      @switch-view="state.listView = !state.listView"
     >
       <template v-if="pending">
         <CourseSkeleton
@@ -24,6 +26,7 @@
           :id="item.id"
           :key="item.id"
           :item="item.attributes"
+          :class="{ list: state.listView }"
         />
       </template>
       <template
@@ -56,7 +59,8 @@
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
-    activePage: 1 as number | undefined
+    activePage: 1 as number | undefined,
+    listView: false
     // activeFilters: undefined as ActiveFilters | undefined,
   })
 

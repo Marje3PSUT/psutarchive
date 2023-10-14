@@ -1,15 +1,18 @@
 <template>
   <div
-    class="card card-compact indicator"
+    class="card card-compact indicator h-full"
   >
-    <div class="flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
-      <div class="capitalize text-lg font-bold">
+    <div class="card-info flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
+      <div class="res-type capitalize text-lg font-bold">
         {{ $t(`material.resource.type.${resourceType}`) }} -
         <span class="text-secondary-focus">
           {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
         </span>
       </div>
-      <div v-if="item.metadata">
+      <div
+        v-if="item.metadata"
+        class="res-metadata"
+      >
         <span v-if="item.metadata.semester">
           {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
         </span>
@@ -19,18 +22,24 @@
       </div>
       <div
         v-if="item.material[0]?.title"
-        class="text-xs opacity-75 max-h-10 line-clamp-3 overflow-clip"
+        class="res-title text-xs opacity-75 max-h-10 line-clamp-3 overflow-clip"
       >
         {{ item.material[0]?.title }}
       </div>
+      <div
+        v-if="item.createdBy"
+        class="res-author text-xs opacity-50 whitespace-nowrap mt-2"
+      >
+        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}` }}
+      </div>
     </div>
-    <div class="flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <span class="font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
-      <div class="flex justify-center items-center gap-1">
+    <div class="card-action flex flex-col items-center gap-y-2 text-xs font-extralight">
+      <span class="res-count font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
+      <div class="res-actions flex justify-center items-center gap-1">
         <button
           v-if="!loading"
           aria-label="download-button"
-          class="tooltip tooltip-accent z-20"
+          class="res-download tooltip tooltip-accent z-20"
           :data-tip="$t('material.download', filesCount)"
           @click="download(item.files?.data)"
         >
@@ -42,12 +51,12 @@
         </button>
         <span
           v-else
-          class="loading loading-spinner w-9 text-accent"
+          class="res-loading loading loading-spinner w-9 text-accent"
         />
         <button
           v-if="filesCount > 1"
           aria-label="see-files-button"
-          class="tooltip tooltip-accent z-20"
+          class="res-folder tooltip tooltip-accent z-20"
           :data-tip="$t('material.preview')"
           @click="openModal()"
         >
@@ -61,7 +70,7 @@
           v-else
           :href="item.files?.data[0].attributes.url"
           target="_blank"
-          class="tooltip tooltip-accent"
+          class="res-open tooltip tooltip-accent"
           :download="item.files?.data[0].attributes.name"
           :data-tip="$t('material.open')"
         >
@@ -72,16 +81,10 @@
           />
         </a>
       </div>
-      <span class="text-center">
+      <span class="res-size text-center">
         {{ totalSize ? (totalSize / 1024).toFixed(2) : 0 }}
         {{ $t('material.megabyte') }}
       </span>
-      <div
-        v-if="item.createdBy"
-        class="text-xs opacity-50 whitespace-nowrap"
-      >
-        {{ $t('misc.by') }} {{ `${item.createdBy.firstname} ${item.createdBy.lastname}` }}
-      </div>
     </div>
 
     <!-- solved exam indicator -->
@@ -270,5 +273,49 @@
     @apply bg-base-100 shadow-xl;
     @apply card-bordered border-base-content;
     --tw-border-opacity: 0.2;
+  }
+  /* List view style */
+  .card.list {
+    /* @apply md:flex-row md:items-center md:flex-wrap; */
+    @apply md:grid md:grid-cols-6;
+    @apply w-full md:rounded-md h-24 p-2;
+    grid-template-rows: 1fr 40px !important;
+    .card-info {
+      /* @apply md:flex-row items-center md:w-fit md:justify-end md:gap-1; */
+      @apply md:col-span-4 md:grid grid-cols-8 md:grid-rows-2 md:justify-start md:items-center;
+      .res-type {
+        @apply md:col-span-3 md:row-start-1 md:col-start-1;
+      }
+      /* .divider {
+        @apply flex mx-1;
+      } */
+      .res-metadata {
+        @apply md:col-span-3 md:col-start-4 md:row-start-1;
+      }
+      .res-title {
+        @apply md:col-span-3 md:col-start-1 md:row-start-2;
+      }
+      .res-author {
+        @apply md:col-start-4 md:row-start-2 md:col-span-2 text-end;
+      }
+    }
+    .card-action {
+      @apply md:grid md:col-span-2 md:grid-cols-4 md:grid-rows-2 md:gap-0 md:m-0 md:p-2;
+      .res-count {
+        @apply md:col-span-1 md:col-start-3 md:row-start-2 text-center;
+      }
+      .res-size {
+        @apply md:col-span-1 md:col-start-4 md:row-start-2 text-center;
+      }
+      .res-actions {
+        @apply md:grid md:grid-cols-2 md:col-span-2 md:col-start-3 md:row-span-1 md:grid-rows-1; 
+        .res-download, .res-loading {
+          @apply md:col-start-2 md:row-start-1;
+        }
+        .res-folder, .res-open {
+          @apply md:col-start-1 md:row-start-1;
+        }
+      }
+    }
   }
 </style>
