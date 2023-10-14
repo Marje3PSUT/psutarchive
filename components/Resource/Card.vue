@@ -296,7 +296,7 @@
         @apply md:col-span-3 md:col-start-1 md:row-start-2;
       }
       .res-author {
-        @apply md:col-start-4 md:row-start-2 md:col-span-2 text-end;
+        @apply md:col-start-4 md:row-start-2 md:col-span-2;
       }
     }
     .card-action {

@@ -45,7 +45,7 @@
           v-if="showViewControl"
           aria-label="switch view"
           class="btn btn-ghost p-0.5 ms-auto tooltip tooltip-accent max-md:hidden"
-          data-tip="Switch view mode"
+          :data-tip="$t('lists.view.switch')"
           @click="$emit('switchView')"
         >
           <Icon

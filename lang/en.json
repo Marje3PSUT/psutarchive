@@ -96,6 +96,9 @@
     "sort": {
       "title": "Sort by",
       "default": "Default order"
+    },
+    "view": {
+      "switch": "Switch view mode"
     }
   },
   "footer": {
