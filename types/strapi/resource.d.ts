@@ -3,7 +3,12 @@ declare global {
     files?: RelationMulti<MediaAttributes>;
     metadata?: MaterialMetadata;
     course?: RelationSingle<CourseAttributes>;
-    material: MaterialSpecificAttributes<ExamAttributes | NoteAttributes>[]
+    createdBy?: {
+      id: number;
+      firstname: string;
+      lastname: string;
+    };
+    material: MaterialSpecificAttributes<ExamAttributes | NoteAttributes>[];
   }
 }
 export {};

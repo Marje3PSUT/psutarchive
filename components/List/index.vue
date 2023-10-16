@@ -1,6 +1,5 @@
 <template>
-  <!-- TODO: add pagination -->
-  <div class="container">
+  <div class="list-component container">
     <!-- Heading -->
     <div
       v-if="heading || headingLink"
@@ -36,12 +35,24 @@
         @searched="q => $emit('searched', q)"
       />
       <!-- Sort and filter -->
-      <div class="flex flex-wrap mx-auto w-full">
+      <div class="flex flex-wrap mx-auto w-full items-center gap-4">
         <ListSort
           v-if="props.showSort"
           :sort-options="props.sortOptions"
           @sort="(q: string) => $emit('sorted', q)"
         />
+        <button
+          v-if="showViewControl"
+          aria-label="switch view"
+          class="btn btn-ghost p-0.5 ms-auto tooltip tooltip-accent max-md:hidden"
+          :data-tip="$t('lists.view.switch')"
+          @click="$emit('switchView')"
+        >
+          <Icon
+            :name="props.view === 'flex' ? 'ion:grid-outline' : 'ion:menu'"
+            :size="props.view === 'flex' ? '28' : '32'"
+          />
+        </button>
       </div>
     </div>
 
@@ -55,7 +66,7 @@
         :key="i"
         class="tab"
         :class="{ 'tab-active': activeTab === i }"
-        @click="activeTab = i; $emit('activeTab', i)"
+        @click="$emit('activeTab', i)"
       >
         {{ tab.title }}
       </button>
@@ -65,13 +76,15 @@
     <Transition name="fade">
       <div
         v-if="!pending"
-        class="list container"
+        class="list wrapper container"
         :class="`view-${props.view} ${$attrs.class}`"
       >
         <!-- list of items / cards -->
         <slot />
       </div>
     </Transition>
+    
+    <!-- Loading animation -->
     <div
       v-if="pending"
       class="flex justify-center"
@@ -80,6 +93,11 @@
         class="loading loading-infinity loading-lg"
       />
     </div>
+
+    <!-- Messages -->
+    <slot name="message" />
+
+    <!-- Pagination -->
     <ListPagination
       v-if="props.pagination"
       :start="pagination?.start"
@@ -134,6 +152,10 @@
       required: false,
       default: "auto",
     },
+    showViewControl: {
+      type: Boolean,
+      default: true,
+    },
     maxGridCols: {
       type: Number,
       required: false,
@@ -158,6 +180,10 @@
       type: String,
       default: null,
     },
+    activeTab: {
+      type: Number,
+      default: 0,
+    },
     tabs: {
       type: Array as PropType<TabItem[]>,
       default: () => [],
@@ -169,14 +195,13 @@
   })
   const { locale } = useI18n()
 
-  defineEmits(["searched", "sorted", "activeTab", 'activePage']);
-  const activeTab = ref(0)
+  defineEmits(["searched", "sorted", "activeTab", 'activePage', 'switchView']);
 
 </script>
 
 <style scoped lang="postcss">
   .list.view-flex {
-    @apply flex;
+    @apply flex gap-4;
   }
   .list.view-grid {
     @apply grid;

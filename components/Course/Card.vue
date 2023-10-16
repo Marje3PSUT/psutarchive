@@ -3,7 +3,7 @@
     class="card card-compact w-full max-sm:h-24 max-h-32 bg-base-100 shadow-xl card-bordered border-base-content hover:bg-base-content hover:bg-opacity-10 transition-colors"
     :class="`hover:bg-${item.categories?.data[0]?.attributes.slug.toUpperCase()} border-${item.categories?.data[0]?.attributes.slug.toUpperCase()} ${$attrs.class ? $attrs.class : ''}`"
   >
-    <div class="flex justify-between m-2 px-2">
+    <div class="flex justify-between m-2 px-2 gap-2 items-center">
       <span class="text-xs badge bg-transparent border border-base-content border-opacity-40">
         #{{ item.course_id }}
       </span>
@@ -36,7 +36,7 @@
             : item.name
         }}
       </h4>
-      <div class="flex justify-between text-xs w-full mt-auto">
+      <div class="card-info flex justify-between items-center text-xs w-full mt-auto">
         <span
           v-if="item.categories?.data.length"
           :title="categories"
@@ -64,11 +64,6 @@
       type: Number,
       default: null
     },
-    listView: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
   })
 
   const { locale } = useI18n();
@@ -97,5 +92,18 @@
 <style scoped lang="postcss">
   .card {
     --tw-border-opacity: 0.7;
+  }
+  /* List view style */
+  .card.list {
+    @apply w-full md:flex-row md:items-center md:flex-wrap md:rounded-md;
+    .card-body {
+      @apply md:flex-row md:items-start md:p-2;
+      .card-title {
+        @apply md:m-0 md:text-start;
+      }
+      .card-info{
+        @apply md:ms-auto md:my-auto md:w-fit md:justify-end md:gap-4;
+      }
+    }
   }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="container mx-auto">
     <List
-      :pending="pending"
       show-search
+      :view="state.listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
       :pagination="{
@@ -12,13 +12,42 @@
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
+      @switch-view="state.listView = !state.listView"
     >
-      <CourseCard
-        v-for="item in list"
-        :id="item.id"
-        :key="item.id"
-        :item="item.attributes"
-      />
+      <template v-if="pending">
+        <CourseSkeleton
+          v-for="index in 9"  
+          :key="index"
+        />
+      </template>
+      <template v-else>
+        <CourseCard
+          v-for="item in list"
+          :id="item.id"
+          :key="item.id"
+          :item="item.attributes"
+          :class="{ list: state.listView }"
+        />
+      </template>
+      <template
+        v-if="!pending"
+        #message
+      >
+        <!-- no data info message -->
+        <UIMessage
+          v-if="!error && list?.length === 0"
+          :message="$t('messages.no-data.course')"
+          class="bg-neutral text-neutral-content max-w-max mx-auto"
+        />
+
+        <!-- error message -->
+        <UIMessage
+          v-if="error"
+          :message="$t('messages.error')"
+          class="max-w-max mx-auto"
+          type="error"
+        />
+      </template>
     </List>
   </div>
 </template>
@@ -30,7 +59,8 @@
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
-    activePage: 1 as number | undefined
+    activePage: 1 as number | undefined,
+    listView: false
     // activeFilters: undefined as ActiveFilters | undefined,
   })
 
@@ -103,7 +133,7 @@
     sort: computed(()  => state.activeSort && !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
   })
 
-  const { data: courses, pending } = useLazyAsyncData<
+  const { data: courses, pending, error } = useLazyAsyncData<
     StrapiResponse<CourseAttributes>
   >(() => $baseApi(`courses?${qs.stringify(query, { encodeValuesOnly: true })}`, { cache: true }), {
     watch: [query]

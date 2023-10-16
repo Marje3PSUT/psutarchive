@@ -1,18 +1,23 @@
 <template>
-  <div class="container mx-auto">
+  <div class="resources container mx-auto">
     <List
       :heading="heading"
       :pending="pending"
-      view="grid"
+      :view="state.listView ? 'flex' : 'auto'"
       :tabs="tabsList"
       show-search
       :search-placeholder="$t('material.search')+ '...'"
       :sort-options="sortOptions"
+      :active-tab="state.activeTab"
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-tab="t => (state.activeTab = t)"
+      @switch-view="state.listView = !state.listView"
     >
-      <TransitionGroup name="list">
+      <TransitionGroup
+        name="list"
+        class="w-full"
+      >
         <div
           v-for="item in resources"
           :key="item.id"
@@ -20,10 +25,27 @@
           <ResourceCard
             :item="item.attributes"
             :course-id="course?.attributes.course_id"
-            class="h-full"
+            :resource-id="item.id"
+            :class="{ list: state.listView }"
           />
         </div>
       </TransitionGroup>
+      <template #message>
+        <!-- no data info message -->
+        <UIMessage
+          v-if="!error && resources?.length === 0"
+          :message="$t(`messages.no-data.${tabsList[state.activeTab].value}`)"
+          class="bg-neutral text-neutral-content max-w-max mx-auto"
+        />
+
+        <!-- error message -->
+        <UIMessage
+          v-if="error"
+          :message="$t('messages.error')"
+          class="max-w-max mx-auto"
+          type="error"
+        />
+      </template>
     </List>
   </div>
 </template>
@@ -36,6 +58,7 @@
 
   const { locale, t } = useI18n()
   const urlId = ref(useRoute().params.id)
+  const route = useRoute()
 
   const tabsList = [
     {
@@ -52,6 +75,7 @@
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
     activeTab: 0, // index of active tab
+    listView: false,
     // activeFilters: undefined as ActiveFilters | undefined,
   })
   const sortOptions = ref<SortOptions>([
@@ -140,8 +164,8 @@
       }
     } as StrapiRestFilters<ResourceAttributes>
   });
-  const { data: resourcesList, pending } = useAsyncData<StrapiResponse<ResourceAttributes>>(
-    async () => {      
+  const { data: resourcesList, pending, error } = useAsyncData<StrapiResponse<ResourceAttributes>>(
+    async () => {
       if (!id) {
         // If the course does not exist throw 404
         throw showError({ // TODO: use createError instead and handle it manually with a custom 404 page
@@ -179,9 +203,23 @@
   const heading = computed<string>(
     () => locale.value === 'en' ? course?.attributes?.name as string
         : course?.attributes?.name_ar as string
-    )
+  )
+  watch(state , () => {
+    return navigateTo({
+      query: {
+        tab: tabsList[state.activeTab].value
+      },
+      replace: true,
+    })
+  })
+  onMounted(() => {
+    const tabs = tabsList.map(i => i.value)
+    if (route.query.tab && tabs.includes(route.query.tab as string)) {
+      state.activeTab = tabs.indexOf(route.query.tab as string)
+    }
+  })
 </script>
-<style scoped lang="postcss">
+<style lang="postcss">
   .list-enter-active,
   .list-leave-active {
     transition: all 0.5s ease;
@@ -193,5 +231,9 @@
   }
   .list-leave-active {
     position: absolute;
+  }
+
+  .resources.container .list.wrapper > div {
+    @apply !w-full;
   }
 </style>

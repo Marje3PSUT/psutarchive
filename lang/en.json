@@ -22,6 +22,9 @@
     "files": "file | files",
     "megabyte": "MB",
     "search": "Search by type, semester, or year",
+    "download": "Download file | Download all files",
+    "preview": "Preview files",
+    "open": "Open file | Open files",
     "semesters": {
       "fall": "Fall",
       "spring": "Spring",
@@ -39,18 +42,22 @@
           "second": "Second",
           "midterm": "Midterm",
           "final": "Final",
-          "quiz": "Quiz"
+          "quiz": "Quiz",
+          "quiz_1": "Quiz 1",
+          "quiz_2": "Quiz 2",
+          "quiz_3": "Quiz 3",
+          "quiz_4": "Quiz 4",
+          "quiz_5": "Quiz 5",
+          "quiz_6": "Quiz 6"
         },
         "solved": "Solved"
       },
       "note": {
         "type": {
-          "lecture": "Lecture",
+          "assignment": "Assignment",
           "summary": "Summary",
           "slides": "Slides",
-          "reference": "Reference",
-          "practice": "Practice",
-          "review": "Review",
+          "project": "Project",
           "other": "Other"
         }
       }
@@ -89,6 +96,9 @@
     "sort": {
       "title": "Sort by",
       "default": "Default order"
+    },
+    "view": {
+      "switch": "Switch view mode"
     }
   },
   "footer": {
@@ -98,5 +108,14 @@
       "about": "About Us",
       "contact": "Contact Us"
     }
+  },
+  "messages": {
+    "no-data": {
+      "generic": "No data found",
+      "course": "No courses were found",
+      "exam": "No exams were found",
+      "note": "No notes were found"
+    },
+    "error": "We're sorry, an error has occured"
   }
 }

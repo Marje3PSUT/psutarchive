@@ -38,12 +38,10 @@ export enum Semesters {
   Summer = "summer"
 }
 export enum NoteTypes {
-  Lecture = "lecture",
   Summary = "summary",
   Slides = "slides",
-  Reference = "reference",
-  Practice = "practice",
-  Review = "review",
+  Assignment = "assignment",
+  Project = "project",
   Other = "other",
 }
 export enum ExamTypes {
@@ -52,4 +50,10 @@ export enum ExamTypes {
   Midterm = "midterm",
   Final = "final",
   Quiz = "quiz",
+  "Quiz 1" = "quiz_1",
+  "Quiz 2" = "quiz_2",
+  "Quiz 3" = "quiz_3",
+  "Quiz 4" = "quiz_4",
+  "Quiz 5" = "quiz_5",
+  "Quiz 6" = "quiz_6",
 }
