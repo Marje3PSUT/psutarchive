@@ -141,7 +141,7 @@
         </div>
         <div class="flex flex-col gap-2">
           <div
-            v-for="file in item.files?.data"
+            v-for="file in filesList"
             :key="file.id"
             dir="ltr"
             class="border-b border-base-content border-opacity-25 p-2 flex items-center gap-4 last:border-none"
@@ -272,6 +272,9 @@
       replace: true,
     })
   }
+
+  const filesList = ref(props.item.files?.data)
+  filesList.value?.sort((a, b) => ('' + a.attributes.name).localeCompare(b.attributes.name))
 
   onMounted(() => {
     if (route.query.res === props.resourceId.toString()) {
