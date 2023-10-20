@@ -4,8 +4,7 @@
   >
     <div class="card-info flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="res-type capitalize text-lg font-bold">
-        {{ $t(`material.resource.type.${resourceType}`) }} -
-        <span class="text-secondary-focus">
+        <span class="text-secondary">
           {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
         </span>
       </div>
