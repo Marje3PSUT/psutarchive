@@ -4,7 +4,7 @@
       :pending="pending"
       view="flex"
       :heading="$t('home.categories.title')"
-      class="mx-auto flex-row flex-wrap gap-4"
+      class="mx-auto !flex-row flex-wrap gap-4"
       :heading-link="{
         to: $nuxt.$localePath('/courses'),
         text: $t('home.categories.all'),

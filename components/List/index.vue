@@ -203,7 +203,7 @@
 
 <style scoped lang="postcss">
   .list.view-flex {
-    @apply flex gap-4;
+    @apply flex gap-4 flex-col;
   }
   .list.view-grid {
     @apply grid;
@@ -234,7 +234,7 @@
   }
   .list.view-auto {
     /* Always list / full-width view on mobile */
-    @apply max-sm:flex sm:grid;
+    @apply max-sm:flex max-sm:flex-col sm:grid;
   }
   .list {
     transition: all 0.25s linear;

@@ -13,7 +13,7 @@
         class="res-metadata"
       >
         <span v-if="item.metadata.semester">
-          {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
+          {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} - 
         </span>
         <span class="text-secondary font-semibold">
           {{ item.metadata.year }}
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="card-action flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <span class="res-count font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
+      <span class="res-count min-w-max font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
       <div class="res-actions flex justify-center items-center gap-1">
         <button
           v-if="!loading"
@@ -93,7 +93,7 @@
       </div>
       <span
         v-if="totalSize"
-        class="text-center"
+        class="res-size min-w-max text-center"
       >
         {{ totalSize / 1024 > 1 ? (totalSize / 1024).toFixed(2) : `< 1` }}
         {{ $t('material.megabyte') }}
@@ -286,48 +286,16 @@
     @apply bg-base-100 shadow-xl;
     @apply card-bordered border-base-content;
     --tw-border-opacity: 0.2;
-  }
-  /* List view style */
-  .card.list {
-    /* @apply md:flex-row md:items-center md:flex-wrap; */
-    @apply md:grid md:grid-cols-6;
-    @apply w-full md:rounded-md h-24 p-2;
-    grid-template-rows: 1fr 40px !important;
-    .card-info {
-      /* @apply md:flex-row items-center md:w-fit md:justify-end md:gap-1; */
-      @apply md:col-span-4 md:grid grid-cols-8 md:grid-rows-2 md:justify-start md:items-center;
-      .res-type {
-        @apply md:col-span-3 md:row-start-1 md:col-start-1;
-      }
-      /* .divider {
-        @apply flex mx-1;
-      } */
-      .res-metadata {
-        @apply md:col-span-3 md:col-start-4 md:row-start-1;
-      }
-      .res-title {
-        @apply md:col-span-3 md:col-start-1 md:row-start-2;
-      }
-      .res-author {
-        @apply md:col-start-4 md:row-start-2 md:col-span-2;
-      }
-    }
-    .card-action {
-      @apply md:grid md:col-span-2 md:grid-cols-4 md:grid-rows-2 md:gap-0 md:m-0 md:p-2;
-      .res-count {
-        @apply md:col-span-1 md:col-start-3 md:row-start-2 text-center;
-      }
-      .res-size {
-        @apply md:col-span-1 md:col-start-4 md:row-start-2 text-center;
+    /* List view style */
+    &.list {
+      .card-info, .card-action {
+        @apply md:flex-row md:gap-4 md:items-center;
       }
       .res-actions {
-        @apply md:grid md:grid-cols-2 md:col-span-2 md:col-start-3 md:row-span-1 md:grid-rows-1; 
-        .res-download, .res-loading {
-          @apply md:col-start-2 md:row-start-1;
-        }
-        .res-folder, .res-open {
-          @apply md:col-start-1 md:row-start-1;
-        }
+        @apply md:order-3;
+      }
+      .res-author {
+        @apply md:mt-0;
       }
     }
   }
