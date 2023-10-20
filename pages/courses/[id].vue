@@ -45,10 +45,7 @@
       @active-tab="t => (state.activeTab = t)"
       @switch-view="state.listView = !state.listView"
     >
-      <TransitionGroup
-        name="list"
-        class="w-full"
-      >
+      <TransitionGroup name="list">
         <div
           v-for="item in resources"
           :key="item.id"
@@ -91,16 +88,18 @@
   const urlId = ref(useRoute().params.id)
   const route = useRoute()
 
-  const tabsList = [
+  const tabsList = ref([
     {
       title: t('exams.title', 2),
-      value: 'exam'
+      value: 'exam',
+      indicator: null as string | number | null, // exams count
     },
     {
       title: t('notes.title', 2),
-      value: 'note'
+      value: 'note',
+      indicator: null as string | number | null, // notes count
     }
-  ]
+  ])
 
   const state = reactive({
     search: undefined as string | undefined,
@@ -221,12 +220,18 @@
       ].some(item => String(item).toLowerCase().includes((state.search as string).toLowerCase()))
       
     }).filter(item => // filter by current active tab
-      item.attributes.material[0].__component.includes(tabsList[state.activeTab].value.toLowerCase()))
+      item.attributes.material[0].__component.includes(tabsList.value[state.activeTab].value.toLowerCase()))
     if (state.activeSort) {
       const selectedSort = unref(sortOptions).filter(option => option.key === state.activeSort)[0]
       if (selectedSort) {
         list?.sort(selectedSort.sortHandler)
       }
+    }
+    if (list && resourcesList.value) {
+      // update resources count
+      tabsList.value[state.activeTab].indicator = list?.length.toString()
+      tabsList.value[(state.activeTab + 1) % tabsList.value.length].indicator
+        = (resourcesList.value?.data.length - list?.length).toString()
     }
     return list
   })
@@ -235,16 +240,17 @@
     () => locale.value === 'en' ? course?.attributes?.name as string
         : course?.attributes?.name_ar as string
   )
+
   watch(state , () => {
     return navigateTo({
       query: {
-        tab: tabsList[state.activeTab].value
+        tab: tabsList.value[state.activeTab].value
       },
       replace: true,
     })
   })
   onMounted(() => {
-    const tabs = tabsList.map(i => i.value)
+    const tabs = tabsList.value.map(i => i.value)
     if (route.query.tab && tabs.includes(route.query.tab as string)) {
       state.activeTab = tabs.indexOf(route.query.tab as string)
     }

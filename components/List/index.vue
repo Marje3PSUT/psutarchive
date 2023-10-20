@@ -67,9 +67,15 @@
         v-for="tab, i in props.tabs"
         :key="i"
         class="tab"
-        :class="{ 'tab-active': activeTab === i }"
+        :class="{ 'tab-active': activeTab === i, 'indicator': tab.indicator }"
         @click="$emit('activeTab', i)"
       >
+        <span
+          v-if="tab.indicator !== null"
+          class="indicator-item badge badge-secondary"
+        >
+          {{ tab.indicator }}
+        </span> 
         {{ tab.title }}
       </button>
     </div>
@@ -122,6 +128,7 @@
   type TabItem = {
     title: string
     value: string
+    indicator?: string | number | null
   }
   type PaginationOptions = {
     start?: number
