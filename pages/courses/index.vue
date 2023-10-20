@@ -85,10 +85,10 @@
       key: 'updatedAt:desc',
       title: t('courses.sort.last-updated')
     },
-    {
-      key: '!resources.count',
-      title: t('courses.sort.res-count')
-    },
+    // {
+    //   key: '!resources.count',
+    //   title: t('courses.sort.res-count')
+    // },
     {
       key: locale.value === 'en' ? 'name:asc' : 'name_ar:asc',
       title: t('courses.sort.alphapetical')
