@@ -41,6 +41,8 @@
           :sort-options="props.sortOptions"
           @sort="(q: string) => $emit('sorted', q)"
         />
+        <slot name="list-option" />
+
         <button
           v-if="showViewControl"
           aria-label="switch view"

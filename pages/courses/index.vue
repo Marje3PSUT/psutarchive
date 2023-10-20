@@ -14,6 +14,20 @@
       @active-page="p => (state.activePage = p)"
       @switch-view="state.listView = !state.listView"
     >
+      <template #list-option>
+        <div class="form-control">
+          <label class="label cursor-pointer gap-2">
+            <span class="label-text">
+              {{ $t('lists.filter.resources') }}
+            </span> 
+            <input
+              v-model="state.withResourcesOnly"
+              type="checkbox"
+              class="toggle toggle-secondary"
+            >
+          </label>
+        </div>
+      </template>
       <template v-if="pending">
         <CourseSkeleton
           v-for="index in 9"  
@@ -60,7 +74,8 @@
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
     activePage: 1 as number | undefined,
-    listView: false
+    listView: false,
+    withResourcesOnly: true, // filter courses that only have resources
     // activeFilters: undefined as ActiveFilters | undefined,
   })
 
@@ -101,6 +116,11 @@
         categories: {
           slug: {
             $contains: route.query.category
+          }
+        },
+        resources: {
+          publishedAt: {
+              $notNull: state.withResourcesOnly || undefined
           }
         },
         // search query
