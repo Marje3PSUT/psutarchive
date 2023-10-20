@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="container mx-auto flex justify-between items-start">
+    <div class="container mx-auto flex flex-wrap gap-4 justify-between items-start">
       <div class="flex flex-col gap-2">
         <h2 class="text-2xl">
           {{ heading }}
@@ -20,7 +20,7 @@
           />
         </a>
       </div>
-      <div class="info flex flex-col gap-4 items-center max-w-[10rem]">
+      <div class="info flex flex-col gap-4 items-center max-w-[10rem] ms-auto">
         <div class="flex gap-4 items-center justify-between">
           <span>#{{ urlId }}</span>
           <CourseFavoriteButton

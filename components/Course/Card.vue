@@ -66,7 +66,7 @@
   }
   /* List view style */
   .card.list {
-    @apply w-full md:flex-row md:items-center md:flex-wrap md:rounded-md;
+    @apply w-full md:flex-row md:items-center md:flex-wrap;
     .card-body {
       @apply md:flex-row md:items-start md:p-2;
       .card-title {
