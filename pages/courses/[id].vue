@@ -1,7 +1,38 @@
 <template>
-  <div class="resources container mx-auto">
+  <div class="container mx-auto">
+    <div class="container mx-auto flex flex-wrap gap-4 justify-between items-start">
+      <div class="flex flex-col gap-2">
+        <h2>
+          {{ heading }}
+        </h2>
+        <!-- recorded lectures link -->
+        <a
+          v-if="course?.attributes.recordings_url"
+          :href="course.attributes.recordings_url"
+          target="_blank"
+          class="link link-hover text-secondary flex items-center gap-1"
+        >
+          {{ $t('courses.recordings') }}
+          <Icon
+            name="ion:md-open"
+            size="22"
+            class="rtl:-rotate-90"
+          />
+        </a>
+      </div>
+      <div class="info flex flex-col gap-4 items-center max-w-[10rem] ms-auto">
+        <div class="flex gap-4 items-center justify-between">
+          <span>#{{ urlId }}</span>
+          <CourseFavoriteButton
+            :id="(course?.id as number)"
+            size="32"
+          />
+        </div>
+        <!-- Temporarily hidden -->
+        <ContributeUploadBtn v-if="false" />
+      </div>
+    </div>
     <List
-      :heading="heading"
       :pending="pending"
       :view="state.listView ? 'flex' : 'auto'"
       :tabs="tabsList"
@@ -14,10 +45,7 @@
       @active-tab="t => (state.activeTab = t)"
       @switch-view="state.listView = !state.listView"
     >
-      <TransitionGroup
-        name="list"
-        class="w-full"
-      >
+      <TransitionGroup name="list">
         <div
           v-for="item in resources"
           :key="item.id"
@@ -60,16 +88,18 @@
   const urlId = ref(useRoute().params.id)
   const route = useRoute()
 
-  const tabsList = [
+  const tabsList = ref([
     {
       title: t('exams.title', 2),
-      value: 'exam'
+      value: 'exam',
+      indicator: null as string | number | null, // exams count
     },
     {
       title: t('notes.title', 2),
-      value: 'note'
+      value: 'note',
+      indicator: null as string | number | null, // notes count
     }
-  ]
+  ])
 
   const state = reactive({
     search: undefined as string | undefined,
@@ -156,6 +186,10 @@
       'files',
       'material',
     ],
+    // TODO: handle pagination
+    pagination: {
+      limit: 100,
+    },
     filters: {
       course: {
         course_id: {
@@ -190,12 +224,18 @@
       ].some(item => String(item).toLowerCase().includes((state.search as string).toLowerCase()))
       
     }).filter(item => // filter by current active tab
-      item.attributes.material[0].__component.includes(tabsList[state.activeTab].value.toLowerCase()))
+      item.attributes.material[0].__component.includes(tabsList.value[state.activeTab].value.toLowerCase()))
     if (state.activeSort) {
       const selectedSort = unref(sortOptions).filter(option => option.key === state.activeSort)[0]
       if (selectedSort) {
         list?.sort(selectedSort.sortHandler)
       }
+    }
+    if (list && resourcesList.value) {
+      // update resources count
+      tabsList.value[state.activeTab].indicator = list?.length.toString()
+      tabsList.value[(state.activeTab + 1) % tabsList.value.length].indicator
+        = (resourcesList.value?.data.length - list?.length).toString()
     }
     return list
   })
@@ -204,16 +244,17 @@
     () => locale.value === 'en' ? course?.attributes?.name as string
         : course?.attributes?.name_ar as string
   )
+
   watch(state , () => {
     return navigateTo({
       query: {
-        tab: tabsList[state.activeTab].value
+        tab: tabsList.value[state.activeTab].value
       },
       replace: true,
     })
   })
   onMounted(() => {
-    const tabs = tabsList.map(i => i.value)
+    const tabs = tabsList.value.map(i => i.value)
     if (route.query.tab && tabs.includes(route.query.tab as string)) {
       state.activeTab = tabs.indexOf(route.query.tab as string)
     }

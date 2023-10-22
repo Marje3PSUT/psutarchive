@@ -7,18 +7,7 @@
       <span class="text-xs badge bg-transparent border border-base-content border-opacity-40">
         #{{ item.course_id }}
       </span>
-      <button
-        :title="$t('courses.addToFavs')"
-        :aria-label="$t('courses.addToFavs')"
-        @click="switchFavState(id)"
-      >
-        <Icon
-          :name="isFavorite ? 'ion:heart': 'ion:heart-outline'"
-          class="cursor-pointer hover:scale-110 transition-all"
-          :class="{ 'text-[#fb6f84]': isFavorite }"
-          size="22"
-        />
-      </button>
+      <CourseFavoriteButton :id="id" />
     </div>
     <NuxtLink
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
@@ -67,27 +56,9 @@
   })
 
   const { locale } = useI18n();
-  const { addCourse, removeCourse, getCourses } = useFavCourses()
-  
-  const isFavorite = ref(false)
-
-  const switchFavState = (id: number) => {
-    if (!isFavorite.value) {
-      addCourse(id)
-    }
-    else {
-      removeCourse(id)
-    }
-    isFavorite.value = !isFavorite.value
-  }
 
   const categories = ref(props.item.categories?.data.map(c => locale.value === 'en' ? c.attributes.name : c.attributes.name_ar).join(', '))
   const resCount = ref(props.item.resources?.data.length ? props.item.resources.data.length : 0)
-
-  onMounted(() => {
-    const favList = getCourses()
-    isFavorite.value = favList? favList?.indexOf(props.id) !== -1 : false
-  })
 </script>
 <style scoped lang="postcss">
   .card {
@@ -95,7 +66,7 @@
   }
   /* List view style */
   .card.list {
-    @apply w-full md:flex-row md:items-center md:flex-wrap md:rounded-md;
+    @apply w-full md:flex-row md:items-center md:flex-wrap;
     .card-body {
       @apply md:flex-row md:items-start md:p-2;
       .card-title {

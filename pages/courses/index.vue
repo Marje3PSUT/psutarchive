@@ -5,6 +5,8 @@
       :view="state.listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
+      :tabs="tabsList"
+      :active-tab="state.activeTab"
       :pagination="{
         end: courses?.meta.pagination?.pageCount as number,
         active: courses?.meta.pagination?.page
@@ -12,8 +14,23 @@
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
+      @active-tab="t => (state.activeTab = t)"
       @switch-view="state.listView = !state.listView"
     >
+      <template #list-option>
+        <div class="form-control">
+          <label class="label cursor-pointer gap-2">
+            <span class="label-text">
+              {{ $t('lists.filter.resources') }}
+            </span> 
+            <input
+              v-model="state.withResourcesOnly"
+              type="checkbox"
+              class="toggle toggle-secondary"
+            >
+          </label>
+        </div>
+      </template>
       <template v-if="pending">
         <CourseSkeleton
           v-for="index in 9"  
@@ -37,7 +54,7 @@
         <UIMessage
           v-if="!error && list?.length === 0"
           :message="$t('messages.no-data.course')"
-          class="bg-neutral text-neutral-content max-w-max mx-auto"
+          class="!bg-base-300 !text-base-content max-w-max mx-auto"
         />
 
         <!-- error message -->
@@ -60,8 +77,28 @@
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
     activePage: 1 as number | undefined,
-    listView: false
+    listView: false,
+    activeTab: 0,
+    withResourcesOnly: true, // filter courses that only have resources
     // activeFilters: undefined as ActiveFilters | undefined,
+  })
+
+  // Get categories tabs
+  const { data: categories } = useLazyAsyncData<
+    StrapiResponse<CategoryAttributes>
+  >(() => $baseApi("categories", { cache: true }));
+  const tabsList = computed(() => {
+    const tabs = categories.value?.data.map((item) => {
+      return {
+        title: locale.value === 'en' ? item?.attributes.name : item?.attributes.name_ar,
+        value: item?.attributes.slug
+      }
+    })
+    tabs?.unshift({
+      title: t('home.categories.all'),
+      value: 'all'
+    })
+    return tabs
   })
 
   // sort keys that start with '!' are handled locally, not from the API
@@ -70,10 +107,10 @@
       key: 'updatedAt:desc',
       title: t('courses.sort.last-updated')
     },
-    {
-      key: '!resources.count',
-      title: t('courses.sort.res-count')
-    },
+    // {
+    //   key: '!resources.count',
+    //   title: t('courses.sort.res-count')
+    // },
     {
       key: locale.value === 'en' ? 'name:asc' : 'name_ar:asc',
       title: t('courses.sort.alphapetical')
@@ -100,7 +137,12 @@
       return {
         categories: {
           slug: {
-            $contains: route.query.category
+            $contains: route.query.category === 'all' ? undefined : route.query.category
+          }
+        },
+        resources: {
+          publishedAt: {
+              $notNull: state.withResourcesOnly || undefined
           }
         },
         // search query
@@ -147,5 +189,21 @@
       }
     }
     return courses.value?.data
+  })
+
+  // Change tab based on url query, and vice versa
+  watch(state , () => {
+    return navigateTo({
+      query: {
+        category: tabsList.value ? tabsList.value[state.activeTab].value : undefined
+      },
+      replace: true,
+    })
+  })
+  onMounted(() => {
+    const tabs = tabsList.value?.map(i => i.value)
+    if (route.query.category && tabs?.includes(route.query.category as string)) {
+      state.activeTab = tabs?.indexOf(route.query.category as string)
+    }
   })
 </script>
