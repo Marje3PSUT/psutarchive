@@ -5,6 +5,8 @@
       :view="state.listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
+      :tabs="tabsList"
+      :active-tab="state.activeTab"
       :pagination="{
         end: courses?.meta.pagination?.pageCount as number,
         active: courses?.meta.pagination?.page
@@ -12,6 +14,7 @@
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
+      @active-tab="t => (state.activeTab = t)"
       @switch-view="state.listView = !state.listView"
     >
       <template #list-option>
@@ -75,8 +78,27 @@
     activeSort: undefined as string | undefined,
     activePage: 1 as number | undefined,
     listView: false,
+    activeTab: 0,
     withResourcesOnly: true, // filter courses that only have resources
     // activeFilters: undefined as ActiveFilters | undefined,
+  })
+
+  // Get categories tabs
+  const { data: categories } = useLazyAsyncData<
+    StrapiResponse<CategoryAttributes>
+  >(() => $baseApi("categories", { cache: true }));
+  const tabsList = computed(() => {
+    const tabs = categories.value?.data.map((item) => {
+      return {
+        title: locale.value === 'en' ? item?.attributes.name : item?.attributes.name_ar,
+        value: item?.attributes.slug
+      }
+    })
+    tabs?.unshift({
+      title: t('home.categories.all'),
+      value: 'all'
+    })
+    return tabs
   })
 
   // sort keys that start with '!' are handled locally, not from the API
@@ -115,7 +137,7 @@
       return {
         categories: {
           slug: {
-            $contains: route.query.category
+            $contains: route.query.category === 'all' ? undefined : route.query.category
           }
         },
         resources: {
@@ -167,5 +189,21 @@
       }
     }
     return courses.value?.data
+  })
+
+  // Change tab based on url query, and vice versa
+  watch(state , () => {
+    return navigateTo({
+      query: {
+        category: tabsList.value ? tabsList.value[state.activeTab].value : undefined
+      },
+      replace: true,
+    })
+  })
+  onMounted(() => {
+    const tabs = tabsList.value?.map(i => i.value)
+    if (route.query.category && tabs?.includes(route.query.category as string)) {
+      state.activeTab = tabs?.indexOf(route.query.category as string)
+    }
   })
 </script>
