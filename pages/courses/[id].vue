@@ -186,6 +186,10 @@
       'files',
       'material',
     ],
+    // TODO: handle pagination
+    pagination: {
+      limit: 100,
+    },
     filters: {
       course: {
         course_id: {
