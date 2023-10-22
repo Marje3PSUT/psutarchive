@@ -71,7 +71,7 @@
         @click="$emit('activeTab', i)"
       >
         <span
-          v-if="tab.indicator !== null"
+          v-if="tab.indicator"
           class="indicator-item badge badge-secondary"
         >
           {{ tab.indicator }}
