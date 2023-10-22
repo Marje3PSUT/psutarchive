@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="container mx-auto flex flex-wrap gap-4 justify-between items-start">
       <div class="flex flex-col gap-2">
-        <h2 class="text-2xl">
+        <h2>
           {{ heading }}
         </h2>
         <!-- recorded lectures link -->
