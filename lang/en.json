@@ -24,6 +24,7 @@
     "megabyte": "MB",
     "search": "Search by type, semester, or year",
     "download": "Download file | Download all files",
+    "share": "Share this Resource",
     "preview": "Preview files",
     "open": "Open file | Open files",
     "semesters": {
@@ -90,7 +91,8 @@
     "name": "no papers | 1 paper | {n} papers"
   },
   "misc": {
-    "by": "by"
+    "by": "Submitted by:",
+    "team": "Marje3 Team"
   },
   "lists": {
     "search": "Search",
