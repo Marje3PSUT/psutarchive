@@ -29,7 +29,7 @@
         <span
           v-if="item.categories?.data.length"
           :title="categories"
-          class="badge badge-sm badge-ghost border-0 line-clamp-1 max-w-[55%]"
+          class="badge badge-sm badge-ghost border-0 line-clamp-1 max-w-[100%]"
         >
           {{ categories }}
         </span>
