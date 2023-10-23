@@ -24,7 +24,8 @@
     "megabyte": "MB",
     "search": "Search by type, semester, or year",
     "download": "Download file | Download all files",
-    "share": "Share this Resource",
+    "share": "Share this resource",
+    "report": "Report this resource",
     "preview": "Preview files",
     "open": "Open file | Open files",
     "semesters": {
