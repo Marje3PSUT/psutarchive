@@ -10,7 +10,7 @@
       </div>
       <div class="relative w-full h-full overflow-hidden">
         <div
-          class="top-1/2 absolute w-24 h-full -translate-y-1/2 border-l border-l-neutral-content resource-drawer z-10"
+          class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-base-100 border-l border-l-neutral-content rounded-xl resource-drawer z-10"
         >
           <div class="grid grid-cols-2 h-4/5">
             <button
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="ml-6 w-3/4 h-full pt-1">
-          <div class="text-lg font-bold h-1/5 mb-1">
+          <div :class="'text-lg font-bold mb-1 ' + titleSize">
             {{ $t(`material.resource.type.${resourceType}`) }} -
             <span class="text-secondary">{{
               item?.material[0]?.type &&
@@ -72,14 +72,17 @@
               )
             }}</span>
           </div>
-          <div class="text-md font-bold h-1/5">
+          <div :class="'text-md font-bold ' + titleSize">
             {{
               item?.metadata?.semester &&
               $t(`material.semesters.${item.metadata.semester.toLowerCase()}`)
             }}
             <span class="text-secondary">{{ item?.metadata?.year }}</span>
           </div>
-          <div class="text-xs opacity-75 line-clamp-2 h-2/5">
+          <div
+            v-if="resourceType === 'note'"
+            class="text-xs opacity-75 line-clamp-2 h-2/5"
+          >
             {{ item.material[0]?.title }}
           </div>
           <div class="font-mono text-xs opacity-50 h-1/5">
@@ -206,6 +209,10 @@ const indicator = computed(() => {
       ? "-right-10 rotate-90"
       : "left-0 -rotate-90 -translate-x-1/2 "
   );
+});
+
+const titleSize = computed(() => {
+  return resourceType.value === "note" ? "h-1/5" : "h-2/5";
 });
 
 const containsMultipleFiles = computed(() => {
