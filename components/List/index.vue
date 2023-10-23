@@ -132,7 +132,7 @@
   }
   type PaginationOptions = {
     start?: number
-    end: number
+    end?: number
     active?: number
     limit?: number
     showArrows?: boolean
