@@ -1,17 +1,17 @@
 <template>
   <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
-      <button
+      <NuxtLink
         v-if="route.fullPath.replace('ar', '') !== '/'"
         class="btn btn-circle btn-ghost"
-        @click="$nuxt.$router.back()"
+        :to="path.substring(0, path.lastIndexOf('/') + 1)"
       >
         <Icon
           class="rtl:rotate-180"
           name="ion:arrow-back"
           size="24"
         />
-      </button>
+      </NuxtLink>
       <NuxtLink
         class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
         :to="$nuxt.$localePath('/')"
@@ -39,5 +39,6 @@
 </template>
 <script setup lang="ts">
   const route = useRoute()
+  const path = computed(() => route.fullPath)
 </script>
 <style scoped lang="postcss"></style>
