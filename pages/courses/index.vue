@@ -107,10 +107,6 @@
       key: 'updatedAt:desc',
       title: t('courses.sort.last-updated')
     },
-    // {
-    //   key: '!resources.count',
-    //   title: t('courses.sort.res-count')
-    // },
     {
       key: locale.value === 'en' ? 'name:asc' : 'name_ar:asc',
       title: t('courses.sort.alphapetical')
@@ -172,7 +168,7 @@
         ]
       }
     }),
-    sort: computed(()  => state.activeSort && !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
+    sort: computed(()  => state.activeSort ? state.activeSort : sortOptions.value[1].key /** Default sort option */)
   })
 
   const { data: courses, pending, error } = useLazyAsyncData<
