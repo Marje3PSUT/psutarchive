@@ -2,7 +2,7 @@
   <label class="h-28 block resource-card">
     <input type="radio" name="resources" class="hidden absolute" />
     <div
-      class="relative border border-neutral-content rounded-xl h-full cursor-pointer select-none"
+      class="relative border border-neutral-content bg-neutral rounded-xl h-full cursor-pointer select-none"
     >
       <!-- Solved indicator -->
       <div v-if="item.material[0]?.is_solved" :class="indicator">
@@ -10,13 +10,13 @@
       </div>
       <div class="relative w-full h-full overflow-hidden">
         <div
-          class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-base-100 border-l border-l-neutral-content rounded-xl resource-drawer z-10"
+          class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-accent text-accent-content border-l border-l-neutral-content rounded-xl resource-drawer z-10"
         >
           <div class="grid grid-cols-2 h-4/5">
             <button
               aria-label="report-button"
               :title="$t('material.report')"
-              class="hover:text-accent transition-colors"
+              class="hover:text-accent-focus transition-colors"
             >
               <Icon name="ion:flag-outline" size="24" />
             </button>
@@ -24,7 +24,7 @@
             <button
               aria-label="download-button"
               :title="$t('material.share')"
-              class="hover:text-accent transition-colors"
+              class="hover:text-accent-focus transition-colors"
             >
               <Icon name="ion:share-social-outline" size="24" />
             </button>
@@ -34,7 +34,7 @@
               :title="$t('material.open')"
               :download="item.files?.data[0].attributes.name"
               target="_blank"
-              class="flex justify-center items-center cursor-pointer hover:text-accent transition-colors"
+              class="flex justify-center items-center hover:text-accent-focus transition-colors"
             >
               <Icon name="ion:md-open" size="24" />
             </a>
@@ -42,7 +42,7 @@
               v-else
               aria-label="see-files-button"
               :title="$t('material.preview')"
-              class="hover:text-accent transition-colors"
+              class="hover:text-accent-focus transition-colors"
               @click="openModal()"
             >
               <Icon name="ion:list-outline" size="24" />
@@ -50,7 +50,7 @@
             <button
               aria-label="download-button"
               :title="$t('material.download')"
-              class="hover:text-accent transition-colors"
+              class="hover:text-accent-focus transition-colors"
               @click="download(item.files?.data)"
             >
               <Icon name="ion:md-download" size="24" />
@@ -313,5 +313,10 @@ onMounted(() => {
 }
 .resource-card > input:checked + div .resource-drawer {
   right: 0;
+}
+
+.resource-card:hover > div {
+  @apply bg-neutral-focus;
+  @apply transition-colors;
 }
 </style>
