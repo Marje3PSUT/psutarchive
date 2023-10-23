@@ -14,7 +14,7 @@
       @sorted="(s: string) => (state.activeSort = s)"
       @searched="q => (state.search = q)"
       @active-page="p => (state.activePage = p)"
-      @active-tab="t => (state.activeTab = t)"
+      @active-tab="t => switchTab(t)"
       @switch-view="state.listView = !state.listView"
     >
       <template #list-option>
@@ -27,6 +27,7 @@
               v-model="state.withResourcesOnly"
               type="checkbox"
               class="toggle toggle-secondary"
+              @change="state.activePage = 1"
             >
           </label>
         </div>
@@ -76,12 +77,17 @@
   const state = reactive({
     search: undefined as string | undefined,
     activeSort: undefined as string | undefined,
-    activePage: 1 as number | undefined,
+    activePage: 1,
     listView: false,
     activeTab: 0,
     withResourcesOnly: true, // filter courses that only have resources
     // activeFilters: undefined as ActiveFilters | undefined,
   })
+
+  const switchTab = (t: number) => {
+    state.activeTab = t;
+    state.activePage = 1;
+  }
 
   // Get categories tabs
   const { data: categories } = useLazyAsyncData<
@@ -107,10 +113,6 @@
       key: 'updatedAt:desc',
       title: t('courses.sort.last-updated')
     },
-    // {
-    //   key: '!resources.count',
-    //   title: t('courses.sort.res-count')
-    // },
     {
       key: locale.value === 'en' ? 'name:asc' : 'name_ar:asc',
       title: t('courses.sort.alphapetical')
@@ -172,7 +174,7 @@
         ]
       }
     }),
-    sort: computed(()  => state.activeSort && !state.activeSort?.startsWith('!') ? state.activeSort : sortOptions.value[2].key)
+    sort: computed(()  => state.activeSort ? state.activeSort : sortOptions.value[1].key /** Default sort option */)
   })
 
   const { data: courses, pending, error } = useLazyAsyncData<

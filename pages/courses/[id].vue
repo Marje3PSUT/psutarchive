@@ -58,7 +58,10 @@
           />
         </div>
       </TransitionGroup>
-      <template #message>
+      <template
+        v-if="!pending"
+        #message
+      >
         <!-- no data info message -->
         <UIMessage
           v-if="!error && resources?.length === 0"
