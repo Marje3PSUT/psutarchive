@@ -26,6 +26,20 @@
     addSeoAttributes: true,
   })
   const config = useRuntimeConfig()
+
+  // Get theme from browser
+  onMounted(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      useTheme().value = 'dark'
+    }
+    else {
+      useTheme().value = 'light'
+    }
+    // listen to browser theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      useTheme().value = event.matches ? "dark" : "light";
+    });
+  })
 </script>
 <style lang="postcss">
   body, #__nuxt, #__layout, #__nuxt > div {
