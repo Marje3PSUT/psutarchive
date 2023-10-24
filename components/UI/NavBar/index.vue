@@ -2,7 +2,7 @@
   <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
       <NuxtLink
-        v-if="route.fullPath.replace('ar', '') !== '/'"
+        v-if="path.replace('ar/', '') !== '/'"
         class="btn btn-circle btn-ghost"
         :to="path.substring(0, path.lastIndexOf('/') + 1)"
       >
