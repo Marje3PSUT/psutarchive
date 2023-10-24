@@ -30,6 +30,14 @@
         class="search-icon"
       />
     </div>
+    <!-- <datalist id="search-data">
+      <option
+        v-for="(item, i) in props.list"
+        :key="i"
+        :value="item.attributes[props.listTitleField]"
+      />
+    </datalist> -->
+    <!-- TODO: add message component -->
     <div
       v-if="searchError"
       class="alert flex alert-error w-max h-12 mx-auto mt-2"

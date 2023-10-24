@@ -1,18 +1,6 @@
 <template>
-  <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
+  <div class="navbar bg-base-200 mb-16">
     <div class="navbar-start">
-      <NuxtLink
-        v-if="path && path.replace('ar', '') !== '/'"
-        class="btn btn-circle btn-ghost"
-        :to="path.substring(0, path.lastIndexOf('/')) || '/'"
-        :replace="true"
-      >
-        <Icon
-          class="rtl:rotate-180"
-          name="ion:arrow-back"
-          size="24"
-        />
-      </NuxtLink>
       <NuxtLink
         class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
         :to="$nuxt.$localePath('/')"
@@ -38,12 +26,9 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-  const route = useRoute()
-  const path = computed(() =>
-    route.fullPath.endsWith('/') ?
-      route.fullPath.substring(0, route.fullPath.length - 1)
-      : route.fullPath
-  )
-</script>
-<style scoped lang="postcss"></style>
+<script setup></script>
+<style scoped lang="postcss">
+.navbar {
+  --tw-bg-opacity: 0.5;
+}
+</style>

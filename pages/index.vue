@@ -4,7 +4,7 @@
       :pending="pending"
       view="flex"
       :heading="$t('home.categories.title')"
-      class="mx-auto !flex-row flex-wrap gap-4"
+      class="mx-auto flex-row flex-wrap gap-4"
       :heading-link="{
         to: $nuxt.$localePath('/courses'),
         text: $t('home.categories.all'),
@@ -14,7 +14,7 @@
       <NuxtLink
         v-for="cat in categories?.data"
         :key="cat.id"
-        class="card max-h-24 shadow-xl border max-md:w-40 flex-1 grow w-36 min-w-[9rem]"
+        class="card max-h-24 shadow-xl border max-md:w-40 flex-1"
         :class="`hover:bg-${cat.attributes.slug.toUpperCase()} border-${cat.attributes.slug.toUpperCase()}`"
         :to="$nuxt.$localePath({ name: 'courses', query: { category: cat.attributes.slug.toLowerCase()}})"
       >

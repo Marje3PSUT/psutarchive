@@ -7,7 +7,18 @@
       <span class="text-xs badge bg-transparent border border-base-content border-opacity-40">
         #{{ item.course_id }}
       </span>
-      <CourseFavoriteButton :id="id" />
+      <button
+        :title="$t('courses.addToFavs')"
+        :aria-label="$t('courses.addToFavs')"
+        @click="switchFavState(id)"
+      >
+        <Icon
+          :name="isFavorite ? 'ion:heart': 'ion:heart-outline'"
+          class="cursor-pointer hover:scale-110 transition-all"
+          :class="{ 'text-[#fb6f84]': isFavorite }"
+          size="22"
+        />
+      </button>
     </div>
     <NuxtLink
       :to="$nuxt.$localePath(`/courses/${item.course_id}`)"
@@ -29,7 +40,7 @@
         <span
           v-if="item.categories?.data.length"
           :title="categories"
-          class="badge badge-sm badge-ghost border-0 line-clamp-1 max-w-[100%]"
+          class="badge badge-sm badge-ghost border-0 line-clamp-1 max-w-[55%]"
         >
           {{ categories }}
         </span>
@@ -56,9 +67,27 @@
   })
 
   const { locale } = useI18n();
+  const { addCourse, removeCourse, getCourses } = useFavCourses()
+  
+  const isFavorite = ref(false)
+
+  const switchFavState = (id: number) => {
+    if (!isFavorite.value) {
+      addCourse(id)
+    }
+    else {
+      removeCourse(id)
+    }
+    isFavorite.value = !isFavorite.value
+  }
 
   const categories = ref(props.item.categories?.data.map(c => locale.value === 'en' ? c.attributes.name : c.attributes.name_ar).join(', '))
   const resCount = ref(props.item.resources?.data.length ? props.item.resources.data.length : 0)
+
+  onMounted(() => {
+    const favList = getCourses()
+    isFavorite.value = favList? favList?.indexOf(props.id) !== -1 : false
+  })
 </script>
 <style scoped lang="postcss">
   .card {
@@ -66,7 +95,7 @@
   }
   /* List view style */
   .card.list {
-    @apply w-full md:flex-row md:items-center md:flex-wrap;
+    @apply w-full md:flex-row md:items-center md:flex-wrap md:rounded-md;
     .card-body {
       @apply md:flex-row md:items-start md:p-2;
       .card-title {

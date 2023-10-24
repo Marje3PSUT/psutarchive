@@ -4,7 +4,8 @@
   >
     <div class="card-info flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="res-type capitalize text-lg font-bold">
-        <span class="text-secondary">
+        {{ $t(`material.resource.type.${resourceType}`) }} -
+        <span class="text-secondary-focus">
           {{ $t(`material.resource.${resourceType}.type.${item.material[0].type}`) }}
         </span>
       </div>
@@ -13,7 +14,7 @@
         class="res-metadata"
       >
         <span v-if="item.metadata.semester">
-          {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} - 
+          {{ $t(`material.semesters.${item.metadata.semester?.toLowerCase()}`) }} -
         </span>
         <span class="text-secondary font-semibold">
           {{ item.metadata.year }}
@@ -33,7 +34,7 @@
       </div>
     </div>
     <div class="card-action flex flex-col items-center gap-y-2 text-xs font-extralight">
-      <span class="res-count min-w-max font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
+      <span class="res-count font-normal">{{ filesCount }} {{ $t('material.files', filesCount) }}</span>
       <div class="res-actions flex justify-center items-center gap-1">
         <button
           v-if="!loading"
@@ -44,7 +45,7 @@
         >
           <Icon
             name="ion:md-download"
-            size="32"
+            size="36"
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </button>
@@ -61,7 +62,7 @@
         >
           <Icon
             name="ion:folder"
-            size="32"
+            size="36"
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </button>
@@ -75,27 +76,13 @@
         >
           <Icon
             name="ion:md-open"
-            size="32"
+            size="36"
             class="cursor-pointer hover:text-accent transition-[200ms]"
           />
         </a>
-        <!-- <button
-          aria-label="share-resource"
-          class="tooltip tooltip-accent z-20"
-          :data-tip="$t('material.preview')"
-        >
-          <Icon
-            name="ion:md-share"
-            size="32"
-            class="cursor-pointer hover:text-accent transition-[200ms]"
-          />
-        </button> -->
       </div>
-      <span
-        v-if="totalSize"
-        class="res-size min-w-max text-center"
-      >
-        {{ totalSize / 1024 > 1 ? (totalSize / 1024).toFixed(2) : `< 1` }}
+      <span class="res-size text-center">
+        {{ totalSize ? (totalSize / 1024).toFixed(2) : 0 }}
         {{ $t('material.megabyte') }}
       </span>
     </div>
@@ -141,7 +128,7 @@
         </div>
         <div class="flex flex-col gap-2">
           <div
-            v-for="file in filesList"
+            v-for="file in item.files?.data"
             :key="file.id"
             dir="ltr"
             class="border-b border-base-content border-opacity-25 p-2 flex items-center gap-4 last:border-none"
@@ -273,9 +260,6 @@
     })
   }
 
-  const filesList = ref(props.item.files?.data)
-  filesList.value?.sort((a, b) => ('' + a.attributes.name).localeCompare(b.attributes.name))
-
   onMounted(() => {
     if (route.query.res === props.resourceId.toString()) {
       openModal()
@@ -289,16 +273,48 @@
     @apply bg-base-100 shadow-xl;
     @apply card-bordered border-base-content;
     --tw-border-opacity: 0.2;
-    /* List view style */
-    &.list {
-      .card-info, .card-action {
-        @apply md:flex-row md:gap-4 md:items-center;
+  }
+  /* List view style */
+  .card.list {
+    /* @apply md:flex-row md:items-center md:flex-wrap; */
+    @apply md:grid md:grid-cols-6;
+    @apply w-full md:rounded-md h-24 p-2;
+    grid-template-rows: 1fr 40px !important;
+    .card-info {
+      /* @apply md:flex-row items-center md:w-fit md:justify-end md:gap-1; */
+      @apply md:col-span-4 md:grid grid-cols-8 md:grid-rows-2 md:justify-start md:items-center;
+      .res-type {
+        @apply md:col-span-3 md:row-start-1 md:col-start-1;
       }
-      .res-actions {
-        @apply md:order-3;
+      /* .divider {
+        @apply flex mx-1;
+      } */
+      .res-metadata {
+        @apply md:col-span-3 md:col-start-4 md:row-start-1;
+      }
+      .res-title {
+        @apply md:col-span-3 md:col-start-1 md:row-start-2;
       }
       .res-author {
-        @apply md:mt-0;
+        @apply md:col-start-4 md:row-start-2 md:col-span-2;
+      }
+    }
+    .card-action {
+      @apply md:grid md:col-span-2 md:grid-cols-4 md:grid-rows-2 md:gap-0 md:m-0 md:p-2;
+      .res-count {
+        @apply md:col-span-1 md:col-start-3 md:row-start-2 text-center;
+      }
+      .res-size {
+        @apply md:col-span-1 md:col-start-4 md:row-start-2 text-center;
+      }
+      .res-actions {
+        @apply md:grid md:grid-cols-2 md:col-span-2 md:col-start-3 md:row-span-1 md:grid-rows-1; 
+        .res-download, .res-loading {
+          @apply md:col-start-2 md:row-start-1;
+        }
+        .res-folder, .res-open {
+          @apply md:col-start-1 md:row-start-1;
+        }
       }
     }
   }

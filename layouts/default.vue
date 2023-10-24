@@ -1,8 +1,8 @@
 <template>
   <div
     :data-theme="useTheme().value"
-    :dir="head.htmlAttrs?.dir"
-    :lang="head.htmlAttrs?.lang"
+    :dir="head.htmlAttrs.dir"
+    :lang="head.htmlAttrs.lang"
     class="flex flex-col"
   >
     <a
@@ -20,32 +20,12 @@
     <UIFooter />
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
   const head = useLocaleHead({
     addDirAttribute: true,
     addSeoAttributes: true,
   })
   const config = useRuntimeConfig()
-
-  // Get theme and language from browser
-  onMounted(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      useTheme().value = 'dark'
-    }
-    else {
-      useTheme().value = 'light'
-    }
-    if (navigator.language.includes('ar')) {
-      const switchLocalePath = useSwitchLocalePath()
-      navigateTo(switchLocalePath('ar'), {
-        replace: true
-      })
-    }
-    // listen to browser theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-      useTheme().value = event.matches ? "dark" : "light";
-    });
-  })
 </script>
 <style lang="postcss">
   body, #__nuxt, #__layout, #__nuxt > div {
