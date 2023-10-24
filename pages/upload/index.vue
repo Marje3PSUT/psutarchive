@@ -23,3 +23,11 @@
     </a>
   </div>
 </template>
+<style>
+  .progress::-webkit-progress-bar {
+    border-radius: 0.125rem;
+  }
+  .progress::-webkit-progress-value {
+    border-radius: 0;
+  }
+</style>
