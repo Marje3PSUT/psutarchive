@@ -2,9 +2,10 @@
   <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
       <NuxtLink
-        v-if="path.replace('ar/', '') !== '/'"
+        v-if="path && path.replace('ar', '') !== '/'"
         class="btn btn-circle btn-ghost"
-        :to="path.substring(0, path.lastIndexOf('/') + 1)"
+        :to="path.substring(0, path.lastIndexOf('/')) || '/'"
+        :replace="true"
       >
         <Icon
           class="rtl:rotate-180"
@@ -39,6 +40,10 @@
 </template>
 <script setup lang="ts">
   const route = useRoute()
-  const path = computed(() => route.fullPath)
+  const path = computed(() =>
+    route.fullPath.endsWith('/') ?
+      route.fullPath.substring(0, route.fullPath.length - 1)
+      : route.fullPath
+  )
 </script>
 <style scoped lang="postcss"></style>
