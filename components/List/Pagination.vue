@@ -60,7 +60,8 @@
     },
     end: {
       type: Number,
-      required: true,
+      required: false,
+      default: null,
     },
     active: {
       type: Number,
@@ -108,8 +109,7 @@
     activePage.value += n
     emit('activePage', activePage.value)
   }
-
-  onMounted(() => {
+  watch(props, () => {
     activePage.value = props.active
   })
 </script>

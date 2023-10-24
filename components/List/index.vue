@@ -41,6 +41,8 @@
           :sort-options="props.sortOptions"
           @sort="(q: string) => $emit('sorted', q)"
         />
+        <slot name="list-option" />
+
         <button
           v-if="showViewControl"
           aria-label="switch view"
@@ -65,9 +67,15 @@
         v-for="tab, i in props.tabs"
         :key="i"
         class="tab"
-        :class="{ 'tab-active': activeTab === i }"
+        :class="{ 'tab-active': activeTab === i, 'indicator': tab.indicator }"
         @click="$emit('activeTab', i)"
       >
+        <span
+          v-if="tab.indicator"
+          class="indicator-item badge badge-secondary"
+        >
+          {{ tab.indicator }}
+        </span> 
         {{ tab.title }}
       </button>
     </div>
@@ -120,10 +128,11 @@
   type TabItem = {
     title: string
     value: string
+    indicator?: string | number | null
   }
   type PaginationOptions = {
     start?: number
-    end: number
+    end?: number
     active?: number
     limit?: number
     showArrows?: boolean
@@ -201,7 +210,7 @@
 
 <style scoped lang="postcss">
   .list.view-flex {
-    @apply flex gap-4;
+    @apply flex gap-4 flex-col;
   }
   .list.view-grid {
     @apply grid;
@@ -232,7 +241,7 @@
   }
   .list.view-auto {
     /* Always list / full-width view on mobile */
-    @apply max-sm:flex sm:grid;
+    @apply max-sm:flex max-sm:flex-col sm:grid;
   }
   .list {
     transition: all 0.25s linear;
