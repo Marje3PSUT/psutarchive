@@ -1,8 +1,13 @@
 <template>
   <label class="h-28 block resource-card">
-    <input type="radio" name="resources" class="hidden absolute" />
+    <input
+      type="checkbox"
+      name="resources"
+      class="hidden absolute"
+      @click="checkboxLogic"
+    />
     <div
-      class="relative border border-neutral-content bg-neutral rounded-xl h-full cursor-pointer select-none"
+      class="relative border border-neutral-content rounded-xl h-full cursor-pointer select-none"
     >
       <!-- Solved indicator -->
       <div v-if="item.material[0]?.is_solved" :class="indicator">
@@ -203,7 +208,7 @@ const filesCount = ref<number>(props.item.files?.data.length as number);
 
 const indicator = computed(() => {
   const style =
-    "rounded-md w-20  text-center bg-accent text-accent-content font-mono absolute -translate-y-1/2 top-1/2 ";
+    "rounded-2xl w-20  text-center bg-accent text-accent-content font-mono absolute -translate-y-1/2 top-1/2 ";
   return style.concat(
     locale.value === "ar"
       ? "-right-10 rotate-90"
@@ -214,6 +219,22 @@ const indicator = computed(() => {
 const titleSize = computed(() => {
   return resourceType.value === "note" ? "h-1/5" : "h-2/5";
 });
+
+const checkboxLogic = (event: MouseEvent) => {
+  const toggledCheckbox = event.target as HTMLInputElement;
+
+  if (toggledCheckbox.checked) {
+    const checkboxes = document.getElementsByName(
+      "resources"
+    ) as NodeListOf<HTMLInputElement>;
+    checkboxes.forEach((el) => {
+      el.checked = false;
+    });
+    toggledCheckbox.checked = true;
+  } else {
+    toggledCheckbox.checked = false;
+  }
+};
 
 const containsMultipleFiles = computed(() => {
   return filesCount.value > 1;
@@ -315,8 +336,10 @@ onMounted(() => {
   right: 0;
 }
 
+/* Commented out because bg-neutral and bg-neutral-focus are broken in light mode
 .resource-card:hover > div {
   @apply bg-neutral-focus;
   @apply transition-colors;
 }
+*/
 </style>
