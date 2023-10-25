@@ -53,6 +53,7 @@
               <Icon name="ion:list-outline" size="24" />
             </button>
             <button
+              v-if="!loading"
               aria-label="download-button"
               :title="$t('material.download')"
               class="hover:text-accent-focus transition-colors"
@@ -60,6 +61,11 @@
             >
               <Icon name="ion:md-download" size="24" />
             </button>
+            <div v-else class="flex justify-center items-center">
+              <span
+                class="res-loading loading loading-spinner w-5"
+              ></span>
+            </div>
           </div>
           <div class="text-xs opacity-75 text-center h-1/5">
             {{ filesCount }} {{ $t("material.files", filesCount) }},
