@@ -43,11 +43,6 @@
   } 
   const socialLinks: Link[] = [
     {
-      name: "Marje3's website",
-      icon: "ion:device-hdd",
-      link: "https://drive.google.com/drive/folders/1Wm8rgLuhfdTrh--f-sYiYCjwW7i2Lkt2?usp=sharing"
-    },
-    {
     name: "Facebook",
     icon: "ion:logo-facebook",
     link: "https://www.facebook.com/marje3psut"
