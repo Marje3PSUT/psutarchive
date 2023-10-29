@@ -44,18 +44,23 @@
   const socialLinks: Link[] = [
     {
       name: "Marje3's website",
-      icon: "ion:globe",
-      link: "https://marje3.club/"
+      icon: "ion:device-hdd",
+      link: "https://drive.google.com/drive/folders/1Wm8rgLuhfdTrh--f-sYiYCjwW7i2Lkt2?usp=sharing"
+    },
+    {
+    name: "Facebook",
+    icon: "ion:logo-facebook",
+    link: "https://www.facebook.com/marje3psut"
     },
     {
       name: "Instagram",
       icon: "ion:logo-instagram",
-      link: "#"
+      link: "https://www.instagram.com/marje3.19/"
     },
     {
       name: "Discord",
       icon: "ion:logo-discord",
-      link: "#"
+      link: "https://discord.gg/SKEuduaVEC"
     },
     {
       name: "GitHub",
