@@ -22,6 +22,7 @@
         <img
           class="logo"
           :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
+          alt="PSUT Archive logo"
           width="40"
         >
         {{ $t("psutarchive") }}
