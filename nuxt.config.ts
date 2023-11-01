@@ -9,6 +9,12 @@ export default defineNuxtConfig({
           type: 'image/svg+xml',
         },
       ],
+      script: [
+        {
+          "data-domain": "psutarchive.com",
+          src: "https://plausible.psutarchive.com/js/script.js",
+        },
+      ],
       // TODO: add them dynamically for i18n
       meta: [
         {
