@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          "data-domain": "demo.psutarchive.com",
+          "data-domain": "psutarchive.com",
           src: "https://plausible.psutarchive.com/js/script.js",
         },
       ],
