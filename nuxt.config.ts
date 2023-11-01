@@ -9,6 +9,14 @@ export default defineNuxtConfig({
           type: 'image/svg+xml',
         },
       ],
+      // TODO: add them dynamically for i18n
+      meta: [
+        {
+          name: 'description',
+          content: 'PSUT Archive is your go-to web archive for accessing past exam papers and course notes designed specifically for students at Princess Sumaya University for Technology (PSUT). Dive into a comprehensive resource collection to enhance your academic journey.',
+        },
+      ],
+      title: 'PSUT Archive - Find Academic Resources for PSUT',
     },
   },
   devtools: { enabled: true },
