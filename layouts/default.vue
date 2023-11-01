@@ -21,9 +21,15 @@
   </div>
 </template>
 <script setup lang="ts">
+  const { locale } = useI18n()
   const head = useLocaleHead({
     addDirAttribute: true,
     addSeoAttributes: true,
+  })
+  useHead({
+    htmlAttrs: {
+      lang: locale.value,
+    },
   })
   const config = useRuntimeConfig()
 

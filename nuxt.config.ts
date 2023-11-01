@@ -1,5 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          href: '/logo/logo_black.svg',
+          type: 'image/svg+xml',
+        },
+      ],
+      // TODO: add them dynamically for i18n
+      meta: [
+        {
+          name: 'description',
+          content: 'PSUT Archive is your go-to web archive for accessing past exam papers and course notes designed specifically for students at Princess Sumaya University for Technology (PSUT). Dive into a comprehensive resource collection to enhance your academic journey.',
+        },
+      ],
+      title: 'PSUT Archive - Find Academic Resources for PSUT',
+    },
+  },
   devtools: { enabled: true },
   modules: ["@nuxtjs/i18n", "nuxt-icon", "nuxt-api-party"],
   css: ["~/assets/css/main.css", "~/assets/css/typography.css"],

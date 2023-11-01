@@ -17,7 +17,7 @@
 <template>
   <details
     ref="detailsElement"
-    class="z-10 dropdown md:hidden"
+    class="z-10 dropdown md:hidden bg-base-200 rounded-lg"
   >
     <summary
       tabindex="0"
