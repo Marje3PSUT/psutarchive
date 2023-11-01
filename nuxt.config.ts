@@ -1,5 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          href: '/logo/logo_black.svg',
+          type: 'image/svg+xml',
+        },
+      ],
+    },
+  },
   devtools: { enabled: true },
   modules: ["@nuxtjs/i18n", "nuxt-icon", "nuxt-api-party"],
   css: ["~/assets/css/main.css", "~/assets/css/typography.css"],
