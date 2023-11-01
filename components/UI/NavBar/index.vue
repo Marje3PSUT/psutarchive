@@ -1,6 +1,7 @@
 <template>
   <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
+      <!-- Back button -->
       <NuxtLink
         v-if="path && path.replace('ar', '') !== '/'"
         class="btn btn-circle btn-ghost"
@@ -13,10 +14,16 @@
           size="24"
         />
       </NuxtLink>
+      <!-- Logo & Homepage -->
       <NuxtLink
         class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
         :to="$nuxt.$localePath('/')"
       >
+        <img
+          class="logo"
+          :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
+          width="40"
+        >
         {{ $t("psutarchive") }}
       </NuxtLink>
     </div>
