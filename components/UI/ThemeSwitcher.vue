@@ -1,5 +1,5 @@
 <template>
-  <label class="swap swap-rotate">
+  <label class="swap swap-rotate bg-base-200 rounded-full">
     <input
       type="checkbox"
       class="mx-4"
