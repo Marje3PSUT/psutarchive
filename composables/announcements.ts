@@ -7,7 +7,16 @@ export const useAnnouncements = () => {
    */
   const getHidden = (): number[] | null => {
     const savedList = localStorage.getItem(STORAGE_KEY)
-    return savedList ? JSON.parse(savedList) : null
+    // return savedList ? JSON.parse(savedList) : null
+    let list = []
+    try {
+      list = savedList ? JSON.parse(savedList) : null
+    }
+    catch (e) {
+      console.error("Caught error:", e)
+      localStorage.removeItem(STORAGE_KEY)
+    }
+    return list
   }
 
   /**
