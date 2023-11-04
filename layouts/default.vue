@@ -11,8 +11,16 @@
     >
       Skip to content
     </a>
-    <LazyDevDeployInfo v-if="config.public.env === 'development'" />
     <NuxtLoadingIndicator />
+    <LazyDevDeployInfo v-if="config.public.env === 'development'" />
+
+    <!-- Announcements -->
+    <LazyHomeAnnouncement
+      v-if="!pending && announcements.list?.length"
+      :id="announcements?.list[0].id"
+      :data="announcements?.list[0].attributes"
+    />
+
     <UINavBar />
     <main id="main">
       <slot />
@@ -33,8 +41,17 @@
   })
   const config = useRuntimeConfig()
 
-  // Get theme and language from browser
+  const announcements = reactive({
+    hiddenList: [] as number[],
+    list: [] as StrapiItem<AnnouncementAttributes>[],
+  })
+
+  const { data, pending } = await useLazyAsyncData(async (): Promise<StrapiResponse<AnnouncementAttributes>> => 
+    await $baseApi(`announcements`, { cache: true })
+  )
+ 
   onMounted(() => {
+    // Get theme and language from browser
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       useTheme().value = 'dark'
     }
@@ -51,6 +68,11 @@
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
       useTheme().value = event.matches ? "dark" : "light";
     });
+
+    // Get list of hidden announcements from localStorage and filter them out
+    const { getHidden } = useAnnouncements()
+    announcements.hiddenList = getHidden() || []
+    announcements.list = data.value?.data.filter(i => !announcements.hiddenList?.includes(i.id)) || []
   })
 </script>
 <style lang="postcss">

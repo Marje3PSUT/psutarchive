@@ -43,7 +43,7 @@
     <button
       title="Hide announcement."
       class="btn btn-circle ms-auto"
-      @click="open = false"
+      @click="hide()"
     >
       <Icon name="ion:close" />
     </button>
@@ -60,10 +60,20 @@
       type: Boolean,
       default: true,
     },
+    id: {
+      type: Number,
+      required: true,
+    },
   })
   const { locale } = useI18n()
   const open = ref(props.shown)
   const expanded = ref(false)
+
+  const hide = () => {
+    open.value = false
+    const { addItem } = useAnnouncements()
+    addItem(props.id)
+  }
 </script>
 
 <style lang="postcss" scoped>
