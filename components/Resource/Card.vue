@@ -38,7 +38,7 @@
         <button
           v-if="!loading"
           aria-label="download-button"
-          class="res-download tooltip tooltip-accent z-20"
+          class="res-download tooltip tooltip-accent"
           :data-tip="$t('material.download', filesCount)"
           @click="download(item.files?.data)"
         >
@@ -55,7 +55,7 @@
         <button
           v-if="filesCount > 1"
           aria-label="see-files-button"
-          class="res-folder tooltip tooltip-accent z-20"
+          class="res-folder tooltip tooltip-accent"
           :data-tip="$t('material.preview')"
           @click="openModal()"
         >
