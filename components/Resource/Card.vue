@@ -67,10 +67,10 @@
         </button>
         <a
           v-else
-          :href="item.files?.data[0].attributes.url"
+          :href="filesList && filesList[0].attributes.url"
           target="_blank"
           class="res-open tooltip tooltip-accent"
-          :download="item.files?.data[0].attributes.name"
+          :download="filesList && filesList[0].attributes.name"
           :data-tip="$t('material.open')"
         >
           <Icon
@@ -196,21 +196,21 @@
       required: true,
     }
   })
+  const filesList = computed(() => props.item.files ? props.item.files?.data : [])
   const { locale } = useI18n()
   const route = useRoute()
 
   const loading = ref(false)
   const resourceType = ref(props.item.material[0]?.__component?.includes('exam') ? 'exam' : 'note')
-  const filesCount = ref<number>(props.item.files?.data.length as number)
+  const filesCount = ref<number>(filesList.value?.length | 0)
 
   // get total size of all files of this resource
   const totalSize = ref(
-    props.item.files?.data
-      .reduce<number>(
+    filesList.value?.reduce<number>(
         (sum: number, curr: StrapiItem<MediaAttributes>) => (sum + curr.attributes.size), 0)
   )
 
-  const download = async (files: StrapiItem<MediaAttributes>[] | undefined = props.item.files?.data) => {
+  const download = async (files: StrapiItem<MediaAttributes>[] | undefined = filesList.value) => {
     loading.value = true
 
     // get urls of files
@@ -273,7 +273,6 @@
     })
   }
 
-  const filesList = ref(props.item.files?.data)
   filesList.value?.sort((a, b) => ('' + a.attributes.name).localeCompare(b.attributes.name))
 
   onMounted(() => {
