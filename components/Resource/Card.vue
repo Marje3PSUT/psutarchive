@@ -1,12 +1,12 @@
 <template>
-  <label class="h-28 block resource-card shadow-xl px-3">
+  <label class="h-28 block resource-card px-3">
     <input
       type="checkbox"
       name="resources"
       class="hidden absolute"
       @click="checkboxLogic"
     >
-    <div class="relative border border-neutral-content rounded-xl h-full select-none">
+    <div class="relative border border-neutral-content rounded-xl h-full select-none shadow-xl">
       <!-- Solved indicator -->
       <div
         v-if="item.material[0]?.is_solved"
@@ -93,9 +93,9 @@
           </div>
         </div>
         <!-- Content Div-->
-        <div class="ml-6 w-3/4 h-full pt-1">
-          <div :class="'text-lg font-bold mb-1 ' + titleSize">
-            <span class="text-secondary">
+        <div class="ml-6 w-3/4 h-full flex flex-col justify-center">
+          <div class="text-lg font-bold">
+            <span class="text-secondary-focus">
               {{
                 item?.material[0]?.type &&
                   $t(
@@ -104,25 +104,31 @@
               }}
             </span>
           </div>
-          <div :class="'text-md font-bold ' + titleSize">
+          <div class="text-md font-bold">
             {{
               item?.metadata?.semester &&
                 $t(`material.semesters.${item.metadata.semester.toLowerCase()}`)
             }}
-            <span class="text-secondary">{{ item?.metadata?.year }}</span>
+            <span class="text-secondary-focus">{{ item?.metadata?.year }}</span>
           </div>
           <div
             v-if="resourceType === 'note'"
-            class="text-xs opacity-75 line-clamp-2 h-2/5"
+            class="text-xs opacity-75 truncate text-secondary h-5"
           >
             {{ item.material[0]?.title }}
           </div>
-          <div class="font-mono text-xs opacity-50 h-1/5">
+          <div class="font-mono text-xs opacity-50">
+            <span class="text-accent hover:text-accent-focus">
+              <Icon
+                name="ion:information-circle-outline"
+                size="24"
+              />
+            </span>
             {{
               item.createdBy
                 ? `${$t("misc.by")} ${item.createdBy.firstname} ${item.createdBy.lastname
                 }`
-                : `${$t("misc.by")} ${$t("misc.team")}`
+                : `${$t("misc.by")} ${$t("misc.anonymous")}`
             }}
           </div>
         </div>
@@ -246,10 +252,6 @@ const indicator = computed(() => {
       ? "-right-10 rotate-90"
       : "left-0 -rotate-90 -translate-x-1/2 "
   );
-});
-
-const titleSize = computed(() => {
-  return resourceType.value === "note" ? "h-1/5" : "h-2/5";
 });
 
 const checkboxLogic = (event: MouseEvent) => {
