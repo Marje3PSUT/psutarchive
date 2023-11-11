@@ -18,7 +18,7 @@
       <div class="relative w-full h-full overflow-hidden">
         <!-- Drawer Div -->
         <div
-          class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-secondary text-secondary-content border-l border-l-neutral-content rounded-xl resource-drawer z-10"
+          class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-secondary text-secondary-content border-x border-x-neutral-content rounded-xl resource-drawer z-10"
         >
           <div class="grid grid-cols-2 h-4/5">
             <button
@@ -86,7 +86,7 @@
               <span class="res-loading loading loading-spinner w-5" />
             </div>
           </div>
-          <div class="text-xs opacity-75 text-center h-1/5">
+          <div class="text-xs opacity-75 text-center h-1/5 truncate">
             {{ filesCount }} {{ $t("material.files", filesCount) }},
             {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
             {{ $t("material.megabyte") }}
@@ -362,24 +362,30 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .resource-card .resource-drawer {
-  right: -6rem;
-  transition-property: right;
+  @apply ltr:-right-[7rem];
+  @apply rtl:-left-[7rem];
+  transition-property: right left;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
 .resource-card:hover .resource-drawer {
-  right: 0;
+  @apply ltr:right-0;
+  @apply rtl:left-0;
 }
 
 @media (hover: none) {
   .resource-card>input:checked+div .resource-drawer {
-    right: 0;
+    @apply ltr:right-0;
+    @apply rtl:left-0;
   }
 
   .resource-card:hover .resource-drawer {
-    right: -6rem;
+    @apply ltr:-right-[7rem];
+    @apply rtl:-left-[7rem];
   }
 }
+
 </style>
