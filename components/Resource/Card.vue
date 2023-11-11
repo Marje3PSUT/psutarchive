@@ -14,9 +14,8 @@
       >
         {{ $t("material.resource.exam.solved") }}
       </div>
-      <!-- Card -->
-      <div class="relative w-full h-full overflow-hidden">
-        <!-- Drawer Div -->
+      <!-- Drawer Div -->
+      <div class="absolute w-full h-full overflow-hidden">
         <div
           class="top-1/2 absolute w-28 h-full -translate-y-1/2 bg-secondary text-secondary-content border-x border-x-neutral-content rounded-xl resource-drawer z-10"
         >
@@ -43,6 +42,7 @@
               aria-label="download-button"
               :title="$t('material.share')"
               class="hover:text-neutral-50 transition-colors"
+              @click="share()"
             >
               <Icon
                 name="ion:share-social-outline"
@@ -85,50 +85,53 @@
             {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
             {{ $t("material.megabyte") }}
           </div>
-        </div>
-        <!-- Content Div-->
-        <div class="ml-6 w-3/4 h-full flex flex-col justify-center">
-          <div class="text-lg font-bold">
-            <span class="text-secondary-focus">
-              {{
-                item?.material[0]?.type &&
-                  $t(
-                    `material.resource.${resourceType}.type.${item.material[0].type}`
-                  )
-              }}
-            </span>
-          </div>
-          <div class="text-md font-bold">
+        </div> 
+      </div>
+      <!-- Content Div-->
+      <div class="absolute ml-6 w-3/4 h-full flex flex-col justify-center">
+        <div class="text-lg font-bold">
+          <span class="text-secondary-focus">
             {{
-              item?.metadata?.semester &&
-                $t(`material.semesters.${item.metadata.semester.toLowerCase()}`)
+              item?.material[0]?.type &&
+                $t(
+                  `material.resource.${resourceType}.type.${item.material[0].type}`
+                )
             }}
-            <span class="text-secondary-focus">{{ item?.metadata?.year }}</span>
-          </div>
-          <div
-            v-if="resourceType === 'note'"
-            dir="ltr"
-            class="text-xs opacity-75 truncate text-secondary rtl:text-right"
+          </span>
+        </div>
+        <div class="text-md font-bold">
+          {{
+            item?.metadata?.semester &&
+              $t(`material.semesters.${item.metadata.semester.toLowerCase()}`)
+          }}
+          <span class="text-secondary-focus">{{ item?.metadata?.year }}</span>
+        </div>
+        <div
+          v-if="resourceType === 'note'"
+          dir="ltr"
+          class="text-xs opacity-75 truncate text-secondary rtl:text-right"
+        >
+          {{ item.material[0]?.title }}
+        </div>
+        <div class="font-mono text-xs">
+          <span
+            class="text-accent opacity-50 hover:text-accent-focus hover:opacity-100 tooltip"
+            :data-tip="`${$t('misc.ownership')} TODO`"
           >
-            {{ item.material[0]?.title }}
-          </div>
-          <div class="font-mono text-xs">
-            <span class="text-accent opacity-75 hover:text-accent-focus hover:opacity-100">
-              <Icon
-                name="ion:information-circle-outline"
-                size="24"
-              />
-            </span>
-            <span class="opacity-50">
-              {{
-                item.createdBy
-                  ? `${$t("misc.by")} ${item.createdBy.firstname} ${item.createdBy.lastname
-                  }`
-                  : `${$t("misc.by")} ${$t("misc.anonymous")}`
-              }}
-            </span>
+            <Icon
+              name="ion:information-circle-outline"
+              size="28"
+            />
+          </span>
+          <span class="opacity-50 p-1 align-middle">
+            {{
+              item.createdBy
+                ? `${$t("misc.by")} ${item.createdBy.firstname} ${item.createdBy.lastname
+                }`
+                : `${$t("misc.by")} ${$t("misc.anonymous")}`
+            }}
+          </span>
             
-          </div>
         </div>
       </div>
     </div>
@@ -240,6 +243,7 @@ const props = defineProps({
 });
 const { locale } = useI18n();
 const route = useRoute();
+const router = useRouter();
 
 const modalIsOpen = ref(false);
 const loading = ref(false);
@@ -270,6 +274,26 @@ onMounted(() => {
     openModal();
   }
 });
+
+const share = () => {
+  const query = {
+    ...route.query,
+    res: props.resourceId,
+  };
+
+  const url = router.resolve({
+    path: route.fullPath,
+    query: query,
+  });
+
+  const fullUrl = window.location.origin + url.fullPath;
+
+  if (navigator.share && navigator.canShare({ url: fullUrl })) {
+    navigator.share({ url: fullUrl });
+} else {
+  navigator.clipboard.writeText(fullUrl);
+}
+}
 
 const download = async (
   files: StrapiItem<MediaAttributes>[] | undefined = props.item.files?.data
