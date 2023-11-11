@@ -100,7 +100,8 @@
           </div>
           <div
             v-if="resourceType === 'note'"
-            class="text-xs opacity-75 truncate text-secondary h-5"
+            dir="ltr"
+            class="text-xs opacity-75 truncate text-secondary rtl:text-right"
           >
             {{ item.material[0]?.title }}
           </div>
