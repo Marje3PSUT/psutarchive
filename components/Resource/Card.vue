@@ -115,7 +115,7 @@
         </div>
         <div class="font-mono text-xs">
           <span
-            class="text-accent opacity-50 hover:text-accent-focus hover:opacity-100 tooltip"
+            class="text-accent opacity-50 hover:text-accent-focus hover:opacity-100 hover:tooltip"
             :data-tip="`${$t('misc.ownership')} TODO`"
           >
             <Icon
