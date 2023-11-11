@@ -135,7 +135,7 @@
       v-if="modalIsOpen"
       #content
     >
-      <div class="border-b border-base-content border-opacity-50 my-4">
+      <div class="border-b border-base-content border-opacity-50 my-4 w-full">
         <div class="capitalize text-lg font-bold flex justify-between p-2">
           <span>
             {{ $t(`material.resource.type.${resourceType}`) }} -
@@ -166,15 +166,15 @@
           {{ item.material[0]?.title }}
         </div>
       </div>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-4">
         <div
           v-for="file in item.files?.data"
           :key="file.id"
           dir="ltr"
-          class="border-b border-base-content border-opacity-25 p-2 flex items-center gap-4 last:border-none"
+          class="flex w-full justify-end items-center border-b border-base-content border-opacity-25 gap-3 last:border-none pb-4"
         >
-          <span class="font-mono">{{ file.attributes.name }}</span>
-          <span class="text-center text-sm ms-auto">
+          <span class="font-mono grow truncate">{{ file.attributes.name }}</span>
+          <span class="text-center text-sm w-20 shrink-0">
             {{ (file.attributes.size / 1024).toFixed(2) }}
             {{ $t("material.megabyte") }}
           </span>
