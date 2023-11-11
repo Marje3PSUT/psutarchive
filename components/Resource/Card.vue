@@ -18,8 +18,15 @@
       <div class="relative w-full h-full overflow-hidden">
         <!-- Drawer Div -->
         <div
-          class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-secondary text-secondary-content border-x border-x-neutral-content rounded-xl resource-drawer z-10"
+          class="top-1/2 absolute w-28 h-full -translate-y-1/2 bg-secondary text-secondary-content border-x border-x-neutral-content rounded-xl resource-drawer z-10"
         >
+          <div class="arrow transition-opacity absolute h-full -left-12 rtl:-right-12 text-secondary flex flex-col justify-center -z-20">
+            <Icon
+              name="ic:sharp-keyboard-double-arrow-left"
+              size="30"
+              class="rtl:rotate-180"
+            />
+          </div>
           <div class="grid grid-cols-2 h-4/5">
             <button
               aria-label="report-button"
@@ -43,7 +50,7 @@
               />
             </button>
             <button
-              
+
               aria-label="see-files-button"
               :title="$t('material.preview')"
               class="hover:text-neutral-50 transition-colors"
@@ -173,7 +180,10 @@
           :key="file.id"
           class="flex w-full justify-end items-center border-b border-base-content border-opacity-25 gap-3 last:border-none pb-4"
         >
-          <span dir="ltr" class="font-mono grow truncate rtl:text-right">{{ file.attributes.name }}</span>
+          <span
+            dir="ltr"
+            class="font-mono grow truncate rtl:text-right"
+          >{{ file.attributes.name }}</span>
           <span class="text-center text-sm w-20 shrink-0">
             {{ (file.attributes.size / 1024).toFixed(2) }}
             {{ $t("material.megabyte") }}
@@ -354,22 +364,34 @@ onMounted(() => {
   transition-property: right left;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+  .arrow {
+    @apply opacity-50
+  }
 }
 
 .resource-card:hover .resource-drawer {
   @apply ltr:right-0;
   @apply rtl:left-0;
+  .arrow {
+    @apply opacity-0
+  }
 }
 
 @media (hover: none) {
   .resource-card>input:checked+div .resource-drawer {
     @apply ltr:right-0;
     @apply rtl:left-0;
+    .arrow {
+    @apply opacity-0
+  }
   }
 
   .resource-card:hover .resource-drawer {
     @apply ltr:-right-[7rem];
     @apply rtl:-left-[7rem];
+    .arrow {
+    @apply opacity-50
+  }
   }
 }
 
