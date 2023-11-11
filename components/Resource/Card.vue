@@ -241,11 +241,19 @@ const props = defineProps({
 const { locale } = useI18n();
 const route = useRoute();
 
+const modalIsOpen = ref(false);
 const loading = ref(false);
 const resourceType = ref(
   props.item.material[0]?.__component?.includes("exam") ? "exam" : "note"
 );
 const filesCount = ref<number>(props.item.files?.data.length as number);
+const totalSize = ref(
+  props.item.files?.data.reduce<number>(
+    (sum: number, curr: StrapiItem<MediaAttributes>) =>
+      sum + curr.attributes.size,
+    0
+  )
+);
 
 const indicator = computed(() => {
   const style =
@@ -257,14 +265,11 @@ const indicator = computed(() => {
   );
 });
 
-// get total size of all files of this resource
-const totalSize = ref(
-  props.item.files?.data.reduce<number>(
-    (sum: number, curr: StrapiItem<MediaAttributes>) =>
-      sum + curr.attributes.size,
-    0
-  )
-);
+onMounted(() => {
+  if (route.query.res === props.resourceId.toString()) {
+    openModal();
+  }
+});
 
 const download = async (
   files: StrapiItem<MediaAttributes>[] | undefined = props.item.files?.data
@@ -314,8 +319,6 @@ const download = async (
   a.click();
   loading.value = false;
 };
-
-const modalIsOpen = ref(false);
 const openModal = () => {
   // open modal
   modalIsOpen.value = true;
@@ -334,12 +337,6 @@ const openModal = () => {
     replace: true,
   });
 };
-
-onMounted(() => {
-  if (route.query.res === props.resourceId.toString()) {
-    openModal();
-  }
-});
 </script>
 
 <style scoped>
