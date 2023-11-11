@@ -6,7 +6,9 @@
       <div v-if="item.material[0]?.is_solved" :class="indicator">
         {{ $t("material.resource.exam.solved") }}
       </div>
+      <!-- Card -->
       <div class="relative w-full h-full overflow-hidden">
+        <!-- Drawer Div -->
         <div
           class="top-1/2 absolute w-24 h-full -translate-y-1/2 bg-secondary text-secondary-content border-l border-l-neutral-content rounded-xl resource-drawer z-10">
           <div class="grid grid-cols-2 h-4/5">
@@ -42,6 +44,7 @@
             {{ $t("material.megabyte") }}
           </div>
         </div>
+        <!-- Content Div-->
         <div class="ml-6 w-3/4 h-full pt-1">
           <div :class="'text-lg font-bold mb-1 ' + titleSize">
             {{ $t(`material.resource.type.${resourceType}`) }} -
