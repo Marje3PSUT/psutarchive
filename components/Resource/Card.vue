@@ -6,7 +6,7 @@
       class="hidden absolute"
       @click="checkboxLogic"
     >
-    <div class="relative border border-neutral-content rounded-xl h-full select-none shadow-xl">
+    <div class="relative border border-neutral-content rounded-xl h-full select-none shadow-xl bg-gradient-to-l rtl:bg-gradient-to-r from-secondary/10">
       <!-- Solved indicator -->
       <div
         v-if="item.material[0]?.is_solved"
