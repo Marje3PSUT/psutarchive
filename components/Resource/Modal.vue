@@ -3,7 +3,7 @@
     :id="`res_${id}`"
     class="modal modal-bottom sm:modal-middle"
   >
-    <div class="modal-box">
+    <div class="modal-box overflow-hidden">
       <form method="dialog">
         <button
           aria-label="close dialog"
