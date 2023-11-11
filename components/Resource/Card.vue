@@ -42,21 +42,8 @@
                 size="24"
               />
             </button>
-            <a
-              v-if="!containsMultipleFiles"
-              :href="item.files?.data[0].attributes.url"
-              :title="$t('material.open')"
-              :download="item.files?.data[0].attributes.name"
-              target="_blank"
-              class="flex justify-center items-center hover:text-neutral-50 transition-colors"
-            >
-              <Icon
-                name="ion:md-open"
-                size="24"
-              />
-            </a>
             <button
-              v-else
+              
               aria-label="see-files-button"
               :title="$t('material.preview')"
               class="hover:text-neutral-50 transition-colors"
@@ -117,19 +104,22 @@
           >
             {{ item.material[0]?.title }}
           </div>
-          <div class="font-mono text-xs opacity-50">
-            <span class="text-accent hover:text-accent-focus">
+          <div class="font-mono text-xs">
+            <span class="text-accent opacity-75 hover:text-accent-focus hover:opacity-100">
               <Icon
                 name="ion:information-circle-outline"
                 size="24"
               />
             </span>
-            {{
-              item.createdBy
-                ? `${$t("misc.by")} ${item.createdBy.firstname} ${item.createdBy.lastname
-                }`
-                : `${$t("misc.by")} ${$t("misc.anonymous")}`
-            }}
+            <span class="opacity-50">
+              {{
+                item.createdBy
+                  ? `${$t("misc.by")} ${item.createdBy.firstname} ${item.createdBy.lastname
+                  }`
+                  : `${$t("misc.by")} ${$t("misc.anonymous")}`
+              }}
+            </span>
+            
           </div>
         </div>
       </div>
@@ -138,7 +128,6 @@
 
   <!-- preview files modal -->
   <ResourceModal
-    v-if="filesCount > 1"
     :id="resourceId"
     @closed="modalIsOpen = false"
   >
@@ -271,10 +260,6 @@ const checkboxLogic = (event: MouseEvent) => {
     toggledCheckbox.checked = false;
   }
 };
-
-const containsMultipleFiles = computed(() => {
-  return filesCount.value > 1;
-});
 
 // get total size of all files of this resource
 const totalSize = ref(
