@@ -171,10 +171,9 @@
         <div
           v-for="file in item.files?.data"
           :key="file.id"
-          dir="ltr"
           class="flex w-full justify-end items-center border-b border-base-content border-opacity-25 gap-3 last:border-none pb-4"
         >
-          <span class="font-mono grow truncate">{{ file.attributes.name }}</span>
+          <span dir="ltr" class="font-mono grow truncate rtl:text-right">{{ file.attributes.name }}</span>
           <span class="text-center text-sm w-20 shrink-0">
             {{ (file.attributes.size / 1024).toFixed(2) }}
             {{ $t("material.megabyte") }}
