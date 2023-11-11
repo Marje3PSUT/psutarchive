@@ -55,6 +55,7 @@
             :course-id="course?.attributes.course_id"
             :resource-id="item.id"
             :class="{ list: state.listView }"
+            :checkbox-logic="checkboxLogic"
           />
         </div>
       </TransitionGroup>
@@ -90,6 +91,24 @@
   const { locale, t } = useI18n()
   const urlId = ref(useRoute().params.id)
   const route = useRoute()
+
+  const checkboxLogic = (event: MouseEvent) => {
+  const toggledCheckbox = event.target as HTMLInputElement;
+
+  if (toggledCheckbox.checked) {
+    console.log("checked!")
+    const checkboxes = document.getElementsByName(
+      "resources"
+    ) as NodeListOf<HTMLInputElement>;
+    checkboxes.forEach((el) => {
+      el.checked = false;
+    });
+    toggledCheckbox.checked = true;
+  } else {
+    console.log('unchecked!')
+    toggledCheckbox.checked = false;
+  }
+};
 
   const tabsList = ref([
     {

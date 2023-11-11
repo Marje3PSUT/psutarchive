@@ -4,7 +4,7 @@
       type="checkbox"
       name="resources"
       class="hidden absolute"
-      @click="checkboxLogic"
+      @click="props.checkboxLogic"
     >
     <div class="relative border border-neutral-content rounded-xl h-full select-none shadow-xl bg-gradient-to-l rtl:bg-gradient-to-r from-secondary/10">
       <!-- Solved indicator -->
@@ -233,6 +233,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  checkboxLogic: {
+    type: Function,
+    required: true
+  }
 });
 const { locale } = useI18n();
 const route = useRoute();
@@ -252,24 +256,6 @@ const indicator = computed(() => {
       : "left-0 -rotate-90 -translate-x-1/2 "
   );
 });
-
-const checkboxLogic = (event: MouseEvent) => {
-  const toggledCheckbox = event.target as HTMLInputElement;
-
-  if (toggledCheckbox.checked) {
-    console.log("checked!")
-    const checkboxes = document.getElementsByName(
-      "resources"
-    ) as NodeListOf<HTMLInputElement>;
-    checkboxes.forEach((el) => {
-      el.checked = false;
-    });
-    toggledCheckbox.checked = true;
-  } else {
-    console.log('unchecked!')
-    toggledCheckbox.checked = false;
-  }
-};
 
 // get total size of all files of this resource
 const totalSize = ref(
