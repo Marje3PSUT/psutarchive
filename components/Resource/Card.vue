@@ -113,7 +113,7 @@
         >
           {{ item.material[0]?.title }}
         </div>
-        <div class="font-mono text-xs">
+        <div class="font-mono text-xs flex flex-row">
           <span
             class="text-accent opacity-50 hover:text-accent-focus hover:opacity-100 hover:tooltip"
             :data-tip="`${$t('misc.ownership')} TODO`"
