@@ -17,7 +17,7 @@
       <!-- Drawer Div -->
       <div class="absolute w-full h-full overflow-hidden">
         <div
-          class="top-1/2 absolute w-28 h-full -translate-y-1/2 border-x border-x-neutral-content rounded-e-xl resource-drawer z-10"
+          class="top-1/2 absolute w-28 px-4 h-full -translate-y-1/2 border-x border-x-neutral-content rounded-e-xl resource-drawer z-10"
         >
           <div class="arrow transition-opacity absolute h-full -left-12 rtl:-right-12 text-secondary flex flex-col justify-center -z-20">
             <Icon
@@ -30,47 +30,46 @@
             <button
               aria-label="report-button"
               :title="$t('material.report')"
-              class="hover:text-neutral-50 transition-colors"
+              class="action-btn"
             >
               <Icon
                 name="ion:flag-outline"
-                size="24"
+                size="26"
               />
             </button>
 
             <button
               aria-label="download-button"
               :title="$t('material.share')"
-              class="hover:text-neutral-50 transition-colors"
+              class="action-btn"
               @click="share()"
             >
               <Icon
                 name="ion:share-social-outline"
-                size="24"
+                size="26"
               />
             </button>
             <button
-
               aria-label="see-files-button"
               :title="$t('material.preview')"
-              class="hover:text-neutral-50 transition-colors"
+              class="action-btn"
               @click="openModal()"
             >
               <Icon
                 name="ion:list-outline"
-                size="24"
+                size="26"
               />
             </button>
             <button
               v-if="!loading"
               aria-label="download-button"
               :title="$t('material.download')"
-              class="hover:text-neutral-50 transition-colors"
+              class="action-btn"
               @click="download(item.files?.data)"
             >
               <Icon
                 name="ion:md-download"
-                size="24"
+                size="26"
               />
             </button>
             <div
@@ -80,10 +79,21 @@
               <span class="res-loading loading loading-spinner w-5" />
             </div>
           </div>
-          <div class="text-xs opacity-75 text-center h-1/5 truncate">
-            {{ filesCount }} {{ $t("material.files", filesCount) }},
-            {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
-            {{ $t("material.megabyte") }}
+          <div class="flex gap-2 items-center justify-center">
+            <div class="text-xs opacity-75 text-center h-1/5 truncate">
+              {{ filesCount }} {{ $t("material.files", filesCount) }},
+              {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
+              {{ $t("material.megabyte") }}
+            </div>
+            <div
+              class="max-sm:tooltip-right w-max font-mono text-xs text-secondary tooltip whitespace-pre-line !text-start"
+              :data-tip="attributionText"
+            >
+              <Icon
+                name="ion:information-circle-outline"
+                size="24"
+              />
+            </div>
           </div>
         </div> 
       </div>
@@ -112,26 +122,6 @@
           class="text-xs opacity-75 truncate text-secondary rtl:text-right"
         >
           {{ item.material[0]?.title }}
-        </div>
-        <div class="font-mono text-xs flex flex-row">
-          <span
-            class="text-accent opacity-50 hover:text-accent-focus hover:opacity-100 hover:tooltip"
-            :data-tip="`${$t('misc.ownership')} TODO`"
-          >
-            <Icon
-              name="ion:information-circle-outline"
-              size="28"
-            />
-          </span>
-          <span class="opacity-50 p-1 align-middle">
-            {{
-              item.createdBy
-                ? `${$t("misc.by")} ${item.createdBy.firstname} ${item.createdBy.lastname
-                }`
-                : `${$t("misc.by")} ${$t("misc.anonymous")}`
-            }}
-          </span>
-            
         </div>
       </div>
     </div>
@@ -259,6 +249,16 @@ const totalSize = ref(
   )
 );
 
+const { t } = useI18n()
+
+const attributionText = ref( 
+  props.item.createdBy
+    ? `${t("misc.by")} ${props.item.createdBy.firstname} ${props.item.createdBy.lastname
+    }`
+    : `${t("misc.by")} ${t("misc.anonymous")}` + '\n' +
+    `${t('misc.ownership')} TODO`
+  )
+
 const indicator = computed(() => {
   const style =
     "rounded-2xl text-sm w-20 text-center bg-secondary text-accent-content font-mono absolute -translate-y-1/2 top-1/2 ";
@@ -379,9 +379,13 @@ const openModal = () => {
 .resource-card:hover .resource-drawer {
   @apply ltr:right-0;
   @apply rtl:left-0;
+  @apply w-36;
   .arrow {
     @apply opacity-0
   }
+}
+.action-btn {
+  @apply hover:text-secondary transition-colors;
 }
 
 @media (hover: none) {
