@@ -379,7 +379,6 @@ const openModal = () => {
 .resource-card:hover .resource-drawer {
   @apply ltr:right-0;
   @apply rtl:left-0;
-  @apply w-36;
   .arrow {
     @apply opacity-0
   }
@@ -395,7 +394,7 @@ const openModal = () => {
     .arrow {
     @apply opacity-0
   }
-  }
+}
 
   .resource-card:hover .resource-drawer {
     @apply ltr:-right-[7rem];
