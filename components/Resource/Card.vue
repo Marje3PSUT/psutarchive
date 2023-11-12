@@ -17,7 +17,7 @@
       <!-- Drawer Div -->
       <div class="absolute w-full h-full overflow-hidden">
         <div
-          class="top-1/2 absolute w-28 px-4 h-full -translate-y-1/2 border-x border-x-neutral-content rounded-e-xl resource-drawer z-10"
+          class="bg-base-100 bg-gradient-to-l rtl:bg-gradient-to-r from-secondary/10 top-1/2 absolute w-28 px-4 h-full -translate-y-1/2 border-x border-x-neutral-content rounded-e-xl resource-drawer z-10"
         >
           <div class="arrow transition-opacity absolute h-full -left-12 rtl:-right-12 text-secondary flex flex-col justify-center -z-20">
             <Icon
