@@ -17,7 +17,7 @@
       <!-- Drawer Div -->
       <div class="absolute w-full h-full overflow-hidden">
         <div
-          class="top-1/2 absolute w-28 h-full -translate-y-1/2 bg-secondary text-secondary-content border-x border-x-neutral-content rounded-xl resource-drawer z-10"
+          class="top-1/2 absolute w-28 h-full -translate-y-1/2 border-x border-x-neutral-content rounded-e-xl resource-drawer z-10"
         >
           <div class="arrow transition-opacity absolute h-full -left-12 rtl:-right-12 text-secondary flex flex-col justify-center -z-20">
             <Icon
@@ -261,7 +261,7 @@ const totalSize = ref(
 
 const indicator = computed(() => {
   const style =
-    "rounded-2xl w-20  text-center bg-accent text-accent-content font-mono absolute -translate-y-1/2 top-1/2 ";
+    "rounded-2xl text-sm w-20 text-center bg-secondary text-accent-content font-mono absolute -translate-y-1/2 top-1/2 ";
   return style.concat(
     locale.value === "ar"
       ? "-right-10 rotate-90"
@@ -363,7 +363,7 @@ const openModal = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 
 .resource-card .resource-drawer {
   @apply ltr:-right-[7rem];
