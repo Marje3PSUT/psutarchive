@@ -94,7 +94,8 @@
   "misc": {
     "by": "Submitted by:",
     "ownership": "Courtesy of",
-    "anonymous": "Anonymous"
+    "anonymous": "Anonymous",
+    "copy": "Coppied to clipboard!"
   },
   "lists": {
     "search": "Search",
