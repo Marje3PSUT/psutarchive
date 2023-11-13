@@ -1,5 +1,8 @@
 <template>
-  <div class="resource-card">
+  <div
+    class="resource-card"
+    :class="{ 'indicator': item.material[0]?.is_solved }"
+  >
     <!-- Solved exam indicator -->
     <span
       v-if="item.material[0]?.is_solved"
@@ -28,16 +31,15 @@
         <span class="text-secondary-focus">{{ item?.metadata?.year }}</span>
       </div>
       <div
-        v-if="resourceType === 'note'"
-        dir="ltr"
-        class="text-xs opacity-75 truncate text-secondary rtl:text-right"
+        v-if="item.material[0]?.title"
+        class="text-sm text-secondary line-clamp-3"
       >
         {{ item.material[0]?.title }}
       </div>
     </div>
     <!-- Action Buttons -->
     <div class="action-buttons">
-      <div class="grid grid-cols-2 h-4/5">
+      <div class="grid">
         <button
           aria-label="report-button"
           :title="$t('material.report')"
@@ -90,21 +92,21 @@
           <span class="res-loading loading loading-spinner w-5" />
         </div>
       </div>
-      <div class="flex gap-2 items-center justify-center">
-        <div class="text-xs opacity-75 text-center h-1/5 truncate">
+      <div class="mx-auto mt-auto text-center">
+        <span class="text-xs opacity-75 text-center h-1/5 truncate">
           {{ filesCount }} {{ $t("material.files", filesCount) }},
           {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
           {{ $t("material.megabyte") }}
-        </div>
-        <div
-          class="ltr:tooltip-left rtl:tooltip-right w-max font-mono text-xs text-secondary tooltip whitespace-pre-line !text-start"
+        </span>
+        <span
+          class="ms-1 ltr:tooltip-left rtl:tooltip-right w-max font-mono text-xs text-secondary tooltip whitespace-pre-line !text-start"
           :data-tip="attributionText"
         >
           <Icon
             name="ion:information-circle-outline"
-            size="24"
+            size="28"
           />
-        </div>
+        </span>
       </div>
     </div>
   </div>
@@ -335,7 +337,7 @@ const openModal = () => {
 
 <style scoped lang="postcss">
 .resource-card {
-  @apply indicator card card-compact flex flex-row justify-between;
+  @apply card card-compact flex flex-row justify-between;
   @apply p-4 h-full w-full;
   @apply border border-neutral-content rounded-xl;
 }
@@ -346,8 +348,12 @@ const openModal = () => {
 .action-buttons {
   @apply w-36 h-full;
   @apply border-s border-neutral-content border-opacity-40;
+  .grid {
+    @apply gap-4 py-2 mx-auto mb-1 w-min;
+    grid-template-columns: 40% 40%;
+  }
 }
 .action-btn {
-  @apply hover:text-secondary transition-colors;
+  @apply hover:text-secondary transition-colors w-max;
 }
 </style>
