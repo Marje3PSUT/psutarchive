@@ -92,10 +92,7 @@
         <div class="text-lg font-bold">
           <span class="text-secondary-focus">
             {{
-              item?.material[0]?.type &&
-                $t(
-                  `material.resource.${resourceType}.type.${item.material[0].type}`
-                )
+              resourceType === 'note' && title ? title : resourceSubtype
             }}
           </span>
         </div>
@@ -111,7 +108,7 @@
           dir="ltr"
           class="text-xs opacity-75 truncate text-secondary rtl:text-right"
         >
-          {{ item.material[0]?.title }}
+          {{ resourceType === 'note' && title ? resourceSubtype : '' }}
         </div>
         <div class="font-mono text-xs flex flex-row">
           <span
@@ -241,7 +238,8 @@ const props = defineProps({
     required: true
   }
 });
-const { locale } = useI18n();
+
+const { locale, t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -250,6 +248,13 @@ const loading = ref(false);
 const resourceType = ref(
   props.item.material[0]?.__component?.includes("exam") ? "exam" : "note"
 );
+const title = ref(
+  props.item.material[0]?.title
+)
+const resourceSubtype = ref(
+  t( `material.resource.${resourceType.value}.type.${props.item.material[0].type}` )
+)
+
 const filesCount = ref<number>(props.item.files?.data.length as number);
 const totalSize = ref(
   props.item.files?.data.reduce<number>(
