@@ -1,12 +1,14 @@
 <template>
-  <div class="border border-neutral-content rounded-xl h-28 resource-card px-3 flex justify-between">
-    <!-- Solved indicator -->
-    <div
+  <div class="indicator card card-compact p-4 border border-neutral-content rounded-xl h-full w-full resource-card flex flex-row justify-between">
+    <!-- Solved exam indicator -->
+    <span
       v-if="item.material[0]?.is_solved"
-      :class="indicator"
+      class="indicator-item indicator-start indicator-middle rounded-2xl text-sm w-20 text-center badge badge-secondary font-mono left-0 -rotate-90 rtl:-right-10 rtl:rotate-90"
     >
       {{ $t("material.resource.exam.solved") }}
-    </div>
+    </span>
+
+    <!-- Main card content -->
     <div class="h-full select-none flex flex-col justify-center">
       <div class="text-lg font-bold">
         <span class="text-secondary-focus">
@@ -34,7 +36,7 @@
       </div>
     </div>
     <!-- Action Buttons -->
-    <div class="w-36 h-full border-s">
+    <div class="w-36 h-full border-s border-neutral-content border-opacity-40">
       <div class="grid grid-cols-2 h-4/5">
         <button
           aria-label="report-button"
@@ -206,7 +208,6 @@ const props = defineProps({
     required: true,
   }
 });
-const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -233,16 +234,6 @@ const attributionText = ref(
     : `${t("misc.by")} ${t("misc.anonymous")}` + '\n' +
     `${t('misc.ownership')} TODO`
   )
-
-const indicator = computed(() => {
-  const style =
-    "rounded-2xl text-sm w-20 text-center bg-secondary text-accent-content font-mono absolute -translate-y-1/2 top-1/2 ";
-  return style.concat(
-    locale.value === "ar"
-      ? "-right-10 rotate-90"
-      : "left-0 -rotate-90 -translate-x-1/2 "
-  );
-});
 
 onMounted(() => {
   if (route.query.res === props.resourceId.toString()) {
