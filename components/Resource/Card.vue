@@ -1,9 +1,9 @@
 <template>
-  <div class="indicator card card-compact p-4 border border-neutral-content rounded-xl h-full w-full resource-card flex flex-row justify-between">
+  <div class="resource-card">
     <!-- Solved exam indicator -->
     <span
       v-if="item.material[0]?.is_solved"
-      class="indicator-item indicator-start indicator-middle rounded-2xl text-sm w-20 text-center badge badge-secondary font-mono left-0 -rotate-90 rtl:-right-10 rtl:rotate-90"
+      class="solved-indicator indicator-item indicator-start indicator-middle"
     >
       {{ $t("material.resource.exam.solved") }}
     </span>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- Action Buttons -->
-    <div class="w-36 h-full border-s border-neutral-content border-opacity-40">
+    <div class="action-buttons">
       <div class="grid grid-cols-2 h-4/5">
         <button
           aria-label="report-button"
@@ -106,7 +106,7 @@
           />
         </div>
       </div>
-    </div> 
+    </div>
   </div>
   <!-- preview files modal -->
   <ResourceModal
@@ -157,7 +157,9 @@
           <span
             dir="ltr"
             class="font-mono grow truncate rtl:text-right"
-          >{{ file.attributes.name }}</span>
+          >{{
+            file.attributes.name
+          }}</span>
           <span class="text-center text-sm w-20 shrink-0">
             {{ (file.attributes.size / 1024).toFixed(2) }}
             {{ $t("material.megabyte") }}
@@ -206,7 +208,7 @@ const props = defineProps({
   resourceId: {
     type: Number,
     required: true,
-  }
+  },
 });
 const route = useRoute();
 const router = useRouter();
@@ -225,15 +227,17 @@ const totalSize = ref(
   )
 );
 
-const { t } = useI18n()
+const { t } = useI18n();
 
-const attributionText = ref( 
+const attributionText = ref(
   props.item.createdBy
-    ? `${t("misc.by")} ${props.item.createdBy.firstname} ${props.item.createdBy.lastname
-    }`
-    : `${t("misc.by")} ${t("misc.anonymous")}` + '\n' +
-    `${t('misc.ownership')} TODO`
-  )
+    ? `${t("misc.by")} ${props.item.createdBy.firstname} ${
+        props.item.createdBy.lastname
+      }`
+    : `${t("misc.by")} ${t("misc.anonymous")}` +
+        "\n" +
+        `${t("misc.ownership")} TODO`
+);
 
 onMounted(() => {
   if (route.query.res === props.resourceId.toString()) {
@@ -256,10 +260,10 @@ const share = () => {
 
   if (navigator.share && navigator.canShare({ url: fullUrl })) {
     navigator.share({ url: fullUrl });
-} else {
-  navigator.clipboard.writeText(fullUrl);
-}
-}
+  } else {
+    navigator.clipboard.writeText(fullUrl);
+  }
+};
 
 const download = async (
   files: StrapiItem<MediaAttributes>[] | undefined = props.item.files?.data
@@ -330,6 +334,19 @@ const openModal = () => {
 </script>
 
 <style scoped lang="postcss">
+.resource-card {
+  @apply indicator card card-compact flex flex-row justify-between;
+  @apply p-4 h-full w-full;
+  @apply border border-neutral-content rounded-xl;
+}
+.solved-indicator {
+  @apply rounded-2xl text-sm w-20 text-center badge badge-secondary font-mono;
+  @apply -rotate-90;
+}
+.action-buttons {
+  @apply w-36 h-full;
+  @apply border-s border-neutral-content border-opacity-40;
+}
 .action-btn {
   @apply hover:text-secondary transition-colors;
 }
