@@ -1,132 +1,111 @@
 <template>
-  <label class="h-28 block resource-card px-3">
-    <input
-      type="checkbox"
-      name="resources"
-      class="hidden absolute"
-      @click="props.checkboxLogic"
+  <div class="border border-neutral-content rounded-xl h-28 resource-card px-3 flex justify-between">
+    <!-- Solved indicator -->
+    <div
+      v-if="item.material[0]?.is_solved"
+      :class="indicator"
     >
-    <div class="relative border border-neutral-content rounded-xl h-full select-none shadow-xl bg-gradient-to-l rtl:bg-gradient-to-r from-secondary/10">
-      <!-- Solved indicator -->
-      <div
-        v-if="item.material[0]?.is_solved"
-        :class="indicator"
-      >
-        {{ $t("material.resource.exam.solved") }}
-      </div>
-      <!-- Drawer Div -->
-      <div class="absolute w-full h-full overflow-hidden">
-        <div
-          class="bg-base-100 bg-gradient-to-l rtl:bg-gradient-to-r from-secondary/10 top-1/2 absolute w-28 px-4 h-full -translate-y-1/2 border-x border-x-neutral-content rounded-e-xl resource-drawer z-10"
-        >
-          <div class="arrow transition-opacity absolute h-full -left-12 rtl:-right-12 text-secondary flex flex-col justify-center -z-20">
-            <Icon
-              name="ic:sharp-keyboard-double-arrow-left"
-              size="30"
-              class="rtl:rotate-180"
-            />
-          </div>
-          <div class="grid grid-cols-2 h-4/5">
-            <button
-              aria-label="report-button"
-              :title="$t('material.report')"
-              class="action-btn"
-            >
-              <Icon
-                name="ion:flag-outline"
-                size="26"
-              />
-            </button>
-
-            <button
-              aria-label="download-button"
-              :title="$t('material.share')"
-              class="action-btn"
-              @click="share()"
-            >
-              <Icon
-                name="ion:share-social-outline"
-                size="26"
-              />
-            </button>
-            <button
-              aria-label="see-files-button"
-              :title="$t('material.preview')"
-              class="action-btn"
-              @click="openModal()"
-            >
-              <Icon
-                name="ion:list-outline"
-                size="26"
-              />
-            </button>
-            <button
-              v-if="!loading"
-              aria-label="download-button"
-              :title="$t('material.download')"
-              class="action-btn"
-              @click="download(item.files?.data)"
-            >
-              <Icon
-                name="ion:md-download"
-                size="26"
-              />
-            </button>
-            <div
-              v-else
-              class="flex justify-center items-center"
-            >
-              <span class="res-loading loading loading-spinner w-5" />
-            </div>
-          </div>
-          <div class="flex gap-2 items-center justify-center">
-            <div class="text-xs opacity-75 text-center h-1/5 truncate">
-              {{ filesCount }} {{ $t("material.files", filesCount) }},
-              {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
-              {{ $t("material.megabyte") }}
-            </div>
-            <div
-              class="max-sm:tooltip-right w-max font-mono text-xs text-secondary tooltip whitespace-pre-line !text-start"
-              :data-tip="attributionText"
-            >
-              <Icon
-                name="ion:information-circle-outline"
-                size="24"
-              />
-            </div>
-          </div>
-        </div> 
-      </div>
-      <!-- Content Div-->
-      <div class="absolute ml-6 w-3/4 h-full flex flex-col justify-center">
-        <div class="text-lg font-bold">
-          <span class="text-secondary-focus">
-            {{
-              item?.material[0]?.type &&
-                $t(
-                  `material.resource.${resourceType}.type.${item.material[0].type}`
-                )
-            }}
-          </span>
-        </div>
-        <div class="text-md font-bold">
+      {{ $t("material.resource.exam.solved") }}
+    </div>
+    <div class="h-full select-none flex flex-col justify-center">
+      <div class="text-lg font-bold">
+        <span class="text-secondary-focus">
           {{
-            item?.metadata?.semester &&
-              $t(`material.semesters.${item.metadata.semester.toLowerCase()}`)
+            item?.material[0]?.type &&
+              $t(
+                `material.resource.${resourceType}.type.${item.material[0].type}`
+              )
           }}
-          <span class="text-secondary-focus">{{ item?.metadata?.year }}</span>
-        </div>
-        <div
-          v-if="resourceType === 'note'"
-          dir="ltr"
-          class="text-xs opacity-75 truncate text-secondary rtl:text-right"
-        >
-          {{ item.material[0]?.title }}
-        </div>
+        </span>
+      </div>
+      <div class="text-md font-bold">
+        {{
+          item?.metadata?.semester &&
+            $t(`material.semesters.${item.metadata.semester.toLowerCase()}`)
+        }}
+        <span class="text-secondary-focus">{{ item?.metadata?.year }}</span>
+      </div>
+      <div
+        v-if="resourceType === 'note'"
+        dir="ltr"
+        class="text-xs opacity-75 truncate text-secondary rtl:text-right"
+      >
+        {{ item.material[0]?.title }}
       </div>
     </div>
-  </label>
+    <!-- Action Buttons -->
+    <div class="w-36 h-full border-s">
+      <div class="grid grid-cols-2 h-4/5">
+        <button
+          aria-label="report-button"
+          :title="$t('material.report')"
+          class="action-btn"
+        >
+          <Icon
+            name="ion:flag-outline"
+            size="26"
+          />
+        </button>
 
+        <button
+          aria-label="download-button"
+          :title="$t('material.share')"
+          class="action-btn"
+          @click="share()"
+        >
+          <Icon
+            name="ion:share-social-outline"
+            size="26"
+          />
+        </button>
+        <button
+          aria-label="see-files-button"
+          :title="$t('material.preview')"
+          class="action-btn"
+          @click="openModal()"
+        >
+          <Icon
+            name="ion:list-outline"
+            size="26"
+          />
+        </button>
+        <button
+          v-if="!loading"
+          aria-label="download-button"
+          :title="$t('material.download')"
+          class="action-btn"
+          @click="download(item.files?.data)"
+        >
+          <Icon
+            name="ion:md-download"
+            size="26"
+          />
+        </button>
+        <div
+          v-else
+          class="flex justify-center items-center"
+        >
+          <span class="res-loading loading loading-spinner w-5" />
+        </div>
+      </div>
+      <div class="flex gap-2 items-center justify-center">
+        <div class="text-xs opacity-75 text-center h-1/5 truncate">
+          {{ filesCount }} {{ $t("material.files", filesCount) }},
+          {{ totalSize ? (totalSize / 1024).toFixed(1) : 0 }}
+          {{ $t("material.megabyte") }}
+        </div>
+        <div
+          class="ltr:tooltip-left rtl:tooltip-right w-max font-mono text-xs text-secondary tooltip whitespace-pre-line !text-start"
+          :data-tip="attributionText"
+        >
+          <Icon
+            name="ion:information-circle-outline"
+            size="24"
+          />
+        </div>
+      </div>
+    </div> 
+  </div>
   <!-- preview files modal -->
   <ResourceModal
     :id="resourceId"
@@ -225,10 +204,6 @@ const props = defineProps({
   resourceId: {
     type: Number,
     required: true,
-  },
-  checkboxLogic: {
-    type: Function,
-    required: true
   }
 });
 const { locale } = useI18n();
@@ -364,45 +339,7 @@ const openModal = () => {
 </script>
 
 <style scoped lang="postcss">
-
-.resource-card .resource-drawer {
-  @apply ltr:-right-[7rem];
-  @apply rtl:-left-[7rem];
-  transition-property: right left;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-  .arrow {
-    @apply opacity-50
-  }
-}
-
-.resource-card:hover .resource-drawer {
-  @apply ltr:right-0;
-  @apply rtl:left-0;
-  .arrow {
-    @apply opacity-0
-  }
-}
 .action-btn {
   @apply hover:text-secondary transition-colors;
 }
-
-@media (hover: none) {
-  .resource-card>input:checked+div .resource-drawer {
-    @apply ltr:right-0;
-    @apply rtl:left-0;
-    .arrow {
-    @apply opacity-0
-  }
-}
-
-  .resource-card:hover .resource-drawer {
-    @apply ltr:-right-[7rem];
-    @apply rtl:-left-[7rem];
-    .arrow {
-    @apply opacity-50
-  }
-  }
-}
-
 </style>
