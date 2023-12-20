@@ -3,9 +3,9 @@
     <div class="navbar-start">
       <!-- Back button -->
       <NuxtLink
-        v-if="path && path.replace('ar', '') !== '/'"
+        v-if="path && path.value.replace('ar', '') !== '/'"
         class="btn btn-circle btn-ghost"
-        :to="path.substring(0, path.lastIndexOf('/')) || '/'"
+        :to="path.value.substring(0, path.value.lastIndexOf('/')) || '/'"
         :replace="true"
       >
         <Icon
@@ -48,10 +48,13 @@
 </template>
 <script setup lang="ts">
   const route = useRoute()
-  const path = computed(() =>
-    route.fullPath.endsWith('/') ?
-      route.fullPath.substring(0, route.fullPath.length - 1)
-      : route.fullPath
-  )
+  let path: ComputedRef<string> | null = null
+  onMounted(() => {
+    path = computed(() =>
+      route.fullPath.endsWith('/') ?
+        route.fullPath.substring(0, route.fullPath.length - 1)
+        : route.fullPath
+    )
+  })
 </script>
 <style scoped lang="postcss"></style>
