@@ -2,18 +2,20 @@
   <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
       <!-- Back button -->
-      <NuxtLink
-        v-if="path && path.value.replace('ar', '') !== '/'"
-        class="btn btn-circle btn-ghost"
-        :to="path.value.substring(0, path.value.lastIndexOf('/')) || '/'"
-        :replace="true"
-      >
-        <Icon
-          class="rtl:rotate-180"
-          name="ion:arrow-back"
-          size="24"
-        />
-      </NuxtLink>
+      <ClientOnly>
+        <NuxtLink
+          v-if="path && path.replace('ar', '') !== '/'"
+          class="btn btn-circle btn-ghost"
+          :to="path.substring(0, path.lastIndexOf('/')) || '/'"
+          :replace="true"
+        >
+          <Icon
+            class="rtl:rotate-180"
+            name="ion:arrow-back"
+            size="24"
+          />
+        </NuxtLink>
+      </ClientOnly>
       <!-- Logo & Homepage -->
       <NuxtLink
         class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
@@ -48,13 +50,10 @@
 </template>
 <script setup lang="ts">
   const route = useRoute()
-  let path: ComputedRef<string> | null = null
-  onMounted(() => {
-    path = computed(() =>
-      route.fullPath.endsWith('/') ?
+  const path = computed(() => 
+    route.fullPath.endsWith('/') ?
         route.fullPath.substring(0, route.fullPath.length - 1)
         : route.fullPath
-    )
-  })
+  )
 </script>
 <style scoped lang="postcss"></style>
