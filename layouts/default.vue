@@ -7,7 +7,7 @@
   >
     <a
       href="#main"
-      class="absolute right-full p-2 opacity-0 focus:left-0 focus:opacity-100 min-w-max bg-base-100 focus:border-2 border-neutral"
+      class="skip-to-content"
     >
       Skip to content
     </a>
@@ -81,5 +81,11 @@
   }
   #main {
     margin-bottom: auto;
+  }
+  .skip-to-content {
+    @apply fixed right-full focus:left-0 z-50;
+    @apply opacity-0 focus:opacity-100;
+    @apply p-2 min-w-max border-neutral focus:border-2;
+    @apply bg-base-content text-base-100;
   }
 </style>
