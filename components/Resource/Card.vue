@@ -1,6 +1,7 @@
 <template>
   <div
     class="card card-compact indicator h-full"
+    :class="`res-${resourceId}`"
   >
     <div class="card-info flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="res-type capitalize text-lg font-bold">
