@@ -304,6 +304,18 @@
   dependencies:
     mime "^3.0.0"
 
+"@directus/sdk@^15.0.1":
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/@directus/sdk/-/sdk-15.0.1.tgz#6106bc2d6a1c7f0011073a0cb7a0f6cb6aa98015"
+  integrity sha512-NuP+S2SZ23gmcSNnHiX7LxlUxkdIjX0mV3kFKqTdU07epj4OJNHk7ZXfSV2y67fnQjFrb7apTHe2LdWnU8Y6vQ==
+  dependencies:
+    "@directus/system-data" "1.0.0"
+
+"@directus/system-data@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@directus/system-data/-/system-data-1.0.0.tgz#0520f8cf85004449db1d9cff872c5849020acbd7"
+  integrity sha512-AKzYkLg39phx9AysQhcf7AmIGq1D/PIkor5B8Y5NB8R+jq+jkH1PBtg/l5Ev4hfsidpNBi5DmpuFy/xmQEYhHQ==
+
 "@esbuild-kit/cjs-loader@^2.4.2":
   version "2.4.2"
   resolved "https://registry.npmjs.org/@esbuild-kit/cjs-loader/-/cjs-loader-2.4.2.tgz"

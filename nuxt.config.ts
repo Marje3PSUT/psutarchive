@@ -58,23 +58,15 @@ modules: ["@nuxtjs/i18n", "nuxt-icon"/*, "nuxt-api-party"*/],
     baseUrl: "http://localhost:3000/",
     debug: false,
   },
-  /*
-  apiParty: {
-    endpoints: {
-      baseApi: {
-        url: process.env.API_BASE_URL!,
-        token: process.env.API_BASE_TOKEN!,
-      },
-    },
-  },
-  */
   runtimeConfig:{
     public: {
       buildCommitSha: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_SHA,
       buildCommitMessage: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_MESSAGE,
       buildCommitBranch: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_REF,
       repoUrl: '',
-      env: process.env.NODE_ENV
+      env: process.env.NODE_ENV,
+      apiUrl: process.env.API_URL || 'http://localhost:8055'
     }
-  }
+  },
+  plugins: ['~/plugins/directus.ts']
 });
