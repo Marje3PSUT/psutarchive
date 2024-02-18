@@ -948,7 +948,7 @@
     eslint-plugin-vue "^9.8.0"
     typescript "^4.9.3"
 
-"@nuxt/kit@3.6.5", "@nuxt/kit@^3.6.1", "@nuxt/kit@^3.6.5":
+"@nuxt/kit@3.6.5", "@nuxt/kit@^3.6.5":
   version "3.6.5"
   resolved "https://registry.npmjs.org/@nuxt/kit/-/kit-3.6.5.tgz"
   integrity sha512-uBI5I2Zx6sk+vRHU+nBmifwxg/nyXCGZ1g5hUKrUfgv1ZfiKB8JkN5T9iRoduDOaqbwM6XSnEl1ja73iloDcrw==
@@ -5165,18 +5165,6 @@ nuxi@3.6.5:
   optionalDependencies:
     fsevents "~2.3.2"
 
-nuxt-api-party@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.npmjs.org/nuxt-api-party/-/nuxt-api-party-0.13.0.tgz"
-  integrity sha512-YBavVC+ioCyChtAGwjn6RsvM61JP1hwbJGbHzNWI5biy7QaUW1ELYV/G1xgG9KVCGpvceLVkkYNL4ZWbdz5GTA==
-  dependencies:
-    "@nuxt/kit" "^3.6.1"
-    defu "^6.1.2"
-    ofetch "^1.1.1"
-    ohash "^1.1.2"
-    scule "^1.0.0"
-    ufo "^1.1.2"
-
 nuxt-icon@^0.5.0:
   version "0.5.0"
   resolved "https://registry.npmjs.org/nuxt-icon/-/nuxt-icon-0.5.0.tgz"
@@ -7247,6 +7235,7 @@ widest-line@^4.0.1:
     string-width "^5.0.1"
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

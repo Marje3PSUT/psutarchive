@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ["@nuxtjs/i18n", "nuxt-icon", "nuxt-api-party"],
+modules: ["@nuxtjs/i18n", "nuxt-icon"/*, "nuxt-api-party"*/],
   css: ["~/assets/css/main.css", "~/assets/css/typography.css"],
   postcss: {
     plugins: {
@@ -58,6 +58,7 @@ export default defineNuxtConfig({
     baseUrl: "http://localhost:3000/",
     debug: false,
   },
+  /*
   apiParty: {
     endpoints: {
       baseApi: {
@@ -66,6 +67,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  */
   runtimeConfig:{
     public: {
       buildCommitSha: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_SHA,
