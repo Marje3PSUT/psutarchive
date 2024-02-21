@@ -1,7 +1,7 @@
 <template>
   <div
     class="card card-compact w-full max-sm:h-24 max-h-32 bg-base-100 shadow-xl card-bordered border-base-content hover:bg-base-content hover:bg-opacity-10 transition-colors"
-    :class="`hover:bg-${item.categories?.data[0]?.attributes.slug.toUpperCase()} border-${item.categories?.data[0]?.attributes.slug.toUpperCase()} ${$attrs.class ? $attrs.class : ''}`"
+    :class="`hover:bg-[${((props.item.category!)[0].category_id as Category).color}] border-[${((props.item.category!)[0].category_id as Category).color}]`"
   >
     <div class="flex justify-between m-2 px-2 gap-2 items-center">
       <span class="text-xs badge bg-transparent border border-base-content border-opacity-40">
@@ -17,17 +17,17 @@
         class="card-title text-lg max-sm:text-sm text-center -mt-5 line-clamp-1"
         :title="locale === 'ar' ?
           item.name_ar
-          : item.name"
+          : item.name_en"
       >
         {{
           locale === 'ar' ?
             item.name_ar
-            : item.name
+            : item.name_en
         }}
       </h4>
       <div class="card-info flex justify-between items-center text-xs w-full mt-auto">
         <span
-          v-if="item.categories?.data.length"
+          v-if="item.category?.length"
           :title="categories"
           class="badge badge-sm badge-ghost border-0 line-clamp-1 max-w-[100%]"
         >
@@ -44,9 +44,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Category, Course } from 'types/schema';
+
   const props = defineProps({
     item: {
-      type: Object as PropType<CourseAttributes>,
+      type: Object as PropType<Course>,
       required: true,
     },
     id: {
@@ -57,8 +59,8 @@
 
   const { locale } = useI18n();
 
-  const categories = ref(props.item.categories?.data.map(c => locale.value === 'en' ? c.attributes.name : c.attributes.name_ar).join(', '))
-  const resCount = ref(props.item.resources?.data.length ? props.item.resources.data.length : 0)
+  const categories = ref(props.item.category!.map(category_course => locale.value === 'en' ? (category_course.category_id as Category)!.name_en : (category_course.category_id as Category)!.name_ar).join(', '))
+  const resCount = ref(props.item.category!.length ? props.item.resource!.length : 0)
 </script>
 <style scoped lang="postcss">
   .card {
