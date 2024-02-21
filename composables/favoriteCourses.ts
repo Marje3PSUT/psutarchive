@@ -3,13 +3,13 @@ export const useFavCourses = () => {
 
   /**
    * Get saved favorite courses list
-   * @returns array of saved courses, null if not found
+   * @returns array of saved courses
    */
-  const getCourses = (): number[] | null => {
+  const getCourses = (): number[] => {
     const savedList = localStorage.getItem(STORAGE_KEY)
     let list = []
     try {
-      list = savedList ? JSON.parse(savedList) : null
+      list = savedList ? JSON.parse(savedList) : []
     }
     catch (e) {
       console.error("Caught error:", e)
@@ -33,11 +33,7 @@ export const useFavCourses = () => {
    */
   const addCourse = (courseId: number) => {
     let list = getCourses()
-    if (list) {
-      if (list.indexOf(courseId) === -1) list.push(courseId)
-      else return
-    }
-    else list = [courseId]
+    list.push(courseId)
     saveFavCourses(list)
   }
 
@@ -47,14 +43,13 @@ export const useFavCourses = () => {
    */
   const removeCourse = (courseId: number) => {
     let list = getCourses()
-    if (list) {
-      const idx = list.indexOf(courseId)
-      if (idx !== -1) {
-        list.splice(idx, 1)
-      }
-      else return
+    const idx = list.indexOf(courseId)
+
+    if (idx !== -1) {
+      list.splice(idx, 1)
     }
-    else list = []
+    else return
+
     saveFavCourses(list)
   }
   return {
