@@ -147,7 +147,7 @@
             dir="ltr"
             class="border-b border-base-content border-opacity-25 p-2 flex items-center gap-4 last:border-none"
           >
-            <span class="font-mono">{{ file.attributes.name }}</span>
+          <span class="font-mono sm:w-1/2 w-full truncate sm:truncate-none">{{ file.attributes.name }}</span>
             <span class="text-center text-sm ms-auto">
               {{ (file.attributes.size / 1024).toFixed(2) }}
               {{ $t('material.megabyte') }}
