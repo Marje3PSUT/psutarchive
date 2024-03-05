@@ -34,7 +34,7 @@
           v-for="item in favCourses"
           :id="item.id"
           :key="item.id"
-          :item="item"
+          :item="item as Course"
           class="border-base-content hover:bg-base-content hover:bg-opacity-10"
         />
       </template>
@@ -45,6 +45,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Course } from 'types/schema';
+
   const { locale } = useI18n();
   const { $directus, $readItems } = useNuxtApp()
 
@@ -62,7 +64,7 @@
         filter: {
           'id': {
             '_in': favList.value
-          }
+          },
         }
       }))
     }
