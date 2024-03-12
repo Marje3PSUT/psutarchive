@@ -1,5 +1,5 @@
-import * as pkg from '@/package.json';
+import * as pkg from "@/package.json";
 
 export default defineEventHandler(() => {
-  return pkg.version
-})
+  return pkg.version;
+});

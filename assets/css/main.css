@@ -8,19 +8,24 @@
 
 /* Background colors and hovers for course categories */
 
-.bg-IT, .hover\:bg-IT:hover {
+.bg-IT,
+.hover\:bg-IT:hover {
   @apply bg-course-cat-IT;
 }
-.bg-ENG, .hover\:bg-ENG:hover {
+.bg-ENG,
+.hover\:bg-ENG:hover {
   @apply bg-course-cat-ENG;
 }
-.bg-MATH, .hover\:bg-MATH:hover {
+.bg-MATH,
+.hover\:bg-MATH:hover {
   @apply bg-course-cat-MATH;
 }
-.bg-BUSINESS, .hover\:bg-BUSINESS:hover {
+.bg-BUSINESS,
+.hover\:bg-BUSINESS:hover {
   @apply bg-course-cat-BUSINESS;
 }
-.bg-ELECT, .hover\:bg-ELECT:hover {
+.bg-ELECT,
+.hover\:bg-ELECT:hover {
   @apply bg-course-cat-ELECT;
 }
 .hover\:bg-IT:hover,
@@ -49,7 +54,6 @@
 .border-ELECT {
   @apply border-course-cat-ELECT;
 }
-
 
 /* Transition Effects */
 /* Fade */
