@@ -1,0 +1,4 @@
+{
+  "*.ts": ["pnpm eslint --fix", "pnpm prettier --write"],
+  "*.js": ["pnpm eslint --fix", "pnpm prettier --write"]
+}

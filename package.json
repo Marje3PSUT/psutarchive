@@ -8,20 +8,26 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
-    "lintfix": "prettier --write --list-different . && lint --fix"
+    "format": "prettier --write .",
+    "lint": "eslint --cache . --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.8.0",
-    "@nuxt/eslint-config": "^0.1.1",
     "@nuxt/types": "^2.17.1",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/i18n": "^8.0.0-beta.11",
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.4.10",
     "@types/qs": "^6.9.7",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.23.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
     "nuxt": "^3.6.5",
     "nuxt-icon": "^0.5.0",
     "postcss": "^8.4.27",
@@ -32,9 +38,10 @@
   },
   "dependencies": {
     "@directus/sdk": "^15.0.1",
+    "@vueuse/core": "^10.9.0",
     "daisyui": "^3.8.0",
     "file-type": "^18.5.0",
     "jszip": "^3.10.1",
-    "qs": "^6.11.2"
+    "lodash": "^4.17.21"
   }
 }
