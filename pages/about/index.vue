@@ -1,23 +1,16 @@
 <!-- eslint-disable vue/no-v-html -->
-<template>
-  <div
-    class="about-page container mx-auto"
-    v-html="
-      locale === 'en'
-        ? about?.data.attributes.page_en
-        : about?.data.attributes.page_ar
-    "
-  />
-</template>
-
 <script setup lang="ts">
 const { locale } = useI18n();
-const { data: about } = await useAsyncData<
-  StrapiResponseSingle<AboutAttributes>
->(async () => {
-  return $baseApi("about-page");
+const { $directus, $readItem } = useNuxtApp();
+
+const { data: about } = await useAsyncData(async () => {
+  return await $directus.request($readItem('about_page', 1));
 });
 </script>
+
+<template>
+  <div class="about-page container mx-auto" v-html="locale === 'en' ? about?.page_en : about?.page_ar" />
+</template>
 
 <style lang="postcss">
 .about-page {

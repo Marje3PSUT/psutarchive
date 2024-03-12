@@ -1,3 +1,179 @@
+<script setup lang="ts">
+import { type Query, type QuerySort } from '@directus/sdk';
+import _ from 'lodash';
+import { debouncedRef } from '@vueuse/core';
+import { Course, Schema } from 'types/schema';
+
+const route = useRoute();
+const { $directus, $readItems } = useNuxtApp();
+const { t, locale } = useI18n();
+
+const sortOptions = ref<{ key: QuerySort<Schema, Course>; title: string }[]>([
+  {
+    key: locale.value === 'en' ? 'name_en' : 'name_ar',
+    title: t('courses.sort.alphapetical'),
+  },
+  {
+    key: 'course_id',
+    title: t('courses.sort.id'),
+  },
+]);
+
+const state = reactive({
+  search: undefined,
+  activeSort: sortOptions.value[0].key,
+  activePage: 1,
+  listView: false,
+  activeTab: 0,
+  // withResourcesOnly: true, // filter courses that only have resources
+  // activeFilters: undefined as ActiveFilters | undefined,
+});
+
+const stateChange = ref<number>(0);
+
+watch(state, () => {
+  stateChange.value = (stateChange.value + 1) % 999;
+});
+
+const stateChangeDebounced = debouncedRef(stateChange, 700);
+
+const switchTab = (t: number) => {
+  state.activeTab = t;
+  state.activePage = 1;
+};
+
+// Get categories tabs
+const { data: categories } = useLazyAsyncData(() =>
+  $directus.request(
+    $readItems('category', {
+      sort: 'sort',
+    }),
+  ),
+);
+
+const tabsList = computed(() => {
+  if (!categories.value) return [];
+
+  const tabs = categories.value!.map((item) => {
+    return {
+      title: locale.value === 'en' ? item?.name_en : item?.name_ar,
+      value: item?.slug,
+    };
+  });
+
+  tabs?.unshift({
+    title: t('home.categories.all'),
+    value: 'all',
+  });
+
+  return tabs;
+});
+
+const query = computed<Query<Schema, Course>>(
+  (): Query<Schema, Course> => ({
+    // @ts-ignore
+    fields: [
+      'id',
+      'name_en',
+      'name_ar',
+      'resource',
+      'course_id',
+      'category.category_id.name_en',
+      'category.category_id.name_ar',
+      'category.category_id.color',
+    ],
+
+    page: state.activePage,
+    limit: 18,
+    filter: {
+      category:
+        !route.query.category || route.query.category === 'all'
+          ? undefined
+          : {
+              category_id: {
+                slug: {
+                  _eq: route.query.category,
+                },
+              },
+            },
+      /*
+        'count(resource)': {
+          _nempty: state.withResourcesOnly
+        },
+        */
+      _or: state?.search
+        ? [
+            {
+              name_en: {
+                _icontains: state.search,
+              },
+            },
+            {
+              name_ar: {
+                _icontains: state.search,
+              },
+            },
+            {
+              alt_names: {
+                _icontains: state.search,
+              },
+            },
+            {
+              course_id: {
+                _icontains: state.search,
+              },
+            },
+          ]
+        : undefined,
+    },
+    sort: state.activeSort,
+  }),
+);
+
+const {
+  data: courses,
+  pending,
+  error,
+} = useLazyAsyncData('courses', () => $directus.request($readItems('course', query.value)), {
+  watch: [stateChangeDebounced],
+});
+
+const { data: recordCount } = useLazyAsyncData(
+  'courseCount',
+  () =>
+    $directus.request(
+      $readItems('course', {
+        ..._.pick(query.value, ['filter']),
+        aggregate: { countDistinct: 'id' },
+      }),
+    ),
+  { watch: [stateChangeDebounced] },
+);
+
+const pageCount = computed(() => {
+  if (!recordCount.value) return 0;
+  return Math.ceil(recordCount.value![0].countDistinct.id / 18);
+});
+
+// Change tab based on url query, and vice versa
+watch(state, () => {
+  return navigateTo({
+    query: {
+      category: tabsList.value ? tabsList.value[state.activeTab].value : undefined,
+    },
+    replace: true,
+  });
+});
+
+onMounted(() => {
+  const tabs = tabsList.value?.map((i) => i.value);
+
+  if (route.query.category && tabs?.includes(route.query.category as string)) {
+    state.activeTab = tabs?.indexOf(route.query.category as string);
+  }
+});
+</script>
+
 <template>
   <div class="container mx-auto">
     <List
@@ -7,25 +183,28 @@
       :sort-options="sortOptions"
       :tabs="tabsList"
       :active-tab="state.activeTab"
-
+      :pagination="{
+        end: pageCount,
+        active: state.activePage,
+      }"
       @sorted="(s: QuerySort<Schema, Course>) => (state.activeSort = s)"
       @searched="(q) => (state.search = q)"
       @active-page="(p) => (state.activePage = p)"
       @active-tab="(t) => switchTab(t)"
-      @switch-view="state.listView = !state.listView"
+      @switch-vicew="state.listView = !state.listView"
     >
       <template #list-option>
         <div class="form-control">
           <label class="label cursor-pointer gap-2">
             <span class="label-text">
-              {{ $t("lists.filter.resources") }}
+              {{ $t('lists.filter.resources') }}
             </span>
-            <input
+            <!--input
               v-model="state.withResourcesOnly"
               type="checkbox"
               class="toggle toggle-secondary"
               @change="state.activePage = 1"
-            />
+            /-->
           </label>
         </div>
       </template>
@@ -50,157 +229,8 @@
         />
 
         <!-- error message -->
-        <UIMessage
-          v-if="error"
-          :message="$t('messages.error')"
-          class="max-w-max mx-auto"
-          type="error"
-        />
+        <UIMessage v-if="error" :message="$t('messages.error')" class="max-w-max mx-auto" type="error" />
       </template>
     </List>
   </div>
 </template>
-<script setup lang="ts">
-import { Query, QuerySort } from "@directus/sdk";
-import { Course, Schema } from "types/schema";
-const route = useRoute();
-const { $directus, $readItems } = useNuxtApp();
-const { t, locale } = useI18n();
-
-const state = reactive({
-  search: undefined,
-  activeSort: "course_id" as QuerySort<Schema, Course>,
-  activePage: 1,
-  listView: false,
-  activeTab: 0,
-  withResourcesOnly: true, // filter courses that only have resources
-  // activeFilters: undefined as ActiveFilters | undefined,
-});
-
-const switchTab = (t: number) => {
-  state.activeTab = t;
-  state.activePage = 1;
-};
-
-// Get categories tabs
-const { data: categories } = useLazyAsyncData(() =>
-  $directus.request(
-    $readItems("category", {
-      sort: "sort",
-    })
-  )
-);
-
-const tabsList = computed(() => {
-  const tabs = categories.value!.map((item) => {
-    return {
-      title: locale.value === "en" ? item?.name_en : item?.name_ar,
-      value: item?.slug,
-    };
-  });
-  tabs?.unshift({
-    title: t("home.categories.all"),
-    value: "all",
-  });
-  return tabs;
-});
-
-// sort keys that start with '!' are handled locally, not from the API
-const sortOptions = ref<{ key: QuerySort<Schema, Course>; title: string }[]>([
-  //{
-  //  key: 'updatedAt:desc',
-  //  title: t('courses.sort.last-updated')
-  //},
-  {
-    key: locale.value === "en" ? "name_en" : "name_ar",
-    title: t("courses.sort.alphapetical"),
-  },
-  {
-    key: "category",
-    title: t("courses.sort.category"),
-  },
-]);
-
-const query = reactive<Query<Schema, Course>>({
-  // @ts-ignore
-  fields: ["*", "category.category_id.*"],
-
-  offset: (state.activePage - 1) * 18,
-  limit: 18,
-  filter: {
-    category: {
-      category_id: {
-        slug: {
-          _eq: route.query.category === 'all' ? undefined : route.query.category,
-        },
-      },
-    },
-    /*
-        'count(resource)': {
-          _nempty: state.withResourcesOnly
-        },
-        */
-    // search query
-    _or: state?.search
-      ? [
-          {
-            name_en: {
-              _contains: state?.search,
-            },
-          },
-          {
-            name_ar: {
-              _contains: state?.search,
-            },
-          },
-          {
-            alt_names: {
-              _contains: state?.search,
-            },
-          },
-          {
-            course_id: {
-              _contains: state?.search,
-            },
-          },
-        ]
-      : undefined,
-  },
-  sort: state.activeSort
-    ? state.activeSort
-    : sortOptions.value[0].key /* Default sort option,*/,
-});
-
-const { data: courses, pending, error } = useLazyAsyncData(() => $directus.request($readItems("course", query)), { watch: [query] });
-
-const { data: recordCount } = useLazyAsyncData(() => $directus.request($readItems("course", { ...query, aggregate: { count: "*" }})), { watch: [query] });
-/*
-  const list = computed(() => {
-    if (((state?.activeSort as unknown as string)?.startsWith('!'))) {
-      // sort by resources count
-      if (state.activeSort === sortOptions.value[1].key) {
-        return courses.value?.sort((a, b) =>
-          (b.resource?.length as number) - (a.resource?.length as number))
-      }
-    }
-    return courses.value
-  })
-*/
-// Change tab based on url query, and vice versa
-watch(state, () => {
-  return navigateTo({
-    query: {
-      category: tabsList.value
-        ? tabsList.value[state.activeTab].value
-        : undefined,
-    },
-    replace: true,
-  });
-});
-onMounted(() => {
-  const tabs = tabsList.value?.map((i) => i.value);
-  if (route.query.category && tabs?.includes(route.query.category as string)) {
-    state.activeTab = tabs?.indexOf(route.query.category as string);
-  }
-});
-</script>
