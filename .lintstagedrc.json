@@ -1,4 +1,6 @@
 {
   "*.ts": ["pnpm eslint --fix", "pnpm prettier --write"],
-  "*.js": ["pnpm eslint --fix", "pnpm prettier --write"]
+  "*.js": ["pnpm eslint --fix", "pnpm prettier --write"],
+  "*.vue": ["pnpm eslint --fix", "pnpm prettier --write"],
+  "*.json": ["pnpm eslint --fix", "pnpm prettier --write"]
 }
