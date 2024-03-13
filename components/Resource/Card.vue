@@ -97,8 +97,8 @@ onMounted(() => {
         </span>
       </div>
       <div v-if="item" class="res-metadata">
-        <span v-if="item.semester">{{ $t(`material.semesters.${item.semester?.toLowerCase()}`) }} -</span>
-        <span class="text-secondary font-semibold">
+        <span v-if="item.semester">{{ $t(`material.semesters.${item.semester?.toLowerCase()}`) }}</span>
+        <span class="pl-2 text-secondary font-semibold">
           {{ item.year }}
         </span>
       </div>
