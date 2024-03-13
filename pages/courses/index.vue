@@ -192,7 +192,7 @@ onMounted(() => {
       @searched="(q) => (state.search = q)"
       @active-page="(p) => (state.activePage = p)"
       @active-tab="(t) => switchTab(t)"
-      @switch-vicew="state.listView = !state.listView"
+      @switch-view="state.listView = !state.listView"
     >
       <template #list-option>
         <div class="form-control">
