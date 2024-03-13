@@ -126,7 +126,7 @@ const query = computed<Query<Schema, Course>>(
           ]
         : undefined,
     },
-    sort: state.activeSort,
+    sort: state.activeSort ?? sortOptions.value[0].key,
   }),
 );
 
@@ -178,6 +178,7 @@ onMounted(() => {
   <div class="container mx-auto">
     <List
       show-search
+      show-sort
       :view="state.listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
@@ -195,17 +196,17 @@ onMounted(() => {
     >
       <template #list-option>
         <div class="form-control">
-          <label class="label cursor-pointer gap-2">
+          <!--label class="label cursor-pointer gap-2">
             <span class="label-text">
               {{ $t('lists.filter.resources') }}
             </span>
-            <!--input
+            <input
               v-model="state.withResourcesOnly"
               type="checkbox"
               class="toggle toggle-secondary"
               @change="state.activePage = 1"
-            /-->
-          </label>
+            />
+          </label-->
         </div>
       </template>
       <template v-if="pending">

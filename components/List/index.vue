@@ -30,7 +30,7 @@ const props = defineProps({
   },
   showSort: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   sortOptions: {
     type: Array as PropType<SortOptions>,
@@ -106,15 +106,17 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
     </div>
 
     <!-- Search, filters, and sort -->
-    <div v-if="props.showSearch" class="container flex flex-col my-8 justify-start gap-y-4 mx-auto">
-      <ListSearch
-        v-bind="$attrs"
-        :search-placeholder="props.searchPlaceholder"
-        @searched="(q) => $emit('searched', q)"
-      />
+    <div class="container flex flex-col my-8 justify-start gap-y-4 mx-auto">
+      <div v-if="props.showSearch">
+        <ListSearch
+          v-bind="$attrs"
+          :search-placeholder="props.searchPlaceholder"
+          @searched="(q) => $emit('searched', q)"
+        />
+      </div>
       <!-- Sort and filter -->
-      <div class="flex flex-wrap mx-auto w-full items-center gap-4">
-        <ListSort v-if="props.showSort" :sort-options="props.sortOptions" @sort="(q: string) => $emit('sorted', q)" />
+      <div v-if="props.showSort" class="flex flex-wrap mx-auto w-full items-center gap-4">
+        <ListSort :sort-options="props.sortOptions" @sort="(q: string) => $emit('sorted', q)" />
         <slot name="list-option" />
 
         <button

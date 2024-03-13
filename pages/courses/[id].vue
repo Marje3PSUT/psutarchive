@@ -76,7 +76,7 @@ const query = computed(
     ],
     deep: {
       resource: {
-        _sort: state.activeSort,
+        _sort: state.activeSort ?? sortOptions.value[0].key,
         _limit: 18,
         _page: state.activePage,
         _filter: {
@@ -201,6 +201,7 @@ onMounted(() => {
       </div>
     </div>
     <List
+      show-sort
       :pending="pending"
       :view="state.listView ? 'flex' : 'auto'"
       :tabs="tabsList"
