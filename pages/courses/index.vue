@@ -218,7 +218,7 @@ onMounted(() => {
           :id="item.id"
           :key="item.id"
           :item="item as Course"
-          :res-count="item.resource_count"
+          :res-count="parseInt(item.resource_count as unknown as string)"
           :class="{ list: state.listView }"
         />
       </template>
