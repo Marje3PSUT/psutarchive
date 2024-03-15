@@ -66,7 +66,7 @@ export default defineNuxtConfig({
       buildCommitBranch: process.env.NUXT_ENV_VERCEL_GIT_COMMIT_REF,
       repoUrl: '',
       env: process.env.NODE_ENV,
-      apiUrl: process.env.API_URL || 'http://localhost:8055',
+      apiUrl: 'http://localhost:8055',
     },
   },
   plugins: ['~/plugins/directus.ts'],
