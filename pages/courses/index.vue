@@ -76,7 +76,7 @@ const query = computed<Query<Schema, Course>>(
       'id',
       'name_en',
       'name_ar',
-      'resource',
+      'count(resource)',
       'course_id',
       'category.category_id.name_en',
       'category.category_id.name_ar',
@@ -218,6 +218,7 @@ onMounted(() => {
           :id="item.id"
           :key="item.id"
           :item="item as Course"
+          :res-count="item.resource_count"
           :class="{ list: state.listView }"
         />
       </template>

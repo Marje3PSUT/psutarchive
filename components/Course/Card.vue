@@ -10,6 +10,10 @@ const props = defineProps({
     type: Number,
     default: null,
   },
+  resCount: {
+    type: Number,
+    required: true,
+  },
 });
 
 const { locale } = useI18n();
@@ -23,8 +27,6 @@ const categories = ref(
     )
     .join(', '),
 );
-
-const resCount = ref(props.item.category!.length ? props.item.resource!.length : 0);
 </script>
 
 <template>
