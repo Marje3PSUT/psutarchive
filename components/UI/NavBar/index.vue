@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const route = useRoute();
+
+const path = computed(() =>
+  route.fullPath.endsWith('/') ? route.fullPath.substring(0, route.fullPath.length - 1) : route.fullPath,
+);
+</script>
+
 <template>
   <div class="navbar bg-base-200 mb-16 sticky top-0 z-20">
     <div class="navbar-start">
@@ -7,27 +15,20 @@
           v-if="path && path.replace('ar', '') !== '/'"
           class="btn btn-circle btn-ghost"
           :to="path.substring(0, path.lastIndexOf('/')) || '/'"
-          :replace="true"
+          replace
         >
-          <Icon
-            class="rtl:rotate-180"
-            name="ion:arrow-back"
-            size="24"
-          />
+          <Icon class="rtl:rotate-180" name="ion:arrow-back" size="24" />
         </NuxtLink>
       </ClientOnly>
       <!-- Logo & Homepage -->
-      <NuxtLink
-        class="btn btn-ghost hover:bg-base-200 normal-case text-xl"
-        :to="$nuxt.$localePath('/')"
-      >
+      <NuxtLink class="btn btn-ghost hover:bg-base-200 normal-case text-xl" :to="$nuxt.$localePath('/')">
         <img
           class="logo"
           :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
           alt="PSUT Archive logo"
           width="40"
-        >
-        {{ $t("psutarchive") }}
+        />
+        {{ $t('psutarchive') }}
       </NuxtLink>
     </div>
 
@@ -48,12 +49,5 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-  const route = useRoute()
-  const path = computed(() => 
-    route.fullPath.endsWith('/') ?
-        route.fullPath.substring(0, route.fullPath.length - 1)
-        : route.fullPath
-  )
-</script>
+
 <style scoped lang="postcss"></style>
