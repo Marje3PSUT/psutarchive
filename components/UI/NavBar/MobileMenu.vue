@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 
+const runtimeConfig = useRuntimeConfig();
 const localePath = useLocalePath();
 const detailsElement = ref(null);
 
@@ -26,7 +27,7 @@ const navigateAndClose = (path) => {
         </a>
       </li>
       <li>
-        <a @click="navigateAndClose('/upload')">
+        <a :href="runtimeConfig.public.editorUrl">
           {{ $t('submit.title') }}
         </a>
       </li>
