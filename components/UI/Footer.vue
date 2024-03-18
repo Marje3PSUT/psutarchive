@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const runtimeConfig = useRuntimeConfig();
 type Link = {
   name: string;
   icon?: string;
@@ -35,7 +36,7 @@ const siteLinks: Link[] = [
   },
   {
     name: 'submit',
-    link: '/upload',
+    link: runtimeConfig.public.editorUrl,
   },
   {
     name: 'about',

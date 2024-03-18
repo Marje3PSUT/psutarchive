@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+const runtimeConfig = useRuntimeConfig();
+</script>
 
 <template>
   <ul class="menu menu-horizontal px-1">
@@ -8,7 +10,7 @@
       </NuxtLink>
     </li>
     <li>
-      <NuxtLink :to="localePath('/upload')">
+      <NuxtLink :to="runtimeConfig.public.editorUrl">
         {{ $t('submit.title') }}
       </NuxtLink>
     </li>

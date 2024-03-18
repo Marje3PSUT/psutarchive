@@ -67,6 +67,7 @@ export default defineNuxtConfig({
       repoUrl: '',
       env: process.env.NODE_ENV,
       apiUrl: 'http://localhost:8055',
+      editorUrl: 'https://editor.psutarchive.com',
     },
   },
   plugins: ['~/plugins/directus.ts'],
