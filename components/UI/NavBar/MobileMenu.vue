@@ -27,7 +27,7 @@ const navigateAndClose = (path) => {
         </a>
       </li>
       <li>
-        <a :href="runtimeConfig.public.editorUrl">
+        <a :href="runtimeConfig.public.editorUrl" class="animate-pulseColor">
           {{ $t('submit.title') }}
         </a>
       </li>
@@ -53,5 +53,19 @@ const navigateAndClose = (path) => {
 ul li {
   @apply bg-base-200;
   --tw-bg-opacity: 0.8;
+}
+@keyframes pulseColor {
+  0%,
+  100% {
+    background-color: #0f1729;
+    color: #adafb5;
+  }
+  50% {
+    background-color: #adafb5;
+    color: #0f1729;
+  }
+}
+.animate-pulseColor {
+  animation: pulseColor 1s infinite;
 }
 </style>

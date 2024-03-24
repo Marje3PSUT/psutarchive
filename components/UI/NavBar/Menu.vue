@@ -10,7 +10,7 @@ const runtimeConfig = useRuntimeConfig();
       </NuxtLink>
     </li>
     <li>
-      <NuxtLink :to="runtimeConfig.public.editorUrl">
+      <NuxtLink :to="runtimeConfig.public.editorUrl" target="_blank" class="animate-pulseColor">
         {{ $t('submit.title') }}
       </NuxtLink>
     </li>
@@ -21,3 +21,20 @@ const runtimeConfig = useRuntimeConfig();
     </li>
   </ul>
 </template>
+
+<style scoped lang="postcss">
+@keyframes pulseColor {
+  0%,
+  100% {
+    background-color: #0f1729;
+    color: #adafb5;
+  }
+  50% {
+    background-color: #adafb5;
+    color: #0f1729;
+  }
+}
+.animate-pulseColor {
+  animation: pulseColor 1s infinite;
+}
+</style>
