@@ -37,7 +37,7 @@ watch(state, () => {
   stateChange.value = (stateChange.value + 1) % 999;
 });
 
-const stateChangeDebounced = debouncedRef(stateChange, 700);
+const stateChangeDebounced = debouncedRef(stateChange, 100);
 
 watch(stateChangeDebounced, () => {
   tabValue.value = state.activeTab;
