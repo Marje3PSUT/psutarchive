@@ -67,7 +67,7 @@ onMounted(() => {
       <NuxtLink
         v-for="cat in categories"
         :key="cat.id"
-        class="card max-h-24 shadow-xl border max-md:w-40 flex-1 grow w-36 min-w-[9rem]"
+        class="card btn btn-ghost max-h-24 shadow-xl border max-md:w-40 flex-1 grow w-36 min-w-[9rem]"
         :style="{ borderColor: cat.color }"
         :to="$nuxt.$localePath({ name: 'courses', query: { category: cat.slug } })"
       >
