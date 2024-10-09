@@ -25,7 +25,7 @@ const state = reactive({
   activePage: 1,
   listView: false,
   activeTab: 0,
-  // withResourcesOnly: true, // filter courses that only have resources
+  withResourcesOnly: true, // filter courses that only have resources
   // activeFilters: undefined as ActiveFilters | undefined,
 });
 
@@ -96,11 +96,6 @@ const query = computed<Query<Schema, Course>>(
                 },
               },
             },
-      /*
-        'count(resource)': {
-          _nempty: state.withResourcesOnly
-        },
-        */
       _or: state?.search
         ? [
             {
@@ -125,6 +120,13 @@ const query = computed<Query<Schema, Course>>(
             },
           ]
         : undefined,
+      ...(state.withResourcesOnly
+        ? {
+            'count(resource)': {
+              _gt: 0, // Check if count of resources is > 0
+            },
+          }
+        : {}),
     },
     sort: state.activeSort ?? sortOptions.value[0].key,
   }),
@@ -196,7 +198,7 @@ onMounted(() => {
     >
       <template #list-option>
         <div class="form-control">
-          <!--label class="label cursor-pointer gap-2">
+          <label class="label cursor-pointer gap-2">
             <span class="label-text">
               {{ $t('lists.filter.resources') }}
             </span>
@@ -206,7 +208,7 @@ onMounted(() => {
               class="toggle toggle-secondary"
               @change="state.activePage = 1"
             />
-          </label-->
+          </label>
         </div>
       </template>
       <template v-if="pending">
