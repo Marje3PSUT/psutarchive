@@ -91,7 +91,7 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
 <template>
   <div class="list-component container">
     <!-- Heading -->
-    <div v-if="heading || headingLink" class="flex justify-between flex-wrap items-center m-4 gap-2">
+    <div v-if="heading || headingLink" class="flex justify-between flex-wrap items-center my-4 gap-2">
       <h3 v-if="props.heading">
         {{ props.heading }}
       </h3>
@@ -106,7 +106,7 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
     </div>
 
     <!-- Search, filters, and sort -->
-    <div class="container flex flex-col my-8 justify-start gap-y-4 mx-auto">
+    <div class="flex flex-col my-8 justify-start gap-y-4 mx-auto">
       <div v-if="props.showSearch">
         <ListSearch
           v-bind="$attrs"
@@ -152,7 +152,7 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
 
     <!-- grid / list / auto views -->
     <Transition name="fade">
-      <div v-if="!pending" class="list wrapper container" :class="`view-${props.view} ${$attrs.class}`">
+      <div v-if="!pending" class="list wrapper" :class="`view-${props.view} ${$attrs.class}`">
         <!-- list of items / cards -->
         <slot />
       </div>

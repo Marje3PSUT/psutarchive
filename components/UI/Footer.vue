@@ -15,7 +15,7 @@ const socialLinks: Link[] = [
   {
     name: 'Instagram',
     icon: 'ion:logo-instagram',
-    link: 'https://www.instagram.com/marje3.19/',
+    link: 'https://www.instagram.com/marje3.psut/',
   },
   {
     name: 'Discord',

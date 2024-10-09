@@ -26,9 +26,10 @@ const state = reactive({
   activeSort: sortOptions.value[0].key,
   activeTab: 0, // index of active tab
   activePage: 1,
-  listView: false,
   // activeFilters: undefined as ActiveFilters | undefined,
 });
+
+const listView = ref(false)
 
 const tabValue = ref(state.activeTab);
 const stateChange = ref<number>(0);
@@ -37,7 +38,7 @@ watch(state, () => {
   stateChange.value = (stateChange.value + 1) % 999;
 });
 
-const stateChangeDebounced = debouncedRef(stateChange, 700);
+const stateChangeDebounced = debouncedRef(stateChange, 100);
 
 watch(stateChangeDebounced, () => {
   tabValue.value = state.activeTab;
@@ -203,7 +204,7 @@ onMounted(() => {
     <List
       show-sort
       :pending="pending"
-      :view="state.listView ? 'flex' : 'auto'"
+      :view="listView ? 'flex' : 'auto'"
       :tabs="tabsList"
       :search-placeholder="$t('material.search') + '...'"
       :sort-options="sortOptions"
@@ -215,11 +216,11 @@ onMounted(() => {
       @sorted="(s: QuerySort<Schema, Resource>) => (state.activeSort = s)"
       @active-page="(p) => (state.activePage = p)"
       @active-tab="(t) => switchTab(t)"
-      @switch-view="state.listView = !state.listView"
+      @switch-view="listView = !listView"
     >
       <TransitionGroup name="list">
         <div v-for="item in course.resource" :key="item.id">
-          <ResourceCard :item="item" :course-id="urlId" :resource-id="item.id" :class="{ list: state.listView }" />
+          <ResourceCard :item="item" :course-id="urlId" :resource-id="item.id" :class="{ list: listView }" />
         </div>
       </TransitionGroup>
       <template v-if="!pending" #message>

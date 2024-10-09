@@ -23,11 +23,12 @@ const state = reactive({
   search: undefined,
   activeSort: sortOptions.value[0].key,
   activePage: 1,
-  listView: false,
   activeTab: 0,
-  // withResourcesOnly: true, // filter courses that only have resources
+  withResourcesOnly: true, // filter courses that only have resources
   // activeFilters: undefined as ActiveFilters | undefined,
 });
+
+const listView = ref(false)
 
 const stateChange = ref<number>(0);
 
@@ -35,7 +36,7 @@ watch(state, () => {
   stateChange.value = (stateChange.value + 1) % 999;
 });
 
-const stateChangeDebounced = debouncedRef(stateChange, 700);
+const stateChangeDebounced = debouncedRef(stateChange, 100);
 
 const switchTab = (t: number) => {
   state.activeTab = t;
@@ -96,11 +97,6 @@ const query = computed<Query<Schema, Course>>(
                 },
               },
             },
-      /*
-        'count(resource)': {
-          _nempty: state.withResourcesOnly
-        },
-        */
       _or: state?.search
         ? [
             {
@@ -125,6 +121,13 @@ const query = computed<Query<Schema, Course>>(
             },
           ]
         : undefined,
+      ...(state.withResourcesOnly
+        ? {
+            'count(resource)': {
+              _gt: 0, // Check if count of resources is > 0
+            },
+          }
+        : {}),
     },
     sort: state.activeSort ?? sortOptions.value[0].key,
   }),
@@ -179,7 +182,7 @@ onMounted(() => {
     <List
       show-search
       show-sort
-      :view="state.listView ? 'flex' : 'auto'"
+      :view="listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
       :tabs="tabsList"
@@ -192,11 +195,11 @@ onMounted(() => {
       @searched="(q) => (state.search = q)"
       @active-page="(p) => (state.activePage = p)"
       @active-tab="(t) => switchTab(t)"
-      @switch-view="state.listView = !state.listView"
+      @switch-view="listView = !listView"
     >
       <template #list-option>
         <div class="form-control">
-          <!--label class="label cursor-pointer gap-2">
+          <label class="label cursor-pointer gap-2">
             <span class="label-text">
               {{ $t('lists.filter.resources') }}
             </span>
@@ -206,7 +209,7 @@ onMounted(() => {
               class="toggle toggle-secondary"
               @change="state.activePage = 1"
             />
-          </label-->
+          </label>
         </div>
       </template>
       <template v-if="pending">
@@ -219,7 +222,7 @@ onMounted(() => {
           :key="item.id"
           :item="item as Course"
           :res-count="parseInt(item.resource_count as unknown as string)"
-          :class="{ list: state.listView }"
+          :class="{ list: listView }"
         />
       </template>
       <template v-if="!pending" #message>
