@@ -23,11 +23,12 @@ const state = reactive({
   search: undefined,
   activeSort: sortOptions.value[0].key,
   activePage: 1,
-  listView: false,
   activeTab: 0,
   withResourcesOnly: true, // filter courses that only have resources
   // activeFilters: undefined as ActiveFilters | undefined,
 });
+
+const listView = ref(false)
 
 const stateChange = ref<number>(0);
 
@@ -181,7 +182,7 @@ onMounted(() => {
     <List
       show-search
       show-sort
-      :view="state.listView ? 'flex' : 'auto'"
+      :view="listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
       :tabs="tabsList"
@@ -194,7 +195,7 @@ onMounted(() => {
       @searched="(q) => (state.search = q)"
       @active-page="(p) => (state.activePage = p)"
       @active-tab="(t) => switchTab(t)"
-      @switch-view="state.listView = !state.listView"
+      @switch-view="listView = !listView"
     >
       <template #list-option>
         <div class="form-control">
@@ -221,7 +222,7 @@ onMounted(() => {
           :key="item.id"
           :item="item as Course"
           :res-count="parseInt(item.resource_count as unknown as string)"
-          :class="{ list: state.listView }"
+          :class="{ list: listView }"
         />
       </template>
       <template v-if="!pending" #message>
