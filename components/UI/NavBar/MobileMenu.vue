@@ -39,6 +39,9 @@ const navigateAndClose = (path) => {
       <li class="rounded-b-box" @click="close()">
         <UILangSwitcher />
       </li>
+      <li class="rounded-b-box" @click="close()">
+        <UIThemeSwitcher />
+      </li>
     </ul>
   </details>
 </template>

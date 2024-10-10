@@ -43,7 +43,7 @@ const path = computed(() =>
         <UILangSwitcher class="max-md:hidden" />
 
         <!-- Theme toggle -->
-        <UIThemeSwitcher />
+        <UIThemeSwitcher class="max-sm:hidden" />
 
         <!-- Navigation menu on small screens -->
         <UINavBarMobileMenu />
