@@ -2,16 +2,10 @@
 import { ref } from 'vue';
 
 const runtimeConfig = useRuntimeConfig();
-const localePath = useLocalePath();
 const detailsElement = ref(null);
 
 const close = () => {
   detailsElement.value.removeAttribute('open');
-};
-
-const navigateAndClose = (path) => {
-  navigateTo(localePath(path));
-  close();
 };
 </script>
 
@@ -20,21 +14,28 @@ const navigateAndClose = (path) => {
     <summary tabindex="0" class="btn btn-ghost md:hidden p-0">
       <Icon name="ion:menu" size="32" />
     </summary>
-    <ul tabindex="0" class="menu menu-compact dropdown-content">
-      <li tabindex="0" class="rounded-t-box">
-        <a @click="navigateAndClose('/courses')">
+    <ul
+      class="menu menu-compact dropdown-content gap-y-4 [&_a]:border [&_a]:border-transparent hover:[&_a]:border-base-content"
+    >
+      <li class="rounded-t-box">
+        <NuxtLink :to="$nuxt.$localePath('/courses')" @click="close">
           {{ $t('courses.title') }}
-        </a>
+        </NuxtLink>
       </li>
       <li>
-        <a :href="runtimeConfig.public.editorUrl">
+        <NuxtLink
+          target="_blank"
+          :href="runtimeConfig.public.editorUrl"
+          class="btn btn-sm btn-outline btn-secondary !border-secondary font-bold"
+          @click="close"
+        >
           {{ $t('submit.title') }}
-        </a>
+        </NuxtLink>
       </li>
       <li>
-        <a @click="navigateAndClose('/about')">
+        <NuxtLink :to="$nuxt.$localePath('/about')" @click="close">
           {{ $t('about.title') }}
-        </a>
+        </NuxtLink>
       </li>
       <li class="rounded-b-box" @click="close()">
         <UILangSwitcher />
@@ -43,6 +44,7 @@ const navigateAndClose = (path) => {
         <UIThemeSwitcher />
       </li>
     </ul>
+    <div class="h-screen w-screen -z-10 bg-base-200 bg-opacity-30 absolute top-0 end-0" @click="close"></div>
   </details>
 </template>
 
