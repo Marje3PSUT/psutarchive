@@ -6,7 +6,7 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <label class="swap swap-rotate bg-base-200 rounded-full">
+  <label class="swap swap-rotate rounded-full">
     <input type="checkbox" class="mx-4" @change="toggleTheme" />
     <svg class="swap-on" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
       <path
