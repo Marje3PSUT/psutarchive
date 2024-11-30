@@ -12,7 +12,7 @@ export default defineNuxtConfig({
       script: [
         {
           'data-domain': process.env.PLAUSIBLE_NUXT_DOMAIN || 'psutarchive.com',
-          src: process.env.PLAUSIBLE_SCRIPT_URL,
+          src: process.env.PLAUSIBLE_SCRIPT_URL || 'https://plausible.psutarchive.com/js/script.js',
         },
       ],
       // TODO: add them dynamically for i18n
