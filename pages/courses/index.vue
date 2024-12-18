@@ -124,9 +124,23 @@ const query = computed<Query<Schema, Course>>(
         : undefined,
       ...(state.withResourcesOnly
         ? {
-            'count(resource)': {
-              _gt: 0, // Check if count of resources is > 0
-            },
+            // show courses with at least either 1 resource or 1 link
+            _and: [
+              {
+                _or: [
+                  {
+                    'count(resource)': {
+                      _gt: 0,
+                    },
+                  },
+                  {
+                    'count(links)': {
+                      _null: false,
+                    },
+                  },
+                ],
+              },
+            ],
           }
         : {}),
     },
