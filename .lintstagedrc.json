@@ -1,6 +1,6 @@
 {
-  "*.ts": ["pnpm eslint --fix", "pnpm prettier --write"],
-  "*.js": ["pnpm eslint --fix", "pnpm prettier --write"],
-  "*.vue": ["pnpm eslint --fix", "pnpm prettier --write"],
-  "*.json": ["pnpm eslint --fix", "pnpm prettier --write"]
+  "*.ts": ["yarn eslint --fix", "prettier --write"],
+  "*.js": ["yarn eslint --fix", "prettier --write"],
+  "*.vue": ["yarn eslint --fix", "prettier --write"],
+  "*.json": ["prettier --write"]
 }
