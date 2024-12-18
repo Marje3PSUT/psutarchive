@@ -28,7 +28,7 @@ const state = reactive({
   // activeFilters: undefined as ActiveFilters | undefined,
 });
 
-const listView = ref(false)
+const listView = ref(false);
 
 const stateChange = ref<number>(0);
 
@@ -78,6 +78,7 @@ const query = computed<Query<Schema, Course>>(
       'name_en',
       'name_ar',
       'count(resource)',
+      'count(links)',
       'course_id',
       'category.category_id.name_en',
       'category.category_id.name_ar',
@@ -221,7 +222,8 @@ onMounted(() => {
           :id="item.id"
           :key="item.id"
           :item="item as Course"
-          :res-count="parseInt(item.resource_count as unknown as string)"
+          :res-count="item.resource_count"
+          :links-count="item.links_count"
           :class="{ list: listView }"
         />
       </template>

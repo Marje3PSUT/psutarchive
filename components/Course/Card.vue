@@ -14,6 +14,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  linksCount: {
+    type: Number as PropType<number | null>,
+    required: true,
+  },
 });
 
 const { locale } = useI18n();
@@ -57,12 +61,17 @@ const categories = ref(
         >
           {{ categories }}
         </span>
-        <span
-          class="grow-0 ms-auto badge badge-sm bg-transparent border-0"
-          :class="{ '!badge-secondary': resCount > 0 }"
-        >
-          {{ $t('papers.name', resCount) }}
-        </span>
+        <div class="flex flex-wrap gap-1 ms-auto">
+          <span class="grow-0 badge badge-sm bg-transparent border-0" :class="{ '!badge-secondary': resCount > 0 }">
+            {{ $t('papers.name', resCount) }}
+          </span>
+          <span
+            v-if="linksCount && linksCount > 0"
+            class="grow-0 badge badge-sm bg-transparent border-0 !badge-secondary"
+          >
+            {{ $t('links.name', linksCount) }}
+          </span>
+        </div>
       </div>
     </NuxtLink>
   </div>
@@ -72,14 +81,18 @@ const categories = ref(
 .card {
   --tw-border-opacity: 0.7;
 }
+
 /* List view style */
 .card.list {
   @apply w-full md:flex-row md:items-center md:flex-wrap;
+
   .card-body {
     @apply md:flex-row md:items-start md:p-2;
+
     .card-title {
       @apply md:m-0 md:text-start;
     }
+
     .card-info {
       @apply md:ms-auto md:my-auto md:w-fit md:justify-end md:gap-4;
     }
