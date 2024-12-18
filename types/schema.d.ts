@@ -180,6 +180,8 @@ export interface Course {
    * Type in database: json
    */
   links: Link[];
+  resource_count: string;
+  links_count: string | null;
 
   /**
    * No description.

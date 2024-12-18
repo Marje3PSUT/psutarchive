@@ -90,6 +90,9 @@
   "papers": {
     "name": "no papers | 1 paper | {n} papers"
   },
+  "links": {
+    "name": "no links | 1 link | {n} links"
+  },
   "misc": {
     "by": "by"
   },

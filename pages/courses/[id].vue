@@ -29,7 +29,7 @@ const state = reactive({
   // activeFilters: undefined as ActiveFilters | undefined,
 });
 
-const listView = ref(false)
+const listView = ref(false);
 
 const tabValue = ref(state.activeTab);
 const stateChange = ref<number>(0);
