@@ -11,11 +11,11 @@ const props = defineProps({
     default: null,
   },
   resCount: {
-    type: Number,
+    type: String,
     required: true,
   },
   linksCount: {
-    type: Number as PropType<number | null>,
+    type: String as PropType<string | null>,
     required: true,
   },
 });
@@ -62,14 +62,18 @@ const categories = ref(
           {{ categories }}
         </span>
         <div class="flex flex-wrap gap-1 ms-auto">
-          <span class="grow-0 badge badge-sm bg-transparent border-0" :class="{ '!badge-secondary': resCount > 0 }">
-            {{ $t('papers.name', resCount) }}
+          <span
+            v-if="resCount"
+            class="grow-0 badge badge-sm bg-transparent border-0"
+            :class="{ '!badge-secondary': parseInt(resCount) > 0 }"
+          >
+            {{ $t('papers.name', parseInt(resCount)) }}
           </span>
           <span
-            v-if="linksCount && linksCount > 0"
+            v-if="linksCount && parseInt(linksCount) > 0"
             class="grow-0 badge badge-sm bg-transparent border-0 !badge-secondary"
           >
-            {{ $t('links.name', linksCount) }}
+            {{ $t('links.name', parseInt(linksCount)) }}
           </span>
         </div>
       </div>
