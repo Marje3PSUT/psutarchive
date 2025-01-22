@@ -1,36 +1,24 @@
-# PSUT Archive
+# PSUTArchive
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Nuxt-based frontend for PSUTArchive. Backend can be found [here](https://github.com/Marje3PSUT/psutarchive-directus).
 
-## Setup
+## Requirements
 
-Make sure to install the dependencies:
+- Node.js (LTS recommended)
+- Yarn
 
-```bash
-# yarn
-yarn install
-```
+## Getting Started
 
-## Development Server
+1. Clone the repo: `git clone https://github.com/Marje3PSUT/psutarchive.git && cd psutarchive`
+2. Install dependencies: `npm install`
+3. Create .env file containing `NUXT_PUBLIC_API_URL=https://api.psutarchive.com`
+4. Start the dev server: `npm run dev`
 
-Start the development server on `http://localhost:3000`
+## Contributing
 
-```bash
-yarn dev
-```
+See our [contribution guidelines](https://github.com/Marje3PSUT/.github/blob/main/CONTRIBUTING.md) and pick an
+issue [here](https://github.com/orgs/Marje3PSUT/projects/1).
 
-## Production
+## Documentation
 
-Build the application for production:
-
-```bash
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [Nuxt Docs](https://nuxt.com/docs)
