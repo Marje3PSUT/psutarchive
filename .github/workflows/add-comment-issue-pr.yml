@@ -14,7 +14,7 @@ jobs:
             Thank you for taking the time to open an issue!
             The issue is being triaged. We'll review it and get back to you.
 
-            If you're interested in resolving it yourself, be sure tell us below, and read [CONTRIBUTION.md](https://github.com/Marje3PSUT/.github/blob/main/CONTRIBUTION.md).
+            If you're interested in resolving it yourself, be sure tell us below, and read [CONTRIBUTING.md](https://github.com/Marje3PSUT/.github/blob/main/CONTRIBUTING.md).
             @Marje3PSUT/maintainers 
 
           pullRequestOpened: |
