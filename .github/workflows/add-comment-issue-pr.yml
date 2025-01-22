@@ -3,13 +3,10 @@ on: [issues, pull_request]
 jobs:
   run:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
     steps:
       - uses: wow-actions/auto-comment@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.COMMENT_PAT }}
           issuesOpened: |
             Thank you for taking the time to open an issue!
             The issue is being triaged. We'll review it and get back to you.
