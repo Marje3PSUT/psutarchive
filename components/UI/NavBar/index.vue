@@ -7,7 +7,7 @@ const path = computed(() =>
 </script>
 
 <template>
-  <div class="bg-base-200 bg-opacity-90 mb-16 sticky top-0 z-20">
+  <div class="main-navbar mb-16 sticky top-0 z-20">
     <div class="navbar container mx-auto">
       <div class="navbar-start">
         <!-- Back button -->
@@ -22,7 +22,11 @@ const path = computed(() =>
           </NuxtLink>
         </ClientOnly>
         <!-- Logo & Homepage -->
-        <NuxtLink class="btn btn-ghost hover:bg-base-200 normal-case text-xl" :to="$nuxt.$localePath('/')">
+        <NuxtLink
+          :data-tip="$t('misc.ramadan')"
+          class="tooltip tooltip-bottom tooltip-accent !btn !btn-ghost hover:!bg-transparent !normal-case !text-xl"
+          :to="$nuxt.$localePath('/')"
+        >
           <img
             class="logo"
             :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
@@ -30,20 +34,21 @@ const path = computed(() =>
             width="40"
           />
           {{ $t('psutarchive') }}
+          <Icon name="noto:crescent-moon" />
         </NuxtLink>
       </div>
 
       <!-- Navigation menu on md/lg screens -->
-      <div class="navbar-center max-md:hidden">
+      <div class="navbar-center max-lg:hidden">
         <UINavBarMenu />
       </div>
 
       <div class="navbar-end gap-x-2">
         <!-- Language toggle -->
-        <UILangSwitcher class="max-md:hidden" />
+        <UILangSwitcher class="max-lg:hidden" />
 
         <!-- Theme toggle -->
-        <UIThemeSwitcher class="max-sm:hidden" />
+        <UIThemeSwitcher class="max-lg:hidden" />
 
         <!-- Navigation menu on small screens -->
         <UINavBarMobileMenu />
@@ -52,4 +57,11 @@ const path = computed(() =>
   </div>
 </template>
 
-<style scoped lang="postcss"></style>
+<style scoped lang="postcss">
+.main-navbar {
+  @apply bg-base-100 bg-opacity-50 border border-base-100 border-opacity-50;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(15.8px);
+  -webkit-backdrop-filter: blur(15.8px);
+}
+</style>
