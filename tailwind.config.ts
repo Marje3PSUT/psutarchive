@@ -1,4 +1,4 @@
-const customDaisyUiVariables = {
+const mainColorTheme = {
   primary: '#38bdf8',
   secondary: '#818CF8',
   accent: '#F471B5',
@@ -9,6 +9,22 @@ const customDaisyUiVariables = {
   success: '#2DD4BF',
   warning: '#F4BF50',
   error: '#FB7085',
+};
+
+const ramadanTheme = {
+  primary: '#e779c1',
+  secondary: '#5778f2',
+  accent: '#FFCA29',
+  neutral: '#221551',
+  info: '#53c0f3',
+  success: '#71ead2',
+  warning: '#f3cc30',
+  error: '#e24056',
+  'base-100': '#1a103c',
+  'neutral-focus': '#273449',
+};
+
+const customDaisyUiVariables = {
   '--rounded-box': '1rem', // border radius rounded-box utility class, used in card and other large boxes
   '--rounded-btn': '0.5rem', // border radius rounded-btn utility class, used in buttons and similar element
   '--rounded-badge': '1.9rem', // border radius rounded-badge utility class, used in badges and similar
@@ -48,14 +64,16 @@ module.exports = {
     themes: [
       {
         dark: {
-          'color-scheme': 'dark',
           ...customDaisyUiVariables,
+          ...ramadanTheme,
+          'color-scheme': 'dark',
         },
       },
       {
         light: {
-          // light colors
           ...customDaisyUiVariables,
+          ...ramadanTheme,
+          secondary: '#103CDA',
           'base-100': '#fafafa',
           'base-content': '#080802',
           'color-scheme': 'light',
