@@ -93,7 +93,7 @@ watch(props, () => {
         showEllipsisAfter ? p !== props.end : showEllipsisBefore ? p !== props.start : true,
       )"
       :key="page"
-      :class="{ 'btn-secondary': page === activePage }"
+      :class="{ 'btn-primary': page === activePage }"
       class="join-item btn max-sm:btn-sm"
       @click="
         activePage = page;
