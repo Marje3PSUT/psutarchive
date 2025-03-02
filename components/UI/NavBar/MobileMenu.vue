@@ -42,18 +42,31 @@ const close = () => {
         <UIThemeSwitcher />
       </li>
     </ul>
-    <div class="h-screen w-screen -z-10 bg-base-200 bg-opacity-30 absolute top-0 end-0" @click="close"></div>
+    <div class="h-screen w-screen -z-10 bg-base-100 bg-opacity-10 absolute top-0 end-0" @click="close"></div>
   </details>
 </template>
 
 <style scoped lang="postcss">
 .menu {
-  --tw-bg-opacity: 0.8;
   @apply mt-2 p-2 w-60 -ms-[12.5rem];
-  @apply rounded-b-box ltr:rounded-br-none rtl:rounded-bl-none border border-base-300 border-t-0;
-  @apply shadow bg-base-100 bg-opacity-50;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  @apply rounded-b-box ltr:rounded-br-none rtl:rounded-bl-none;
+  @apply shadow bg-base-100 bg-opacity-100;
+  @apply border  border-t-0 border-base-100 border-opacity-50;
   backdrop-filter: blur(15.8px);
   -webkit-backdrop-filter: blur(15.8px);
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+  .menu {
+    @apply bg-opacity-20;
+  }
+}
+
+/* Safari */
+_::-webkit-full-page-media,
+_:future,
+:root .menu {
+  @apply bg-opacity-20;
 }
 </style>
