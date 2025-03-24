@@ -72,9 +72,21 @@ const siteLinks: Link[] = [
       {{ $t('psutarchive') }}
     </nuxt-link>
     <nav class="flex flex-wrap gap-4 justify-center">
-      <nuxt-link v-for="link in siteLinks" :key="link.name" :to="$nuxt.$localePath(link.link)" class="link link-hover">
-        {{ $t(`footer.links.${link.name}`) }}
-      </nuxt-link>
+      <template v-for="link in siteLinks" :key="link.name">
+        <a v-if="link.external" :href="link.url" target="_blank" class="link link-hover">
+          {{ $t(`footer.links.${link.name}`) }}
+        </a>
+        <nuxt-link
+          v-else
+          :to="{
+            path: $nuxt.$localePath(link.url),
+            hash: link.url.includes('#') ? link.url.substring(link.url.indexOf('#')) : undefined,
+          }"
+          class="link link-hover"
+        >
+          {{ $t(`footer.links.${link.name}`) }}
+        </nuxt-link>
+      </template>
     </nav>
     <nav class="flex flex-wrap gap-4 justify-center">
       <nuxt-link
