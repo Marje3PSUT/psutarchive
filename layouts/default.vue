@@ -74,6 +74,9 @@ onMounted(() => {
 </template>
 
 <style lang="postcss">
+html {
+  scroll-behavior: smooth;
+}
 body,
 #__nuxt,
 #__layout,

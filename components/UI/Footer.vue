@@ -1,50 +1,63 @@
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig();
 type Link = {
   name: string;
   icon?: string;
-  link: string;
+  url: string;
+  external?: boolean;
 };
 
 const socialLinks: Link[] = [
   {
     name: 'Facebook',
     icon: 'ion:logo-facebook',
-    link: 'https://www.facebook.com/marje3psut',
+    url: 'https://www.facebook.com/marje3psut',
+    external: true,
   },
   {
     name: 'Instagram',
     icon: 'ion:logo-instagram',
-    link: 'https://www.instagram.com/marje3.psut/',
+    url: 'https://www.instagram.com/marje3.psut/',
+    external: true,
   },
   {
     name: 'Discord',
     icon: 'ion:logo-discord',
-    link: 'https://discord.gg/SKEuduaVEC',
+    url: 'https://discord.gg/SKEuduaVEC',
+    external: true,
   },
   {
     name: 'GitHub',
     icon: 'ion:logo-github',
-    link: 'https://github.com/Marje3PSUT/',
+    url: 'https://github.com/Marje3PSUT/',
+    external: true,
   },
 ];
 
 const siteLinks: Link[] = [
   {
     name: 'courses',
-    link: '/courses',
+    url: '/courses',
   },
   {
     name: 'submit',
-    link: runtimeConfig.public.editorUrl,
+    url: useRuntimeConfig().public.editorUrl,
+    external: true,
   },
   {
     name: 'about',
-    link: '/about',
+    url: '/about',
   },
   {
     name: 'contact',
-    link: '/about#contact',
+    url: '/about#contact',
+  },
+  {
+    name: 'terms',
+    url: '/about#terms',
+  },
+  {
+    name: 'privacy',
+    url: '/about#privacy',
   },
 ];
 </script>
@@ -59,18 +72,30 @@ const siteLinks: Link[] = [
       {{ $t('psutarchive') }}
     </nuxt-link>
     <nav class="flex flex-wrap gap-4 justify-center">
-      <nuxt-link v-for="link in siteLinks" :key="link.name" :to="$nuxt.$localePath(link.link)" class="link link-hover">
-        {{ $t(`footer.links.${link.name}`) }}
-      </nuxt-link>
+      <template v-for="link in siteLinks" :key="link.name">
+        <a v-if="link.external" :href="link.url" target="_blank" class="link link-hover">
+          {{ $t(`footer.links.${link.name}`) }}
+        </a>
+        <nuxt-link
+          v-else
+          :to="{
+            path: $nuxt.$localePath(link.url),
+            hash: link.url.includes('#') ? link.url.substring(link.url.indexOf('#')) : undefined,
+          }"
+          class="link link-hover"
+        >
+          {{ $t(`footer.links.${link.name}`) }}
+        </nuxt-link>
+      </template>
     </nav>
     <nav class="flex flex-wrap gap-4 justify-center">
       <nuxt-link
         v-for="(link, i) in socialLinks"
         :key="i"
         :title="link.name"
-        :to="link.link"
+        :to="link.url"
         external
-        target="_blank"
+        target="'_blank'"
         class="hover:scale-110 transition-all hover:text-accent"
       >
         <Icon :name="link.icon as string" size="24" />
@@ -79,4 +104,4 @@ const siteLinks: Link[] = [
   </footer>
 </template>
 
-<style scoped lang="postcss"></style>
+<style scoped></style>
