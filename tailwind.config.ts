@@ -52,8 +52,8 @@ module.exports = {
     colors: {
       'course-cat-IT': '#ED8B00',
       'course-cat-ENG': '#F9423A',
-      'course-cat-BUSINESS': '#FFCD00', // business
-      'course-cat-MATH': '#20ADA6', // just random colors for now
+      'course-cat-BUSINESS': '#FFCD00',
+      'course-cat-MATH': '#20ADA6',
       'course-cat-ELECT': '#BE986A',
     },
   },
@@ -65,14 +65,14 @@ module.exports = {
       {
         dark: {
           ...customDaisyUiVariables,
-          ...ramadanTheme,
+          ...mainColorTheme,
           'color-scheme': 'dark',
         },
       },
       {
         light: {
           ...customDaisyUiVariables,
-          ...ramadanTheme,
+          ...mainColorTheme,
           secondary: '#103CDA',
           'base-100': '#fafafa',
           'base-content': '#080802',
