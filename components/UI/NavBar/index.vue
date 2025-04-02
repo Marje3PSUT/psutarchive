@@ -22,11 +22,7 @@ const path = computed(() =>
           </NuxtLink>
         </ClientOnly>
         <!-- Logo & Homepage -->
-        <NuxtLink
-          :data-tip="$t('misc.ramadan')"
-          class="tooltip tooltip-bottom tooltip-accent !btn !btn-ghost hover:!bg-transparent !normal-case !text-xl"
-          :to="$nuxt.$localePath('/')"
-        >
+        <NuxtLink class="!btn !btn-ghost hover:!bg-transparent !normal-case !text-xl" :to="$nuxt.$localePath('/')">
           <img
             class="logo"
             :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
@@ -34,7 +30,6 @@ const path = computed(() =>
             width="40"
           />
           {{ $t('psutarchive') }}
-          <Icon name="noto:crescent-moon" />
         </NuxtLink>
       </div>
 
