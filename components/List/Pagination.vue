@@ -132,11 +132,4 @@ watch(props, () => {
   </div>
 </template>
 
-<!-- adjust height on mobile -->
-<style lang="postcss" scoped>
-@media (max-width: 640px) {
-  .btn {
-    @apply h-8 min-h-8 px-2 text-xs;
-  }
-}
-</style>
+<style lang="postcss" scoped></style>
