@@ -29,6 +29,9 @@ const emit = defineEmits(['activePage']);
 
 const activePage = ref(props.active);
 
+// Show pagination only if there is more than 1 page
+const showPagination = computed(() => props.end > props.start);
+
 const pagesToShow = computed<number[]>(() => {
   const pages = [];
   // ensure that we do not go over / below the range
@@ -66,7 +69,7 @@ watch(props, () => {
 </script>
 
 <template>
-  <div class="join flex-wrap w-full justify-center">
+  <div v-if="showPagination" class="join flex-wrap w-full justify-center">
     <button
       v-if="showArrows"
       class="btn join-item max-sm:btn-sm"
@@ -89,9 +92,12 @@ watch(props, () => {
     </template>
 
     <button
-      v-for="page in pagesToShow.filter((p) =>
-        showEllipsisAfter ? p !== props.end : showEllipsisBefore ? p !== props.start : true,
-      )"
+      v-for="page in pagesToShow.filter((p, index) => {
+        // Hide page number button next to ellipsis: first page if ellipsis before, last page if ellipsis after
+        if (showEllipsisBefore && index === 0) return false;
+        if (showEllipsisAfter && index === pagesToShow.length - 1) return false;
+        return true; // show it otherwise
+      })"
       :key="page"
       :class="{ 'btn-primary': page === activePage }"
       class="join-item btn max-sm:btn-sm"
