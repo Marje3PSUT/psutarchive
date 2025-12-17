@@ -8,7 +8,7 @@ const path = computed(() =>
 
 <template>
   <div class="main-navbar mb-16 sticky top-0 z-20">
-    <div class="navbar container mx-auto">
+    <div class="navbar container mx-auto [&_.main-logo-link]:hover:tooltip-open">
       <div class="navbar-start">
         <!-- Back button -->
         <ClientOnly>
@@ -24,7 +24,7 @@ const path = computed(() =>
         <!-- Logo & Homepage -->
         <NuxtLink
           :data-tip="$t('misc.christmas')"
-          class="!btn !btn-ghost hover:!bg-transparent !normal-case !text-xl tooltip tooltip-bottom tooltip-secondary tooltip-open"
+          class="main-logo-link !btn !btn-ghost hover:!bg-transparent !normal-case !text-xl tooltip tooltip-bottom tooltip-secondary"
           :to="$nuxt.$localePath('/')"
         >
           <img
