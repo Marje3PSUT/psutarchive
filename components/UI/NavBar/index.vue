@@ -33,12 +33,10 @@ const path = computed(() =>
         </NuxtLink>
       </div>
 
-      <!-- Navigation menu on md/lg screens -->
-      <div class="navbar-center max-lg:hidden">
-        <UINavBarMenu />
-      </div>
-
       <div class="navbar-end gap-x-2">
+        <!-- Navigation menu on md/lg screens -->
+        <div class="max-lg:hidden"><UINavBarMenu /></div>
+
         <!-- Language toggle -->
         <UILangSwitcher class="max-lg:hidden" />
 
