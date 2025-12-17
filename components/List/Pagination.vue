@@ -99,7 +99,7 @@ watch(props, () => {
         return true; // show it otherwise
       })"
       :key="page"
-      :class="{ 'btn-primary': page === activePage }"
+      :class="{ 'btn-secondary': page === activePage }"
       class="join-item btn max-sm:btn-sm"
       @click="
         activePage = page;

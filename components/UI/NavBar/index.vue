@@ -8,7 +8,7 @@ const path = computed(() =>
 
 <template>
   <div class="main-navbar mb-16 sticky top-0 z-20">
-    <div class="navbar container mx-auto">
+    <div class="navbar container mx-auto [&_.main-logo-link]:hover:tooltip-open">
       <div class="navbar-start">
         <!-- Back button -->
         <ClientOnly>
@@ -22,7 +22,11 @@ const path = computed(() =>
           </NuxtLink>
         </ClientOnly>
         <!-- Logo & Homepage -->
-        <NuxtLink class="!btn !btn-ghost hover:!bg-transparent !normal-case !text-xl" :to="$nuxt.$localePath('/')">
+        <NuxtLink
+          :data-tip="$t('misc.christmas')"
+          class="main-logo-link !btn !btn-ghost hover:!bg-transparent !normal-case !text-xl tooltip tooltip-bottom tooltip-secondary"
+          :to="$nuxt.$localePath('/')"
+        >
           <img
             class="logo"
             :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
@@ -33,12 +37,10 @@ const path = computed(() =>
         </NuxtLink>
       </div>
 
-      <!-- Navigation menu on md/lg screens -->
-      <div class="navbar-center max-lg:hidden">
-        <UINavBarMenu />
-      </div>
-
       <div class="navbar-end gap-x-2">
+        <!-- Navigation menu on md/lg screens -->
+        <div class="max-lg:hidden"><UINavBarMenu /></div>
+
         <!-- Language toggle -->
         <UILangSwitcher class="max-lg:hidden" />
 
