@@ -22,7 +22,11 @@ const path = computed(() =>
           </NuxtLink>
         </ClientOnly>
         <!-- Logo & Homepage -->
-        <NuxtLink class="!btn !btn-ghost hover:!bg-transparent !normal-case !text-xl" :to="$nuxt.$localePath('/')">
+        <NuxtLink
+          :data-tip="$t('misc.christmas')"
+          class="!btn !btn-ghost hover:!bg-transparent !normal-case !text-xl tooltip tooltip-bottom tooltip-secondary"
+          :to="$nuxt.$localePath('/')"
+        >
           <img
             class="logo"
             :src="useTheme().value === 'dark' ? '/logo/logo_white.svg' : '/logo/logo_black.svg'"
