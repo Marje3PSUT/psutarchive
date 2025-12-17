@@ -24,6 +24,35 @@ const ramadanTheme = {
   'neutral-focus': '#273449',
 };
 
+const christmasTheme = {
+  dark: {
+    primary: '#6A994E',
+    secondary: '#BC4749',
+    accent: '#F8B229',
+    neutral: '#1F2937',
+    info: '#38BDF8',
+    success: '#16A34A',
+    warning: '#F59E0B',
+    error: '#EF4444',
+    'neutral-focus': '#273449',
+    'base-100': '#1b2614',
+    'base-content': '#FEF9E1',
+  },
+  light: {
+    primary: '#386641',
+    secondary: '#386641',
+    accent: '#BC4749',
+    neutral: '#1F2937',
+    info: '#38BDF8',
+    success: '#16A34A',
+    warning: '#F59E0B',
+    error: '#EF4444',
+    'neutral-focus': '#273449',
+    'base-100': '#FEF9E1',
+    'base-content': '#080802',
+  },
+};
+
 const customDaisyUiVariables = {
   '--rounded-box': '1rem', // border radius rounded-box utility class, used in card and other large boxes
   '--rounded-btn': '0.5rem', // border radius rounded-btn utility class, used in buttons and similar element
@@ -65,17 +94,14 @@ module.exports = {
       {
         dark: {
           ...customDaisyUiVariables,
-          ...mainColorTheme,
+          ...christmasTheme.dark,
           'color-scheme': 'dark',
         },
       },
       {
         light: {
           ...customDaisyUiVariables,
-          ...mainColorTheme,
-          secondary: '#103CDA',
-          'base-100': '#fafafa',
-          'base-content': '#080802',
+          ...christmasTheme.light,
           'color-scheme': 'light',
         },
       },
