@@ -35,7 +35,7 @@ const christmasTheme = {
     warning: '#F59E0B',
     error: '#EF4444',
     'neutral-focus': '#273449',
-    'base-100': '#1b2614',
+    'base-100': '#01110a',
     'base-content': '#FEF9E1',
   },
   light: {
