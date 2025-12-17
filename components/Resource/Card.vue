@@ -92,13 +92,13 @@ onMounted(() => {
   <div class="card card-compact indicator h-full" :class="`res-${resourceId}`">
     <div class="card-info flex flex-col m-2 px-2 h-full justify-around items-start my-auto">
       <div class="res-type capitalize text-lg font-bold">
-        <span class="text-secondary">
+        <span class="text-accent">
           {{ $t(`material.resource.${props.item.type}.type.${resourceSubTypeData.type}`) }}
         </span>
       </div>
       <div v-if="item" class="res-metadata">
         <span v-if="item.semester">{{ $t(`material.semesters.${item.semester?.toLowerCase()}`) }}</span>
-        <span class="pl-2 text-secondary font-semibold">
+        <span class="pl-2 text-accent font-semibold">
           {{ item.year }}
         </span>
       </div>
@@ -163,7 +163,7 @@ onMounted(() => {
     <!-- solved exam indicator -->
     <span
       v-if="item.type === 'exam' && (item.exam_data as ExamDatum).solved"
-      class="indicator-item indicator-middle badge badge-secondary uppercase font-bold"
+      class="indicator-item indicator-middle badge badge-accent uppercase font-bold"
       :class="locale === 'en' ? 'indicator-start -rotate-90' : 'indicator-end rotate-90'"
     >
       {{ $t('material.resource.exam.solved') }}
@@ -176,7 +176,7 @@ onMounted(() => {
           <div class="capitalize text-lg font-bold flex justify-between p-2">
             <span>
               {{ $t(`material.resource.type.${item.type}`) }} -
-              <span class="text-secondary-focus">
+              <span class="text-accent-focus">
                 {{ $t(`material.resource.${item.type}.type.${resourceSubTypeData.type}`) }}
               </span>
             </span>
