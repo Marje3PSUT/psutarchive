@@ -65,13 +65,13 @@ const categories = ref(
           <span
             v-if="resCount"
             class="grow-0 badge badge-sm bg-transparent border-0"
-            :class="{ '!badge-secondary': parseInt(resCount) > 0 }"
+            :class="{ '!badge-accent': parseInt(resCount) > 0 }"
           >
             {{ $t('papers.name', parseInt(resCount)) }}
           </span>
           <span
             v-if="linksCount && parseInt(linksCount) > 0"
-            class="grow-0 badge badge-sm bg-transparent border-0 !badge-secondary"
+            class="grow-0 badge badge-sm bg-transparent border-0 !badge-accent"
           >
             {{ $t('links.name', parseInt(linksCount)) }}
           </span>

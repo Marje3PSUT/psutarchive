@@ -24,7 +24,7 @@ const close = () => {
         <NuxtLink
           target="_blank"
           :href="runtimeConfig.public.editorUrl"
-          class="btn btn-sm btn-outline btn-secondary !border-secondary font-bold"
+          class="btn btn-sm btn-primary !border-primary font-bold"
           @click="close"
         >
           {{ $t('submit.title') }}

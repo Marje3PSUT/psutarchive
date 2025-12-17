@@ -37,7 +37,7 @@ const { data: about } = await useAsyncData(async () => {
   }
 
   a {
-    @apply link link-hover text-secondary;
+    @apply link link-hover text-accent;
   }
 }
 </style>

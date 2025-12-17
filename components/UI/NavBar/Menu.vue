@@ -12,17 +12,17 @@ const runtimeConfig = useRuntimeConfig();
       </NuxtLink>
     </li>
     <li>
-      <NuxtLink
-        target="_blank"
-        :to="runtimeConfig.public.editorUrl"
-        class="btn btn-sm btn-outline btn-primary !border-primary font-bold"
-      >
-        {{ $t('submit.title') }}
+      <NuxtLink :to="localePath('/about')">
+        {{ $t('about.title') }}
       </NuxtLink>
     </li>
     <li>
-      <NuxtLink :to="localePath('/about')">
-        {{ $t('about.title') }}
+      <NuxtLink
+        target="_blank"
+        :to="runtimeConfig.public.editorUrl"
+        class="btn btn-sm btn-primary !border-primary font-bold"
+      >
+        {{ $t('submit.title') }}
       </NuxtLink>
     </li>
   </ul>

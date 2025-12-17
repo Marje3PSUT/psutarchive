@@ -221,7 +221,7 @@ onMounted(() => {
             <input
               v-model="state.withResourcesOnly"
               type="checkbox"
-              class="toggle toggle-secondary"
+              class="toggle toggle-accent"
               @change="state.activePage = 1"
             />
           </label>

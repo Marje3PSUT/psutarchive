@@ -140,10 +140,13 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
         v-for="(tab, i) in props.tabs"
         :key="i"
         class="tab"
-        :class="{ 'tab-active': activeTab === i, indicator: tab.indicator }"
+        :class="{
+          'tab-active font-bold !bg-secondary !text-secondary-content': activeTab === i,
+          indicator: tab.indicator,
+        }"
         @click="$emit('activeTab', i)"
       >
-        <span v-if="tab.indicator" class="indicator-item badge badge-secondary">
+        <span v-if="tab.indicator" class="indicator-item badge badge-accent">
           {{ tab.indicator }}
         </span>
         {{ tab.title }}

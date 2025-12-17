@@ -186,7 +186,7 @@ onMounted(() => {
           :key="link.title"
           :href="link.url"
           target="_blank"
-          class="link link-hover text-secondary flex items-center gap-1"
+          class="link link-hover text-accent flex items-center gap-1"
         >
           {{ link.title.length === 0 ? `${$t('courses.link')} ${index + 1}` : link.title }}
           <Icon name="ion:md-open" size="22" class="rtl:-rotate-90" />
