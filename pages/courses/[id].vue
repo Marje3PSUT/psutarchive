@@ -145,6 +145,15 @@ const pageCount = computed(() => {
   return Math.ceil(recordCount.value![0].resource![0].countDistinct.id / 18);
 });
 
+const currentTabResourceCount = computed(() => {
+  if (!recordCount.value || !recordCount.value[0]?.resource || recordCount.value[0].resource.length === 0) return 0;
+  const resources = recordCount.value[0].resource;
+  // @ts-expect-error
+  const count = resources[0]?.countDistinct?.id;
+  if (count) return count;
+  return 0;
+});
+
 const heading = computed<string>(() => (locale.value === 'en' ? course.value!.name_en : course.value!.name_ar));
 
 const switchTab = (t: number) => {
@@ -208,6 +217,7 @@ onMounted(() => {
       :tabs="tabsList"
       :search-placeholder="$t('material.search') + '...'"
       :sort-options="sortOptions"
+      :resource-count="currentTabResourceCount"
       :active-tab="state.activeTab"
       :pagination="{
         end: pageCount,

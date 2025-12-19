@@ -69,6 +69,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  resourceCount: {
+    type: Number,
+    default: null,
+  },
   activeTab: {
     type: Number,
     default: 0,
@@ -117,6 +121,10 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
       <!-- Sort and filter -->
       <div v-if="props.showSort" class="flex flex-wrap mx-auto w-full items-center gap-4">
         <ListSort :sort-options="props.sortOptions" @sort="(q: string) => $emit('sorted', q)" />
+        <span v-if="resourceCount !== null" class="text-sm text-base-content/70">
+          {{ resourceCount }}
+          {{ resourceCount === 1 ? $t('material.resource.title', 1) : $t('material.resource.title', 2) }}
+        </span>
         <slot name="list-option" />
 
         <button
