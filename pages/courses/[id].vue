@@ -219,6 +219,15 @@ const switchTab = (t: number) => {
   state.activePage = 1;
 };
 
+// Reset to exam tab when course ID changes
+watch(
+  () => route.params.id,
+  () => {
+    state.activeTab = 0;
+  },
+  { immediate: true },
+);
+
 watch(state, () => {
   return navigateTo({
     query: {
@@ -226,14 +235,6 @@ watch(state, () => {
     },
     replace: true,
   });
-});
-
-onMounted(() => {
-  const tabs = tabsList.value.map((i) => i.value);
-
-  if (route.query.tab && tabs.includes(route.query.tab as 'note' | 'exam')) {
-    state.activeTab = tabs.indexOf(route.query.tab as 'note' | 'exam');
-  }
 });
 </script>
 
