@@ -77,7 +77,11 @@ module.exports = {
     './app.vue',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['IBM Plex Sans', 'Alyamama', 'sans-serif'],
+      },
+    },
     colors: {
       'course-cat-IT': '#ED8B00',
       'course-cat-ENG': '#F9423A',
