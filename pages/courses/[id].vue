@@ -49,11 +49,13 @@ const tabsList = ref<{ title: string; value: 'exam' | 'note'; indicator: string 
     title: t('exams.title', 2),
     value: 'exam',
     indicator: null, // exams count
+    disabled: false,
   },
   {
     title: t('notes.title', 2),
     value: 'note',
     indicator: null, // notes count
+    disabled: false,
   },
 ]);
 
@@ -135,9 +137,65 @@ const {
   { watch: [stateChangeDebounced] },
 );
 
+// Fetch resource counts directly from the resource table
+const { data: resourceCounts } = useLazyAsyncData(
+  'resourceCounts',
+  async () => {
+    // Query resources directly, grouped by type
+    const result = await $directus.request(
+      $readItems('resource', {
+        // @ts-expect-error
+        aggregate: {
+          count: 'id',
+        },
+        groupBy: ['type'],
+        filter: {
+          course: {
+            course_id: {
+              _eq: urlId.value,
+            },
+          },
+        },
+      }),
+    );
+
+    return result;
+  },
+  { watch: [urlId] },
+);
+
 const { data: recordCount } = useLazyAsyncData(() => $directus.request($readItems('course', countQuery.value)), {
   watch: [stateChangeDebounced],
 });
+
+// Update tabs with disabled state
+watch(
+  resourceCounts,
+  (data) => {
+    if (data) {
+      // @ts-expect-error
+      const examItem = data.find((r) => r.type === 'exam');
+      // @ts-expect-error
+      const noteItem = data.find((r) => r.type === 'note');
+      // @ts-expect-error
+      const examCount = examItem?.count?.id ?? 0;
+      // @ts-expect-error
+      const noteCount = noteItem?.count?.id ?? 0;
+      tabsList.value[0].disabled = examCount === 0;
+      tabsList.value[1].disabled = noteCount === 0;
+
+      // If current active tab is disabled, switch to the enabled one
+      if (tabsList.value[state.activeTab].disabled) {
+        const enabledTabIndex = tabsList.value.findIndex((tab) => !tab.disabled);
+
+        if (enabledTabIndex !== -1) {
+          state.activeTab = enabledTabIndex;
+        }
+      }
+    }
+  },
+  { immediate: true },
+);
 
 const pageCount = computed(() => {
   if (!recordCount.value || recordCount.value![0].resource?.length === 0) return 0;

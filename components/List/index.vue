@@ -8,6 +8,7 @@ type TabItem = {
   title: string;
   value: string;
   indicator?: string | number | null;
+  disabled?: boolean;
 };
 type PaginationOptions = {
   start?: number;
@@ -152,6 +153,7 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
           'tab-active font-bold !bg-secondary !text-secondary-content': activeTab === i,
           indicator: tab.indicator,
         }"
+        :disabled="tab.disabled"
         @click="$emit('activeTab', i)"
       >
         <span v-if="tab.indicator" class="indicator-item badge badge-accent">
