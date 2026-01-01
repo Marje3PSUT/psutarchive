@@ -219,20 +219,49 @@ const switchTab = (t: number) => {
   state.activePage = 1;
 };
 
+onMounted(() => {
+  const tabParam = route.query.tab as string;
+  const pageParam = route.query.page as string;
+
+  if (tabParam) {
+    const tabIndex = tabsList.value.findIndex((tab) => tab.value === tabParam);
+
+    if (tabIndex !== -1) {
+      state.activeTab = tabIndex;
+    }
+  }
+
+  if (pageParam) {
+    const page = Number(pageParam);
+
+    if (!isNaN(page) && page > 0) {
+      state.activePage = page;
+    }
+  }
+});
+
 // Reset to exam tab when course ID changes
 watch(
   () => route.params.id,
   () => {
     state.activeTab = 0;
+    state.activePage = 1;
   },
   { immediate: true },
 );
 
 watch(state, () => {
+  const query: Record<string, string> = {
+    tab: tabsList.value[state.activeTab].value,
+  };
+
+  // Only add page parameter if it's not page 1
+  if (state.activePage > 1) {
+    query.page = state.activePage.toString();
+  }
+
   return navigateTo({
-    query: {
-      tab: tabsList.value[state.activeTab].value,
-    },
+    query,
     replace: true,
   });
 });
