@@ -94,14 +94,17 @@ module.exports = {
       {
         dark: {
           ...customDaisyUiVariables,
-          ...christmasTheme.dark,
+          ...mainColorTheme,
           'color-scheme': 'dark',
         },
       },
       {
         light: {
           ...customDaisyUiVariables,
-          ...christmasTheme.light,
+          ...mainColorTheme,
+          secondary: '#103CDA',
+          'base-100': '#fafafa',
+          'base-content': '#080802',
           'color-scheme': 'light',
         },
       },

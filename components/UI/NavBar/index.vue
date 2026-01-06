@@ -23,8 +23,7 @@ const path = computed(() =>
         </ClientOnly>
         <!-- Logo & Homepage -->
         <NuxtLink
-          :data-tip="$t('misc.christmas')"
-          class="main-logo-link !btn !btn-ghost hover:!bg-transparent !normal-case !text-xl tooltip tooltip-bottom tooltip-secondary"
+          class="main-logo-link !btn !btn-ghost hover:!bg-transparent !normal-case !text-xl"
           :to="$nuxt.$localePath('/')"
         >
           <img
