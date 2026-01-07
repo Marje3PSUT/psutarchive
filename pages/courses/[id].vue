@@ -49,11 +49,13 @@ const tabsList = ref<{ title: string; value: 'exam' | 'note'; indicator: string 
     title: t('exams.title', 2),
     value: 'exam',
     indicator: null, // exams count
+    disabled: false,
   },
   {
     title: t('notes.title', 2),
     value: 'note',
     indicator: null, // notes count
+    disabled: false,
   },
 ]);
 
@@ -135,14 +137,79 @@ const {
   { watch: [stateChangeDebounced] },
 );
 
+// Fetch resource counts directly from the resource table
+const { data: resourceCounts } = useLazyAsyncData(
+  'resourceCounts',
+  async () => {
+    // Query resources directly, grouped by type
+    const result = await $directus.request(
+      $readItems('resource', {
+        // @ts-expect-error
+        aggregate: {
+          count: 'id',
+        },
+        groupBy: ['type'],
+        filter: {
+          course: {
+            course_id: {
+              _eq: urlId.value,
+            },
+          },
+        },
+      }),
+    );
+
+    return result;
+  },
+  { watch: [urlId] },
+);
+
 const { data: recordCount } = useLazyAsyncData(() => $directus.request($readItems('course', countQuery.value)), {
   watch: [stateChangeDebounced],
 });
+
+// Update tabs with disabled state
+watch(
+  resourceCounts,
+  (data) => {
+    if (data) {
+      // @ts-expect-error
+      const examItem = data.find((r) => r.type === 'exam');
+      // @ts-expect-error
+      const noteItem = data.find((r) => r.type === 'note');
+      // @ts-expect-error
+      const examCount = examItem?.count?.id ?? 0;
+      // @ts-expect-error
+      const noteCount = noteItem?.count?.id ?? 0;
+      tabsList.value[0].disabled = examCount === 0;
+      tabsList.value[1].disabled = noteCount === 0;
+
+      // If current active tab is disabled, switch to the enabled one
+      if (tabsList.value[state.activeTab].disabled) {
+        const enabledTabIndex = tabsList.value.findIndex((tab) => !tab.disabled);
+
+        if (enabledTabIndex !== -1) {
+          state.activeTab = enabledTabIndex;
+        }
+      }
+    }
+  },
+  { immediate: true },
+);
 
 const pageCount = computed(() => {
   if (!recordCount.value || recordCount.value![0].resource?.length === 0) return 0;
   // @ts-expect-error
   return Math.ceil(recordCount.value![0].resource![0].countDistinct.id / 18);
+});
+
+const currentTabResourceCount = computed(() => {
+  if (!recordCount.value || !recordCount.value[0]?.resource || recordCount.value[0].resource.length === 0) return 0;
+  const resources = recordCount.value[0].resource;
+  // @ts-expect-error
+  const count = resources[0]?.countDistinct?.id;
+  if (count) return count;
+  return 0;
 });
 
 const heading = computed<string>(() => (locale.value === 'en' ? course.value!.name_en : course.value!.name_ar));
@@ -152,21 +219,51 @@ const switchTab = (t: number) => {
   state.activePage = 1;
 };
 
-watch(state, () => {
-  return navigateTo({
-    query: {
-      tab: tabsList.value[state.activeTab].value,
-    },
-    replace: true,
-  });
+onMounted(() => {
+  const tabParam = route.query.tab as string;
+  const pageParam = route.query.page as string;
+
+  if (tabParam) {
+    const tabIndex = tabsList.value.findIndex((tab) => tab.value === tabParam);
+
+    if (tabIndex !== -1) {
+      state.activeTab = tabIndex;
+    }
+  }
+
+  if (pageParam) {
+    const page = Number(pageParam);
+
+    if (!isNaN(page) && page > 0) {
+      state.activePage = page;
+    }
+  }
 });
 
-onMounted(() => {
-  const tabs = tabsList.value.map((i) => i.value);
+// Reset to exam tab when course ID changes
+watch(
+  () => route.params.id,
+  () => {
+    state.activeTab = 0;
+    state.activePage = 1;
+  },
+  { immediate: true },
+);
 
-  if (route.query.tab && tabs.includes(route.query.tab as 'note' | 'exam')) {
-    state.activeTab = tabs.indexOf(route.query.tab as 'note' | 'exam');
+watch(state, () => {
+  const query: Record<string, string> = {
+    tab: tabsList.value[state.activeTab].value,
+  };
+
+  // Only add page parameter if it's not page 1
+  if (state.activePage > 1) {
+    query.page = state.activePage.toString();
   }
+
+  return navigateTo({
+    query,
+    replace: true,
+  });
 });
 </script>
 
@@ -208,6 +305,7 @@ onMounted(() => {
       :tabs="tabsList"
       :search-placeholder="$t('material.search') + '...'"
       :sort-options="sortOptions"
+      :resource-count="currentTabResourceCount"
       :active-tab="state.activeTab"
       :pagination="{
         end: pageCount,
