@@ -45,7 +45,7 @@ const { siteLinks, socialLinks, sponsorLinks } = useLinks();
       <div class="text-lg font-bold">
         {{ $t('footer.sponsors.title') }}
       </div>
-      <div class="flex flex-wrap gap-4 justify-center">
+      <div class="flex flex-wrap items-center gap-8 justify-center">
         <nuxt-link
           v-for="(sponsor, i) in sponsorLinks"
           :key="i"
@@ -62,6 +62,11 @@ const { siteLinks, socialLinks, sponsorLinks } = useLinks();
             class="h-16 object-contain"
           />
           <div v-else>{{ sponsor.name }}</div>
+        </nuxt-link>
+        <!-- hidden temporarily -->
+        <nuxt-link v-if="false" class="btn btn-outline btn-secondary btn-md text-start">
+          <span class="max-w-max font-bold">{{ $t('footer.sponsors.become-sponsor') }}</span>
+          <Icon name="ion:heart" size="28" />
         </nuxt-link>
       </div>
     </div>
