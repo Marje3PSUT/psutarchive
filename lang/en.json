@@ -119,6 +119,10 @@
       "contact": "Contact Us",
       "terms": "Terms of Use",
       "privacy": "Privacy Policy"
+    },
+    "sponsors": {
+      "title": "Our Sponsors",
+      "become-sponsor": "Become a sponsor"
     }
   },
   "messages": {

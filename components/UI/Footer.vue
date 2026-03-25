@@ -1,69 +1,9 @@
 <script setup lang="ts">
-type Link = {
-  name: string;
-  icon?: string;
-  url: string;
-  external?: boolean;
-};
-
-const socialLinks: Link[] = [
-  {
-    name: 'Facebook',
-    icon: 'ion:logo-facebook',
-    url: 'https://www.facebook.com/marje3psut',
-    external: true,
-  },
-  {
-    name: 'Instagram',
-    icon: 'ion:logo-instagram',
-    url: 'https://www.instagram.com/marje3.psut/',
-    external: true,
-  },
-  {
-    name: 'Discord',
-    icon: 'ion:logo-discord',
-    url: 'https://discord.gg/SKEuduaVEC',
-    external: true,
-  },
-  {
-    name: 'GitHub',
-    icon: 'ion:logo-github',
-    url: 'https://github.com/Marje3PSUT/',
-    external: true,
-  },
-];
-
-const siteLinks: Link[] = [
-  {
-    name: 'courses',
-    url: '/courses',
-  },
-  {
-    name: 'submit',
-    url: useRuntimeConfig().public.editorUrl,
-    external: true,
-  },
-  {
-    name: 'about',
-    url: '/about',
-  },
-  {
-    name: 'contact',
-    url: '/about#contact',
-  },
-  {
-    name: 'terms',
-    url: '/about#terms',
-  },
-  {
-    name: 'privacy',
-    url: '/about#privacy',
-  },
-];
+const { siteLinks, socialLinks, sponsorLinks } = useLinks();
 </script>
 
 <template>
-  <footer class="footer mt-16 gap-y-8 footer-center p-10 bg-base-200 text-base-content">
+  <footer class="footer mt-16 gap-y-8 footer-center p-10 pb-32 bg-base-200 text-base-content">
     <nuxt-link
       :to="$nuxt.$localePath('/')"
       title="homepage"
@@ -101,6 +41,35 @@ const siteLinks: Link[] = [
         <Icon :name="link.icon as string" size="24" />
       </nuxt-link>
     </nav>
+    <div class="flex flex-col justify-center items-center">
+      <div class="text-lg font-bold">
+        {{ $t('footer.sponsors.title') }}
+      </div>
+      <div class="flex flex-wrap items-center gap-8 justify-center">
+        <nuxt-link
+          v-for="(sponsor, i) in sponsorLinks"
+          :key="i"
+          :title="sponsor.name"
+          :to="sponsor.url"
+          external
+          target="_blank"
+          class="hover:scale-110 transition-all hover:text-accent"
+        >
+          <img
+            v-if="sponsor.logoUrl"
+            :src="sponsor.logoUrl(useTheme().value)"
+            :alt="sponsor.name"
+            class="h-16 object-contain"
+          />
+          <div v-else>{{ sponsor.name }}</div>
+        </nuxt-link>
+        <!-- hidden temporarily -->
+        <nuxt-link v-if="false" class="btn btn-outline btn-secondary btn-md text-start">
+          <span class="max-w-max font-bold">{{ $t('footer.sponsors.become-sponsor') }}</span>
+          <Icon name="ion:heart" size="28" />
+        </nuxt-link>
+      </div>
+    </div>
   </footer>
 </template>
 
