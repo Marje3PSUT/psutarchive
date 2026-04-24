@@ -8,6 +8,12 @@ const route = useRoute();
 const { $directus, $readItems } = useNuxtApp();
 const { t, locale } = useI18n();
 
+const pageTitle = computed(() => `${t('courses.title')} - ${t('psutarchive')}`);
+
+useHead(() => ({
+  title: pageTitle.value,
+}));
+
 const sortOptions = ref<{ key: QuerySort<Schema, Course>; title: string }[]>([
   {
     key: locale.value === 'en' ? 'name_en' : 'name_ar',
