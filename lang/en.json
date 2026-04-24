@@ -132,6 +132,8 @@
       "exam": "No exams were found",
       "note": "No notes were found"
     },
+    "course-not-found": "Course not found",
+    "course-not-found-with-id": "Course #{id} not found.",
     "error": "We're sorry, an error has occured"
   }
 }

@@ -127,7 +127,7 @@ const {
       throw showError({
         // TODO: use createError instead and handle it manually with a custom 404 page
         statusCode: 404,
-        statusMessage: `Course #${urlId.value} not found.`,
+        statusMessage: t('messages.course-not-found-with-id', { id: urlId.value }),
       });
 
     return result[0];
@@ -138,6 +138,25 @@ const {
 const { data: recordCount } = useLazyAsyncData(() => $directus.request($readItems('course', countQuery.value)), {
   watch: [stateChangeDebounced],
 });
+
+const pageTitle = computed(() => {
+  const appName = String(t('psutarchive'));
+  const localizedCourseName = locale.value === 'en' ? course.value?.name_en : course.value?.name_ar;
+
+  if (localizedCourseName?.trim()) {
+    return `${localizedCourseName} - ${appName}`;
+  }
+
+  if (error.value) {
+    return `${t('messages.course-not-found')} - ${appName}`;
+  }
+
+  return appName;
+});
+
+useHead(() => ({
+  title: pageTitle.value,
+}));
 
 const pageCount = computed(() => {
   if (!recordCount.value || recordCount.value![0].resource?.length === 0) return 0;
