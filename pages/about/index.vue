@@ -1,7 +1,13 @@
 <!-- eslint-disable vue/no-v-html -->
 <script setup lang="ts">
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const { $directus, $readItem } = useNuxtApp();
+
+const pageTitle = computed(() => `${t('about.title')} - ${t('psutarchive')}`);
+
+useHead(() => ({
+  title: pageTitle.value,
+}));
 
 const { data: about } = await useAsyncData(async () => {
   return await $directus.request($readItem('about_page', 1));
