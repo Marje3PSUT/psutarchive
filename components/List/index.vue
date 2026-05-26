@@ -142,12 +142,18 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
         class="tab"
         :class="{
           'tab-active font-bold !bg-secondary !text-secondary-content': activeTab === i,
-          indicator: tab.indicator,
+          'indicator': tab.indicator !== null && tab.indicator !== undefined,
+          'tab-disabled opacity-50 cursor-not-allowed': tab.indicator === 0,
         }"
-        @click="$emit('activeTab', i)"
+        :disabled="tab.indicator === 0"
+        @click="tab.indicator !== 0 && $emit('activeTab', i)"
       >
-        <span v-if="tab.indicator" class="indicator-item badge badge-accent">
-          {{ tab.indicator }}
+        <span
+          v-if="tab.indicator !== null && tab.indicator !== undefined"
+          class="indicator-item badge"
+          :class="tab.indicator === 0 ? 'badge-ghost' : 'badge-accent'"
+        >
+          {{ tab.indicator === 0 ? $t('messages.empty') : tab.indicator }}
         </span>
         {{ tab.title }}
       </button>
@@ -184,6 +190,11 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
 </template>
 
 <style scoped lang="postcss">
+.tab.indicator .indicator-item {
+  --indicator-right: 0;
+  transform: translateY(-50%);
+}
+
 .list.view-flex {
   @apply flex gap-4 flex-col;
 }
