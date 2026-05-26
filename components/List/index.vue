@@ -116,7 +116,7 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
       </div>
       <!-- Sort and filter -->
       <div v-if="props.showSort" class="flex flex-wrap mx-auto w-full items-center gap-4">
-        <ListSort :sort-options="props.sortOptions" @sort="(q: string) => $emit('sorted', q)" />
+        <ListSort v-bind="$attrs" :sort-options="props.sortOptions" @sort="(q: string) => $emit('sorted', q)" />
         <slot name="list-option" />
 
         <button

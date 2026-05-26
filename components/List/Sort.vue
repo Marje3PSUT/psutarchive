@@ -4,10 +4,14 @@ const props = defineProps({
     type: Array as PropType<SortOptions>,
     required: true,
   },
+  initialValue: {
+    type: String,
+    default: '0',
+  },
 });
 
 defineEmits(['sort']);
-const selected = ref('0');
+const selected = ref(props.initialValue);
 </script>
 
 <template>
