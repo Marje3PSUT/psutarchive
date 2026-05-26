@@ -134,6 +134,8 @@
     },
     "course-not-found": "Course not found",
     "course-not-found-with-id": "Course #{id} not found.",
+    "no-resources": "No resources were found for this course",
+    "empty": "Empty",
     "error": "We're sorry, an error has occured"
   }
 }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type Query, type QuerySort } from '@directus/sdk';
 import { debouncedRef } from '@vueuse/core';
-import _ from 'lodash';
 import { Course, Resource, Schema } from 'types/schema';
 
 definePageMeta({
@@ -44,16 +43,16 @@ watch(stateChangeDebounced, () => {
   tabValue.value = state.activeTab;
 });
 
-const tabsList = ref<{ title: string; value: 'exam' | 'note'; indicator: string | number | null }[]>([
+const tabsList = computed(() => [
   {
     title: t('exams.title', 2),
-    value: 'exam',
-    indicator: null, // exams count
+    value: 'exam' as const,
+    indicator: typeCounts.value.exam,
   },
   {
     title: t('notes.title', 2),
-    value: 'note',
-    indicator: null, // notes count
+    value: 'note' as const,
+    indicator: typeCounts.value.note,
   },
 ]);
 
@@ -97,18 +96,15 @@ const query = computed(
 
 const countQuery = computed(
   (): Query<Schema, Course> => ({
-    filter: query.value.filter,
+    filter: { course_id: { _eq: urlId.value } },
     deep: {
       resource: {
-        _filter: _.assign(query.value.deep!.resource!._filter, {
-          course: { course_id: { _eq: urlId.value } },
-        }),
         // @ts-expect-error
         _aggregate: {
           countDistinct: 'id',
         },
-        _groupBy: ['course', 'type'],
-        _sort: 'course',
+        _groupBy: ['type'],
+        _sort: 'type',
       },
     },
   }),
@@ -139,6 +135,11 @@ const { data: recordCount } = useLazyAsyncData(() => $directus.request($readItem
   watch: [stateChangeDebounced],
 });
 
+const typeCounts = computed(() => ({
+  exam: (recordCount.value?.[0]?.resource as any[])?.find((r: any) => r.type === 'exam')?.countDistinct?.id ?? null,
+  note: (recordCount.value?.[0]?.resource as any[])?.find((r: any) => r.type === 'note')?.countDistinct?.id ?? null,
+}));
+
 const pageTitle = computed(() => {
   const appName = String(t('psutarchive'));
   const localizedCourseName = locale.value === 'en' ? course.value?.name_en : course.value?.name_ar;
@@ -159,9 +160,11 @@ useHead(() => ({
 }));
 
 const pageCount = computed(() => {
-  if (!recordCount.value || recordCount.value![0].resource?.length === 0) return 0;
-  // @ts-expect-error
-  return Math.ceil(recordCount.value![0].resource![0].countDistinct.id / 18);
+  if (!recordCount.value || (recordCount.value[0] as any)?.resource?.length === 0) return 0;
+  const currentType = tabsList.value[state.activeTab].value;
+  const typeEntry = (recordCount.value[0] as any).resource!.find((r: any) => r.type === currentType);
+  if (!typeEntry) return 0;
+  return Math.ceil(typeEntry.countDistinct.id / 18);
 });
 
 const heading = computed<string>(() => (locale.value === 'en' ? course.value!.name_en : course.value!.name_ar));
@@ -180,8 +183,24 @@ watch(state, () => {
   });
 });
 
+const hasAutoSwitched = ref(false);
+
+watch(recordCount, () => {
+  if (hasAutoSwitched.value) return;
+  const counts = typeCounts.value;
+  if (counts.exam === null || counts.note === null) return;
+
+  hasAutoSwitched.value = true;
+
+  if (counts.exam === 0 && counts.note > 0 && state.activeTab !== 1) {
+    switchTab(1);
+  } else if (counts.note === 0 && counts.exam > 0 && state.activeTab !== 0) {
+    switchTab(0);
+  }
+});
+
 onMounted(() => {
-  const tabs = tabsList.value.map((i) => i.value);
+  const tabs = ['exam', 'note'];
 
   if (route.query.tab && tabs.includes(route.query.tab as 'note' | 'exam')) {
     state.activeTab = tabs.indexOf(route.query.tab as 'note' | 'exam');
@@ -246,7 +265,11 @@ onMounted(() => {
         <!-- no data info message -->
         <UIMessage
           v-if="!error && course?.resource?.length === 0"
-          :message="$t(`messages.no-data.${tabsList[tabValue].value}`)"
+          :message="
+            typeCounts.exam === 0 && typeCounts.note === 0
+              ? $t('messages.no-resources')
+              : $t(`messages.no-data.${tabsList[tabValue].value}`)
+          "
           class="bg-neutral text-neutral-content max-w-max mx-auto"
         />
 
