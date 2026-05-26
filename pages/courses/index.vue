@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { type Query, type QuerySort } from '@directus/sdk';
+import { type Query } from '@directus/sdk';
 import _ from 'lodash';
 import { debouncedRef } from '@vueuse/core';
 import { Course, Schema } from 'types/schema';
 
-const route = useRoute();
 const { $directus, $readItems } = useNuxtApp();
 const { t, locale } = useI18n();
+
+const filters = useCoursesFilters();
+filters.initFromUrl();
 
 const pageTitle = computed(() => `${t('courses.title')} - ${t('psutarchive')}`);
 
@@ -14,39 +16,28 @@ useHead(() => ({
   title: pageTitle.value,
 }));
 
-const sortOptions = ref<{ key: QuerySort<Schema, Course>; title: string }[]>([
+const sortOptions = ref<{ key: string; title: string }[]>([
   {
-    key: locale.value === 'en' ? 'name_en' : 'name_ar',
+    key: 'alphabetical',
     title: t('courses.sort.alphapetical'),
   },
   {
-    key: 'course_id',
+    key: 'id',
     title: t('courses.sort.id'),
   },
 ]);
 
-const state = reactive({
-  search: undefined,
-  activeSort: sortOptions.value[0].key,
-  activePage: 1,
-  activeTab: 0,
-  withResourcesOnly: true, // filter courses that only have resources
-  // activeFilters: undefined as ActiveFilters | undefined,
-});
-
-const listView = ref(false);
+const listView = computed(() => filters.view.value === 'list');
 
 const stateChange = ref<number>(0);
-
-watch(state, () => {
-  stateChange.value = (stateChange.value + 1) % 999;
-});
-
 const stateChangeDebounced = debouncedRef(stateChange, 100);
 
-const switchTab = (t: number) => {
-  state.activeTab = t;
-  state.activePage = 1;
+const switchTab = (i: number) => {
+  const slug = tabsList.value?.[i]?.value;
+  if (slug && slug !== filters.categorySlug.value) {
+    filters.categorySlug.value = slug;
+    filters.page.value = 0;
+  }
 };
 
 // Get categories tabs
@@ -76,6 +67,12 @@ const tabsList = computed(() => {
   return tabs;
 });
 
+const activeTabIndex = computed(() => {
+  if (!tabsList.value) return 0;
+  const idx = tabsList.value.findIndex((t) => t.value === filters.categorySlug.value);
+  return idx >= 0 ? idx : 0;
+});
+
 const query = computed<Query<Schema, Course>>(
   (): Query<Schema, Course> => ({
     // @ts-ignore
@@ -91,46 +88,45 @@ const query = computed<Query<Schema, Course>>(
       'category.category_id.color',
     ],
 
-    page: state.activePage,
+    page: filters.page.value + 1,
     limit: 18,
     filter: {
       category:
-        !route.query.category || route.query.category === 'all'
+        filters.categorySlug.value === 'all'
           ? undefined
           : {
               category_id: {
                 slug: {
-                  _eq: route.query.category,
+                  _eq: filters.categorySlug.value,
                 },
               },
             },
-      _or: state?.search
+      _or: filters.search.value
         ? [
             {
               name_en: {
-                _icontains: state.search,
+                _icontains: filters.search.value,
               },
             },
             {
               name_ar: {
-                _icontains: state.search,
+                _icontains: filters.search.value,
               },
             },
             {
               alt_names: {
-                _icontains: state.search,
+                _icontains: filters.search.value,
               },
             },
             {
               course_id: {
-                _icontains: state.search,
+                _icontains: filters.search.value,
               },
             },
           ]
         : undefined,
-      ...(state.withResourcesOnly
+      ...(filters.res.value === 'yes'
         ? {
-            // show courses with at least either 1 resource or 1 link
             _and: [
               {
                 _or: [
@@ -150,7 +146,7 @@ const query = computed<Query<Schema, Course>>(
           }
         : {}),
     },
-    sort: state.activeSort ?? sortOptions.value[0].key,
+    sort: filters.sort.value === 'id' ? 'course_id' : locale.value === 'en' ? 'name_en' : 'name_ar',
   }),
 );
 
@@ -179,23 +175,23 @@ const pageCount = computed(() => {
   return Math.ceil(recordCount.value![0].countDistinct.id / 18);
 });
 
-// Change tab based on url query, and vice versa
-watch(state, () => {
-  return navigateTo({
-    query: {
-      category: tabsList.value ? tabsList.value[state.activeTab].value : undefined,
-    },
-    replace: true,
-  });
-});
-
-onMounted(() => {
-  const tabs = tabsList.value?.map((i) => i.value);
-
-  if (route.query.category && tabs?.includes(route.query.category as string)) {
-    state.activeTab = tabs?.indexOf(route.query.category as string);
-  }
-});
+watch(
+  [filters.search, filters.categorySlug, filters.page, filters.sort, filters.view, filters.res],
+  () => {
+    stateChange.value = (stateChange.value + 1) % 999;
+    navigateTo({
+      query: {
+        query: filters.search.value ? encodeURIComponent(filters.search.value) : '',
+        category: filters.categorySlug.value,
+        page: String(filters.page.value + 1),
+        sort: filters.sort.value,
+        view: filters.view.value,
+        res: filters.res.value,
+      },
+      replace: true,
+    });
+  },
+);
 </script>
 
 <template>
@@ -203,20 +199,22 @@ onMounted(() => {
     <List
       show-search
       show-sort
+      :initial-search="filters.search.value"
+      :initial-value="filters.sort.value"
       :view="listView ? 'flex' : 'auto'"
       :heading="$t('courses.title')"
       :sort-options="sortOptions"
       :tabs="tabsList"
-      :active-tab="state.activeTab"
+      :active-tab="activeTabIndex"
       :pagination="{
         end: pageCount,
-        active: state.activePage,
+        active: filters.page.value + 1,
       }"
-      @sorted="(s: QuerySort<Schema, Course>) => (state.activeSort = s)"
-      @searched="(q) => (state.search = q)"
-      @active-page="(p) => (state.activePage = p)"
-      @active-tab="(t) => switchTab(t)"
-      @switch-view="listView = !listView"
+      @sorted="(key: string) => { filters.sort.value = key; filters.page.value = 0 }"
+      @searched="(q: string) => { filters.search.value = q; filters.page.value = 0 }"
+      @active-page="(p: number) => (filters.page.value = p - 1)"
+      @active-tab="(i: number) => switchTab(i)"
+      @switch-view="filters.view.value = listView ? 'grid' : 'list'"
     >
       <template #list-option>
         <div class="form-control">
@@ -225,10 +223,10 @@ onMounted(() => {
               {{ $t('lists.filter.resources') }}
             </span>
             <input
-              v-model="state.withResourcesOnly"
+              :checked="filters.res.value === 'yes'"
               type="checkbox"
               class="toggle toggle-accent"
-              @change="state.activePage = 1"
+              @change="filters.res.value = filters.res.value === 'yes' ? 'no' : 'yes'; filters.page.value = 0"
             />
           </label>
         </div>
@@ -248,14 +246,11 @@ onMounted(() => {
         />
       </template>
       <template v-if="!pending" #message>
-        <!-- no data info message -->
         <UIMessage
           v-if="!error && courses?.length === 0"
           :message="$t('messages.no-data.course')"
           class="!bg-base-300 !text-base-content max-w-max mx-auto"
         />
-
-        <!-- error message -->
         <UIMessage v-if="error" :message="$t('messages.error')" class="max-w-max mx-auto" type="error" />
       </template>
     </List>

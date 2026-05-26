@@ -15,11 +15,15 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  initialSearch: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits(['searched']);
 
-const searchTerm = ref('');
+const searchTerm = ref(props.initialSearch);
 
 watch(searchTerm, (newSearchTerm) => {
   emit('searched', newSearchTerm);
