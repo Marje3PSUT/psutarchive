@@ -190,6 +190,11 @@ defineEmits(['searched', 'sorted', 'activeTab', 'activePage', 'switchView']);
 </template>
 
 <style scoped lang="postcss">
+.tab.indicator .indicator-item {
+  --indicator-right: 0;
+  transform: translateY(-50%);
+}
+
 .list.view-flex {
   @apply flex gap-4 flex-col;
 }

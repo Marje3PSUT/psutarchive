@@ -94,22 +94,6 @@ const query = computed(
   }),
 );
 
-const countQuery = computed(
-  (): Query<Schema, Course> => ({
-    filter: { course_id: { _eq: urlId.value } },
-    deep: {
-      resource: {
-        // @ts-expect-error
-        _aggregate: {
-          countDistinct: 'id',
-        },
-        _groupBy: ['type'],
-        _sort: 'type',
-      },
-    },
-  }),
-);
-
 const {
   data: course,
   pending,
@@ -131,14 +115,29 @@ const {
   { watch: [stateChangeDebounced] },
 );
 
-const { data: recordCount } = useLazyAsyncData(() => $directus.request($readItems('course', countQuery.value)), {
-  watch: [stateChangeDebounced],
-});
+const { data: recordCount } = useLazyAsyncData(
+  'resourceCounts',
+  () =>
+    $directus.request(
+      $readItems('resource', {
+        // @ts-expect-error
+        aggregate: { countDistinct: 'id' },
+        groupBy: ['type'],
+        filter: {
+          course: { course_id: { _eq: urlId.value } },
+        },
+      }),
+    ),
+  { watch: [stateChangeDebounced] },
+);
 
-const typeCounts = computed(() => ({
-  exam: (recordCount.value?.[0]?.resource as any[])?.find((r: any) => r.type === 'exam')?.countDistinct?.id ?? null,
-  note: (recordCount.value?.[0]?.resource as any[])?.find((r: any) => r.type === 'note')?.countDistinct?.id ?? null,
-}));
+const typeCounts = computed(() => {
+  if (!recordCount.value) return { exam: null, note: null };
+  return {
+    exam: (recordCount.value as any[]).find((r: any) => r.type === 'exam')?.countDistinct?.id ?? 0,
+    note: (recordCount.value as any[]).find((r: any) => r.type === 'note')?.countDistinct?.id ?? 0,
+  };
+});
 
 const pageTitle = computed(() => {
   const appName = String(t('psutarchive'));
@@ -160,9 +159,9 @@ useHead(() => ({
 }));
 
 const pageCount = computed(() => {
-  if (!recordCount.value || (recordCount.value[0] as any)?.resource?.length === 0) return 0;
+  if (!recordCount.value) return 0;
   const currentType = tabsList.value[state.activeTab].value;
-  const typeEntry = (recordCount.value[0] as any).resource!.find((r: any) => r.type === currentType);
+  const typeEntry = (recordCount.value as any[]).find((r: any) => r.type === currentType);
   if (!typeEntry) return 0;
   return Math.ceil(typeEntry.countDistinct.id / 18);
 });
