@@ -128,7 +128,8 @@
   "messages": {
     "no-data": {
       "generic": "No data found",
-      "course": "No courses were found",
+      "course": "No courses were found. If you believe a course is missing, please",
+      "email-us": "email our support team.",
       "exam": "No exams were found",
       "note": "No notes were found"
     },

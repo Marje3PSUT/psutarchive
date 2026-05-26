@@ -36,6 +36,14 @@ const state = reactive({
 
 const listView = ref(false);
 
+const config = useRuntimeConfig();
+const mailtoLink = computed(() => {
+  const email = config.public.supportEmail;
+  const subject = encodeURIComponent(config.public.missingCourseEmailSubject);
+  const body = encodeURIComponent(config.public.missingCourseEmailBody);
+  return `mailto:${email}?subject=${subject}&body=${body}`;
+});
+
 const stateChange = ref<number>(0);
 
 watch(state, () => {
@@ -251,9 +259,11 @@ onMounted(() => {
         <!-- no data info message -->
         <UIMessage
           v-if="!error && courses?.length === 0"
-          :message="$t('messages.no-data.course')"
           class="!bg-base-300 !text-base-content max-w-max mx-auto"
-        />
+        >
+          <span>{{ $t('messages.no-data.course') }}&nbsp;</span>
+          <a :href="mailtoLink" class="link link-primary">{{ $t('messages.no-data.email-us') }}</a>
+        </UIMessage>
 
         <!-- error message -->
         <UIMessage v-if="error" :message="$t('messages.error')" class="max-w-max mx-auto" type="error" />
